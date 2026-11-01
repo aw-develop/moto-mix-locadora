@@ -1,2 +1,23 @@
-:host {display:inline-flex; width:1em; height:1em; flex:none; vertical-align:middle; line-height:0;}
-svg {display:block; width:100%; height:100%; overflow:visible;}
+:host {
+  display: inline-flex;
+  width: 1em;
+  height: 1em;
+  flex: none;
+  vertical-align: middle;
+  line-height: 0;
+}
+svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  /* Bootstrap paths already contain their outlines; never add the global SVG stroke. */
+  fill: currentColor;
+  stroke: none;
+  stroke-width: 0;
+}
+use {
+  fill: currentColor;
+  stroke: none;
+  stroke-width: 0;
+}
