@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="320" viewBox="0 0 1280 320" role="img" aria-labelledby="title desc">
+  <title id="title">Mix Locadora de Motos</title>
+  <desc id="desc">Seu próximo movimento. Plataforma de locação e central de operações, com identidade grafite e verde neon.</desc>
+  <rect width="1280" height="320" fill="#0d0d0d"/>
+  <path d="M0 319H1280" stroke="#2a332d" stroke-width="2"/>
+  <path d="M1040 0H1100L920 320H860Z" fill="#132b1b"/>
+  <path d="M1120 0H1142L962 320H940Z" fill="#00e640"/>
+  <path d="M1165 0H1171L991 320H985Z" fill="#00e640" opacity=".45"/>
+  <rect x="64" y="44" width="8" height="8" fill="#00e640"/>
+  <text x="87" y="53" fill="#8ba694" font-family="Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="3">MIX / LOCADORA DE MOTOS</text>
+  <text x="60" y="174" fill="#f5f7f5" font-family="Arial Black, Arial, sans-serif" font-size="112" font-weight="900" font-style="italic" letter-spacing="-9">M<tspan fill="#00e640">IX</tspan></text>
+  <text x="330" y="137" fill="#f5f7f5" font-family="Arial, sans-serif" font-size="27" font-weight="700" letter-spacing="1">SEU PRÓXIMO</text>
+  <text x="330" y="174" fill="#00e640" font-family="Arial, sans-serif" font-size="27" font-weight="700" letter-spacing="1">MOVIMENTO.</text>
+  <text x="64" y="234" fill="#9ead9f" font-family="Arial, sans-serif" font-size="17">Site público + central de operações da Mix Locadora.</text>
+  <text x="64" y="279" fill="#657d6d" font-family="Arial, sans-serif" font-size="11" letter-spacing="2">ANGULAR · TYPESCRIPT · CLOUDFLARE D1 + R2</text>
+  <text x="1216" y="279" fill="#8ba694" font-family="Arial, sans-serif" font-size="11" text-anchor="end" letter-spacing="2">MIX CONTROL CENTER</text>
+</svg>
