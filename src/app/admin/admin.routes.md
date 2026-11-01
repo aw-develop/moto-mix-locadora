@@ -1,5 +1,7 @@
-# Rotas administrativas
+# Acesso administrativo
 
-As rotas `/admin/dashboard`, `/admin/motos`, `/admin/banners` e `/admin/configuracoes` são lazy-loaded. A aplicação consulta `/api/session` antes de iniciar a navegação. Apenas uma identidade autorizada pode entrar no painel. Visitantes são direcionados a `/admin/login`, que inicia a autenticação do Sites no nível superior do navegador.
+As páginas administrativas usam lazy loading, guards Angular que consultam `/api/session` a cada navegação e um bloqueio no Worker antes da entrega do documento. Sessões ausentes ou expiradas são encaminhadas ao login; falhas de verificação bloqueiam o acesso. O login por senha permanece público para permitir a autenticação.
 
-Toda gravação exige autorização novamente no Worker, independentemente dos guards Angular. O estado é persistido em D1 e as imagens em R2.
+Os endpoints protegidos validam a autorização em cada requisição. Modificar flags no navegador não concede permissão à API. As páginas administrativas recebem `noindex, nofollow, noarchive, nosnippet` e `no-store`.
+
+O site público não anuncia o link do painel. O endereço pode ser inferido pelos arquivos do frontend ou pelo repositório público, por isso não é tratado como segredo de segurança.

@@ -1,5 +1,6 @@
 import { protectedSourcePath, secureResponse } from "../server/http/security.ts";
 import { json } from "../server/http/responses.ts";
+import { adminPageGate } from "../server/auth/admin-page.ts";
 import { handleApi } from "../server/router.ts";
 import handler from "vinext/server/fetch-handler";
 import { runWithConnectorBinding } from "../lib/connector-context";
@@ -13,6 +14,8 @@ const worker = {
   ) {
     if (protectedSourcePath(new URL(request.url).pathname))
       return secureResponse(json({error:"Recurso não encontrado."},404),request);
+    const gate = await adminPageGate(request,env);
+    if (gate) return secureResponse(gate,request);
     const response = await handleApi(request, env);
     if (response) return secureResponse(response,request);
     let binding = ctx.props?.CONNECTORS;

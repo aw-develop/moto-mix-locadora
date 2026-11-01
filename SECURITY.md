@@ -88,3 +88,11 @@ A revisão não equivale a pentest completo, teste de carga, perícia dos acesso
 - [Segurança no Angular](https://angular.dev/best-practices/security)
 - [Headers de segurança em Cloudflare Workers](https://developers.cloudflare.com/workers/examples/security-headers/)
 - [GitHub Advisory Database](https://github.com/advisories)
+
+## Proteção das rotas administrativas
+
+O Worker valida a sessão antes de entregar documentos administrativos protegidos. Visitantes sem autorização são redirecionados ao login, e falhas na validação bloqueiam a resposta protegida. O login permanece acessível para autenticação. Os guards Angular também consultam o servidor a cada navegação, mesmo que exista uma flag administrativa antiga em memória. A autorização da API permanece independente desses guards.
+
+O link administrativo foi removido do rodapé público e dos links de acesso direto da apresentação do README. Respostas administrativas incluem `noindex, nofollow, noarchive, nosnippet` e `no-store`; essas diretivas orientam buscadores compatíveis e não controlam crawlers maliciosos. Não se listam rotas administrativas em robots.txt.
+
+O repositório GitHub é público: rotas também podem ser inferidas pelo código entregue ao navegador. Não há garantia de URL secreta. Conhecer o endereço não concede uma sessão autorizada nem acesso de escrita. Remover um link não apaga cópias antigas em caches, commits ou histórico de navegação.

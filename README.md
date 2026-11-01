@@ -9,7 +9,6 @@
 
 <p align="center">
   <a href="https://mix-locadora-motos-racing.alesonroberto3.chatgpt.site">Visitar o site</a> ·
-  <a href="https://mix-locadora-motos-racing.alesonroberto3.chatgpt.site/admin/login">Acessar o painel</a> ·
   <a href="ARCHITECTURE.md">Documentação técnica</a>
 </p>
 
@@ -123,7 +122,7 @@ O manifesto [.openai/hosting.json](.openai/hosting.json) mantém a identidade da
 
 ## Acesso e entrega ao cliente
 
-1. Acesse **[o painel administrativo](https://mix-locadora-motos-racing.alesonroberto3.chatgpt.site/admin/login)** com as credenciais fornecidas ao responsável.
+1. Acesse **o endereço administrativo fornecido ao responsável na entrega** com suas credenciais.
 2. Abra **Configurações → Segurança de acesso**.
 3. Informe a senha atual, o novo login e a nova senha com confirmação.
 4. Salve e entre novamente com os novos dados.

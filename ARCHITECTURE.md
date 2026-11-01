@@ -46,7 +46,7 @@ As imagens comerciais são públicas, identificadas por hash e servidas com MIME
 
 ## Interface
 
-Mantém `/`, `/admin/login`, `/admin/dashboard`, `/admin/motos`, `/admin/banners` e `/admin/configuracoes`. As rotas e páginas Angular continuam lazy-loaded. Todos os dispositivos carregam o estado salvo ao abrir ou recarregar o site. Não há atualização push entre dispositivos; conflitos em novas gravações são detectados pelo servidor.
+Mantém `/`, `/admin/login`, `/admin/dashboard`, `/admin/motos`, `/admin/banners` e `/admin/configuracoes`. As rotas e páginas Angular continuam lazy-loaded. O Worker valida a sessão antes de entregar documentos administrativos protegidos, e os guards revalidam `/api/session` a cada navegação. A tela de login permanece pública, sem divulgação no rodapé. Todos os dispositivos carregam o estado salvo ao abrir ou recarregar o site. Não há atualização push entre dispositivos; conflitos em novas gravações são detectados pelo servidor.
 
 O carrossel mantém rotação automática de 6 segundos sem controles manuais. Upload com prévia, drag and drop, catálogo filtrável, configurações de contato e efeitos de scroll continuam disponíveis.
 

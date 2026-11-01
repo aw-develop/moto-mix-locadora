@@ -18,6 +18,7 @@ describe("Mix application", () => {
       expect(page.querySelector(`#${id}`)).not.toBeNull();
     }
     expect(page.querySelector(".benefit-bar")).not.toBeNull();
+    expect(page.querySelector('a[href*="/admin"]')).toBeNull();
     const dialog = page.querySelector("dialog")!;
     // JSDOM does not implement the browser's dialog methods.
     dialog.showModal = vi.fn();

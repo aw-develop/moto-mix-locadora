@@ -20,7 +20,7 @@ test('HTML responses enforce browser defenses without allowing inline scripts or
  assert.equal(response.headers.get('cache-control'),'no-store');
  assert.equal(response.headers.get('x-content-type-options'),'nosniff');
  assert.equal(response.headers.get('referrer-policy'),'no-referrer');
- assert.equal(response.headers.get('x-robots-tag'),'noindex, nofollow');
+ assert.equal(response.headers.get('x-robots-tag'),'noindex, nofollow, noarchive, nosnippet');
  assert.match(response.headers.get('strict-transport-security')!,/max-age/);
  const scripts=DOCUMENT_CSP.split('; ').find(value=>value.startsWith('script-src'))!;
  assert.equal(scripts,"script-src 'self'");assert.match(DOCUMENT_CSP,/object-src 'none'/);assert.match(DOCUMENT_CSP,/connect-src 'self'/);

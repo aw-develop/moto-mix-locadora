@@ -8,6 +8,8 @@ export interface AdminIdentity {
 @Injectable({ providedIn: "root" })
 export class AdminSessionService {
   private readonly identity = signal<AdminIdentity | null>(null);
+  private verification: Promise<boolean> | null = null;
+  private revision = 0;
   readonly active = computed(() => this.identity()?.isAdmin === true);
   readonly signedIn = computed(() => this.identity()?.signedIn === true);
   readonly profile = computed(() => ({
@@ -16,7 +18,27 @@ export class AdminSessionService {
     role: "Administrador autorizado",
   }));
   setIdentity(identity: AdminIdentity): void {
+    this.revision++;
     this.identity.set(identity);
+  }
+  verifySession(): Promise<boolean> {
+    if (!this.verification) this.verification = this.readSession().finally(() => { this.verification = null; });
+    return this.verification;
+  }
+  private async readSession(): Promise<boolean> {
+    const revision = this.revision;
+    try {
+      const response = await fetch("/api/session", { cache: "no-store", signal: AbortSignal.timeout(10000) });
+      if (!response.ok) throw new Error("Sessão indisponível.");
+      const value = await response.json();
+      if (revision !== this.revision) return false;
+      this.setIdentity({ isAdmin: value?.isAdmin === true, signedIn: value?.signedIn === true,
+        name: typeof value?.name === "string" ? value.name.slice(0,160) : "", email: "" });
+      return this.active();
+    } catch {
+      if (revision === this.revision) this.logout();
+      return false;
+    }
   }
   async login(username: string, password: string): Promise<void> {
     const response = await fetch("/api/auth/login", {
@@ -33,6 +55,7 @@ export class AdminSessionService {
     this.logout();
   }
   logout(): void {
+    this.revision++;
     this.identity.set(null);
   }
   assertAdminSession(): void {

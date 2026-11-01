@@ -12,6 +12,13 @@ export const DOCUMENT_CSP = [
   "form-action 'self'",
   "frame-ancestors 'self' https://chatgpt.com",
 ].join('; ');
+export function normalizedPath(pathname: string): string {
+  try { return decodeURIComponent(pathname).replace(/\\/g,'/').replace(/\/+/g,'/').toLowerCase(); }
+  catch { return ''; }
+}
+export function administrativePath(pathname: string): boolean {
+  return /^\/admin(?:\/|;|$)/.test(pathname);
+}
 export function protectedSourcePath(pathname: string): boolean {
   let path: string;
   try { path = decodeURIComponent(pathname).toLowerCase(); } catch { return true; }
@@ -29,6 +36,6 @@ export function secureResponse(response: Response, request: Request): Response {
     headers.append('content-security-policy',DOCUMENT_CSP);
     headers.set('cache-control','no-store');
   }
-  if (new URL(request.url).pathname.startsWith('/admin')) headers.set('x-robots-tag','noindex, nofollow');
+  if (administrativePath(normalizedPath(new URL(request.url).pathname))) headers.set('x-robots-tag','noindex, nofollow, noarchive, nosnippet');
   return new Response(response.body,{status:response.status,statusText:response.statusText,headers});
 }
