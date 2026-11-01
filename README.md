@@ -1,10 +1,10 @@
 # Mix Locadora — Angular com salvamento permanente
 
-Site público em Angular 21, painel administrativo e API no servidor. Motos, disponibilidade, preços, banners, ordem e configurações são persistidos no D1; imagens do dispositivo são armazenadas no R2 e recebem URLs permanentes. O site continua público. Edições requerem a conta ChatGPT autorizada no servidor.
+Site público em Angular 21, painel administrativo e API no servidor. Motos, disponibilidade, preços, banners, ordem e configurações são persistidos no D1; imagens do dispositivo são armazenadas no R2 e recebem URLs permanentes. O site continua público. Edições requerem login e senha administrativos ou a conta ChatGPT autorizada no servidor.
 
 ## Uso
 
-Acesse `/admin/dashboard`. Quando necessário, entre com ChatGPT pela tela de login usando a conta proprietária autorizada. Salve os formulários normalmente: cada alteração é enviada automaticamente ao servidor. Aguarde **Todas as alterações estão salvas no servidor** no topo antes de fechar.
+Acesse `/admin/dashboard`. Entre com login e senha em `/admin/login`; a conta ChatGPT proprietária autorizada continua como alternativa. Salve os formulários normalmente: cada alteração é enviada automaticamente ao servidor. Aguarde **Todas as alterações estão salvas no servidor** no topo antes de fechar.
 
 Se houver erro, a tela não anuncia sucesso e oferece nova tentativa. Se outro dispositivo salvou uma versão mais recente, a gravação é bloqueada para evitar sobrescrever dados. Recarregue os dados salvos, revise a alteração e salve novamente. O navegador avisa ao tentar sair com alterações pendentes.
 
@@ -47,7 +47,7 @@ npm run build
 
 `npm run dev:angular` inicia somente a interface, sem API. `npm run build` gera o artefato completo em `dist/`; não publique apenas o build Angular como site estático. Para desenvolvimento completo, execute o build antes de `npm run dev` e aplique as migrações locais conforme a documentação do Sites. Ambiente local e produção usam bancos separados.
 
-O runtime precisa de `ADMIN_EMAILS` (lista de contas autorizadas separadas por vírgula), `DB` (D1) e `BUCKET` (R2). Configure `ADMIN_EMAILS` no servidor, nunca em código Angular. A autenticação hospedada é controlada pelo Sites por `/signin-with-chatgpt` e `/signout-with-chatgpt`. Não existe senha demo nem autorização por localStorage.
+O runtime precisa de `ADMIN_EMAILS` (lista de contas autorizadas separadas por vírgula), `DB` (D1) e `BUCKET` (R2). Configure `ADMIN_EMAILS` no servidor, nunca em código Angular. A autenticação hospedada é controlada pelo Sites por `/signin-with-chatgpt` e `/signout-with-chatgpt`. O login por senha usa `ADMIN_USERNAME` e `ADMIN_PASSWORD_HASH` (segredos de runtime). O hash tem formato `salt:hash`, com PBKDF2-SHA256, 100.000 iterações e saída de 32 bytes. A senha não é incluída no repositório. A sessão dura oito horas, fica em cookie HttpOnly/Secure/SameSite=Strict e é revogada no logout. Há limite de dez tentativas em 15 minutos por IP. Trocar o hash invalida as sessões anteriores. Não existe senha demo nem autorização por localStorage.
 
 ## Verificação
 

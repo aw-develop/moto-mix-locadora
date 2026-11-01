@@ -149,3 +149,9 @@
   font-style: normal;
   color: var(--green);
 }
+
+.login-form {display:grid; gap:12px; margin:28px 0 16px;}
+.login-form label {font-size:12px; font-weight:600; color:#b9ccbf;}
+.login-form input {width:100%; box-sizing:border-box; background:#111b15; color:#f2f7f3; border:1px solid #36573f; border-radius:4px; padding:14px; font:inherit; min-height:48px;}
+.login-form input:focus-visible {outline:2px solid var(--green); outline-offset:2px;}
+.login-form button {margin-top:12px; min-height:48px; width:100%;}

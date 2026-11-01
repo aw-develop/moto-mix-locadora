@@ -15,6 +15,13 @@
       "when": 1793497121919,
       "tag": "0001_lying_wind_dancer",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1793499673498,
+      "tag": "0002_sleepy_alice",
+      "breakpoints": true
     }
   ]
 }

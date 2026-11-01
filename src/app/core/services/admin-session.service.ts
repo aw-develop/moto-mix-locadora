@@ -18,6 +18,20 @@ export class AdminSessionService {
   setIdentity(identity: AdminIdentity): void {
     this.identity.set(identity);
   }
+  async login(username: string, password: string): Promise<void> {
+    const response = await fetch("/api/auth/login", {
+      method: "POST", headers: {"content-type":"application/json"},
+      body: JSON.stringify({username,password}), signal: AbortSignal.timeout(15000),
+    });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error || "Não foi possível entrar.");
+    this.setIdentity(result);
+  }
+  async signOut(): Promise<void> {
+    const response = await fetch("/api/auth/logout", { method: "POST", signal: AbortSignal.timeout(15000) });
+    if (!response.ok) throw new Error("Não foi possível encerrar a sessão. Tente novamente.");
+    this.logout();
+  }
   logout(): void {
     this.identity.set(null);
   }

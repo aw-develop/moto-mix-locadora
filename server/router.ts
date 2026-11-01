@@ -2,6 +2,8 @@ import type {
   BackendEnvironment,
   RequestContext,
 } from "./models/environment.ts";
+import { passwordIdentity } from "./auth/password.ts";
+import { authRoute } from "./routes/auth.route.ts";
 import { resolveIdentity } from "./auth/identity.ts";
 import { errorResponse, json } from "./http/responses.ts";
 import { catalogRoute } from "./routes/catalog.route.ts";
@@ -18,8 +20,10 @@ export async function handleApi(
       request,
       env,
       url,
-      identity: resolveIdentity(request, env),
+      identity: (await passwordIdentity(request, env)) ?? resolveIdentity(request, env),
     };
+    if (["/api/auth/login", "/api/auth/logout"].includes(url.pathname) && request.method === "POST")
+      return await authRoute(context);
     if (url.pathname === "/api/session" && request.method === "GET")
       return sessionRoute(context);
     if (

@@ -53,3 +53,13 @@ export const metadata = sqliteTable("catalog_metadata", {
   updatedAt: text("updated_at"),
   writeToken: text("write_token").notNull(),
 });
+
+export const adminSessions = sqliteTable("admin_sessions", {
+  tokenHash: text("token_hash").primaryKey(),
+  expiresAt: integer("expires_at").notNull(),
+});
+export const loginAttempts = sqliteTable("login_attempts", {
+  key: text("key").primaryKey(),
+  attempts: integer("attempts").notNull(),
+  windowStart: integer("window_start").notNull(),
+});

@@ -15,17 +15,16 @@
       <span class="admin-kicker">PAINEL ADMINISTRATIVO</span>
       <h2>Bem-vindo à central.</h2>
       <p>Gerencie a Mix com a mesma agilidade do seu corre.</p>
-      <div class="demo-card">
-        <b>Área administrativa protegida</b>
-        <p>
-          Entre com a conta ChatGPT autorizada para gerenciar e salvar os dados
-          da Mix.
-        </p>
-        <p>
-          As alterações ficam salvas no servidor e as imagens em armazenamento
-          permanente.
-        </p>
-      </div>
+      <form [formGroup]="form" (ngSubmit)="submit()" class="login-form">
+        <label for="admin-username">Login</label>
+        <input id="admin-username" formControlName="username" autocomplete="username" maxlength="80" required />
+        <label for="admin-password">Senha</label>
+        <input id="admin-password" type="password" formControlName="password" autocomplete="current-password" maxlength="256" required />
+        @if (error()) { <p class="admin-error" role="alert">{{ error() }}</p> }
+        <button mat-flat-button class="admin-primary" type="submit" [disabled]="busy() || form.invalid">
+          {{ busy() ? 'Entrando…' : 'Entrar no painel →' }}
+        </button>
+      </form>
       @if (session.active()) {
         <a mat-flat-button class="admin-primary" routerLink="/admin/dashboard"
           >Abrir painel →</a
@@ -41,8 +40,7 @@
       }
       @if (session.signedIn() && !session.active()) {
         <p class="admin-error">
-          Sua conta não possui acesso administrativo. Entre com a conta
-          proprietária do site.
+          Sua conta ChatGPT não possui acesso administrativo. Use o login e a senha ou a conta proprietária.
         </p>
       }
       @if (admin.saveError()) {

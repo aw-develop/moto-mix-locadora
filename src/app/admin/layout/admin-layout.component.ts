@@ -41,8 +41,12 @@ export class AdminLayoutComponent {
     )
       void this.admin.initialize();
   }
-  logout(): void {
-    this.session.logout();
-    void this.router.navigateByUrl("/admin/login");
+  async logout(): Promise<void> {
+    try {
+      await this.session.signOut();
+      window.location.assign("/signout-with-chatgpt?return_to=%2Fadmin%2Flogin");
+    } catch (error) {
+      window.alert(error instanceof Error ? error.message : "Não foi possível sair.");
+    }
   }
 }
