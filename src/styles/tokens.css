@@ -1,0 +1,10 @@
+/* Shared styles; selectors are intentionally global. */
+:root {
+  --green: #00e640;
+  --bg: #0d0d0d;
+  --panel: #181919;
+  --border: #2b2d2c;
+  --muted: #929793;
+  --font: "Inter", Arial, sans-serif;
+  --display: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
+}

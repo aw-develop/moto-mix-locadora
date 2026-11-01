@@ -1,0 +1,112 @@
+/* Component-owned styles; responsive rules live beside the template. */
+
+.why {
+  background: #141614;
+  border-block: 1px solid var(--border);
+}
+.reasons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 45px;
+}
+.reasons article {
+  position: relative;
+  padding: 0 45px;
+  border-right: 1px solid #303530;
+}
+.reasons article:first-child {
+  padding-left: 0;
+}
+.reasons article:last-child {
+  border: none;
+  padding-right: 0;
+}
+.reasons article > svg {
+  height: 32px;
+  width: 32px;
+  color: var(--green);
+  margin: 0 0 23px;
+}
+.reason-number {
+  position: absolute;
+  top: 0;
+  right: 40px;
+  font-family: var(--display);
+  font-size: 45px;
+  color: #303730;
+  line-height: 1;
+}
+.reasons article:last-child .reason-number {
+  right: 0;
+}
+.reasons h3 {
+  font-family: var(--display);
+  font-size: 26px;
+  line-height: 1.1;
+  font-weight: 600;
+  margin: 0 0 16px;
+}
+.reasons p {
+  font-size: 11px;
+  color: #99a299;
+  line-height: 1.9;
+  max-width: 280px;
+}
+.fine {
+  font-size: 8px;
+  color: #626e62;
+  margin: 35px 0 0;
+}
+@media (max-width: 800px) {
+  .reasons article {
+    padding-inline: 24px;
+  }
+  .reasons h3 {
+    font-size: 23px;
+  }
+  .reasons p {
+    font-size: 10px;
+  }
+  .reason-number {
+    right: 22px;
+  }
+}
+@media (max-width: 540px) {
+  .reasons {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    margin-top: 32px;
+  }
+  .reasons article,
+  .reasons article:first-child,
+  .reasons article:last-child {
+    padding: 0 0 23px;
+    border: 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .reasons article:last-child {
+    border: 0;
+    padding-bottom: 0;
+  }
+  .reasons article > svg {
+    margin-bottom: 15px;
+  }
+  .reasons h3 {
+    font-size: 29px;
+  }
+  .reasons p {
+    font-size: 11px;
+    max-width: none;
+  }
+  .reason-number,
+  .reasons article:last-child .reason-number {
+    right: 0;
+    font-size: 50px;
+  }
+  .fine {
+    font-size: 8px;
+  }
+}
+:host {
+  display: contents;
+}

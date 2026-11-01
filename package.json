@@ -1,0 +1,60 @@
+{
+  "name": "mix-locadora-angular",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node scripts/run-framework.mjs dev",
+    "dev": "node scripts/run-framework.mjs dev",
+    "build": "node scripts/build-full.mjs",
+    "test": "ng test --watch=false",
+    "build:client": "ng build --configuration production --output-path .angular/site-client --deploy-url /client/",
+    "db:generate": "drizzle-kit generate",
+    "dev:angular": "ng serve --host 0.0.0.0",
+    "test:api": "node --experimental-strip-types --test server/tests/*.test.ts",
+    "typecheck:server": "tsc -p tsconfig.server.json"
+  },
+  "dependencies": {
+    "@angular/common": "^21.2.0",
+    "@angular/compiler": "^21.2.0",
+    "@angular/core": "^21.2.0",
+    "@angular/forms": "^21.2.0",
+    "@angular/platform-browser": "^21.2.0",
+    "rxjs": "~7.8.2",
+    "tslib": "^2.8.1",
+    "@angular/router": "^21.2.0",
+    "@angular/material": "^21.2.0",
+    "@angular/cdk": "^21.2.0",
+    "drizzle-orm": "0.45.2",
+    "next": "16.3.4",
+    "react": "19.2.6",
+    "react-dom": "19.2.6"
+  },
+  "devDependencies": {
+    "@angular/build": "^21.2.0",
+    "@angular/cli": "^21.2.0",
+    "@angular/compiler-cli": "^21.2.0",
+    "typescript": "~5.9.3",
+    "vitest": "^4.0.18",
+    "jsdom": "^27.4.0",
+    "@cloudflare/vite-plugin": "1.37.1",
+    "@cloudflare/workers-types": "4.20260515.1",
+    "@types/node": "22.19.19",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "6.0.2",
+    "@vitejs/plugin-rsc": "0.5.26",
+    "drizzle-kit": "0.31.10",
+    "json-rpc-2.0": "1.7.1",
+    "raw-body": "3.0.2",
+    "react-server-dom-webpack": "19.2.6",
+    "vinext": "1.0.0-beta.5",
+    "vite": "8.0.13",
+    "wrangler": "4.92.0"
+  },
+  "type": "module",
+  "overrides": {
+    "miniflare": {
+      "sharp": "0.35.4"
+    }
+  }
+}

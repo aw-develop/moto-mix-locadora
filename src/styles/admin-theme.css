@@ -1,0 +1,22 @@
+/* Shared styles; selectors are intentionally global. */
+
+.admin-app,
+.admin-login,
+.admin-dialog {
+  --mat-sys-primary: var(--green);
+  --mat-sys-on-primary: #071e0c;
+  --mat-sys-surface: #161a17;
+  --mat-sys-on-surface: #edf1ed;
+  --mat-sys-on-surface-variant: #a6b0a6;
+  --mat-sys-outline: #394139;
+  --mat-sys-secondary-container: #123f20;
+  --mat-sys-on-secondary-container: #79ef99;
+  --mat-sys-error: #ef9494;
+  --mat-sys-corner-extra-large: 6px;
+  --mat-sys-corner-full: 4px;
+  color-scheme: dark;
+  color: #edf1ed;
+  font-family: Inter, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.6;
+}

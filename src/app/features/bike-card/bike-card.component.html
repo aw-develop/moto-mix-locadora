@@ -1,0 +1,51 @@
+<article class="bike-card" [class.unavailable]="!bike().available">
+  <div class="bike-visual">
+    <span class="badge" [class.available]="bike().available"
+      ><i></i>{{ bike().available ? "DISPONÍVEL" : "ALUGADA" }}</span
+    ><span class="bike-category">{{ bike().category }}</span
+    ><img
+      [src]="bike().image"
+      [alt]="bike().name + ' — imagem ilustrativa'"
+      loading="lazy"
+      width="600"
+      height="400"
+    /><span class="visual-index"
+      >MIX / {{ bike().version.split(" · ")[1] }}</span
+    >
+  </div>
+  <div class="bike-content">
+    <div class="bike-version">{{ bike().version }}</div>
+    <h3>{{ bike().name }}</h3>
+    <p class="bike-description">{{ bike().description }}</p>
+    <div class="specs">
+      <span><b aria-hidden="true">⚙</b> {{ bike().transmission }}</span
+      ><span><b aria-hidden="true">◉</b> {{ bike().consumption }}</span>
+    </div>
+    <div class="price-row">
+      <div>
+        <span>DIÁRIA A PARTIR DE</span>
+        <p>
+          {{ bike().daily | currency: "BRL" : "symbol" : "1.0-0" : "pt-BR"
+          }}<small> / dia</small>
+        </p>
+      </div>
+      <div class="weekly">
+        {{ bike().weekly | currency: "BRL" : "symbol" : "1.0-0" : "pt-BR"
+        }}<span>/ semana</span>
+      </div>
+    </div>
+    @if (bike().available) {
+      <a
+        class="btn reserve"
+        [mixWhatsapp]="whatsapp.reserveMessage(bike().name)"
+        [mixModel]="bike().name"
+        >Reservar este modelo <svg aria-hidden="true"><use href="#arrow" /></svg
+      ></a>
+    } @else {
+      <button class="btn reserve disabled" disabled>
+        Indisponível no momento
+        <svg aria-hidden="true"><use href="#arrow" /></svg>
+      </button>
+    }
+  </div>
+</article>

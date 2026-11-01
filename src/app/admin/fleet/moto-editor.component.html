@@ -1,0 +1,87 @@
+<div class="admin-dialog-heading">
+  <span class="admin-kicker">CATÁLOGO / FROTA</span>
+  <h2 mat-dialog-title>{{ data ? "Editar moto" : "Adicionar moto" }}</h2>
+  <p>Dados que aparecem no catálogo do site público.</p>
+</div>
+<form class="admin-form" [formGroup]="form" (ngSubmit)="save()" novalidate>
+  <mat-dialog-content
+    ><div class="admin-form-grid">
+      <label class="full"
+        >Nome do modelo<input
+          formControlName="name"
+          placeholder="Ex.: Honda CG 160"
+          maxlength="80"
+          required /></label
+      ><label
+        >Versão / Cilindrada<input
+          formControlName="version"
+          placeholder="TITAN · 160 CC"
+          maxlength="80"
+          required /></label
+      ><label
+        >Categoria<select formControlName="category">
+          <option>Entregas</option>
+          <option>Urbana</option>
+          <option>Touring</option>
+        </select></label
+      >
+      <div class="full">
+        <mix-image-upload formControlName="image" label="Foto da moto" />
+      </div>
+      <label
+        >Diária (R$)<input
+          type="number"
+          formControlName="daily"
+          min="0.01"
+          max="100000"
+          step="0.01"
+          required /></label
+      ><label
+        >Semanal (R$)<input
+          type="number"
+          formControlName="weekly"
+          min="0.01"
+          max="100000"
+          step="0.01"
+          required /></label
+      ><label
+        >Transmissão<input
+          formControlName="transmission"
+          maxlength="60"
+          required /></label
+      ><label
+        >Consumo médio<input
+          formControlName="consumption"
+          placeholder="Até 40 km/l"
+          maxlength="60"
+          required /></label
+      ><label class="full"
+        >Descrição<textarea
+          formControlName="description"
+          rows="3"
+          maxlength="600"
+          required
+        ></textarea>
+      </label>
+      <div class="full form-switch">
+        <mat-slide-toggle formControlName="available"
+          >Disponível para locação</mat-slide-toggle
+        ><small>Atualiza o status no catálogo imediatamente.</small>
+      </div>
+    </div>
+    @if (error()) {
+      <p class="admin-error" role="alert">{{ error() }}</p>
+    }</mat-dialog-content
+  ><mat-dialog-actions align="end"
+    ><button mat-button type="button" [mat-dialog-close]="false">
+      Cancelar</button
+    ><button
+      mat-flat-button
+      type="submit"
+      class="admin-primary"
+      [disabled]="form.controls.image.hasError('imageProcessing')"
+    >
+      {{ data ? "Salvar alterações" : "Adicionar moto" }}
+    </button></mat-dialog-actions
+  >
+</form>

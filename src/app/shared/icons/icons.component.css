@@ -1,0 +1,10 @@
+/* Component-owned styles; responsive rules live beside the template. */
+:host {
+  display: contents;
+}
+.symbols {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}

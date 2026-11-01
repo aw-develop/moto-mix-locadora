@@ -1,0 +1,79 @@
+<section class="contact section wrap" id="contato">
+  <div mixReveal>
+    <div class="eyebrow">04 / VAMOS CONVERSAR</div>
+    <h2>PRONTO PARA<br /><em>ACELERAR?</em></h2>
+    <p>
+      Conte o que você precisa.<br />A gente ajuda a encontrar a moto certa.
+    </p>
+    <a class="text-link" mixWhatsapp
+      ><svg aria-hidden="true"><use href="#wa" /></svg> Conversar pelo WhatsApp
+      <span>↗</span></a
+    >
+  </div>
+  <form [mixReveal]="100" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    <div class="form-row">
+      <label
+        >Seu nome<input
+          formControlName="name"
+          autocomplete="name"
+          placeholder="Como podemos chamar você?"
+          required
+          maxlength="100"
+          [attr.aria-invalid]="
+            form.controls.name.touched && form.controls.name.invalid
+          "
+          aria-describedby="name-error"
+        />
+        @if (form.controls.name.touched && form.controls.name.invalid) {
+          <span class="field-error" id="name-error">Informe seu nome.</span>
+        }
+      </label>
+      <label
+        >Seu WhatsApp<input
+          formControlName="phone"
+          autocomplete="tel"
+          type="tel"
+          placeholder="(DDD) 99999-9999"
+          required
+          maxlength="20"
+          [attr.aria-invalid]="
+            form.controls.phone.touched && form.controls.phone.invalid
+          "
+          aria-describedby="phone-error"
+        />
+        @if (form.controls.phone.touched && form.controls.phone.invalid) {
+          <span class="field-error" id="phone-error"
+            >Informe um telefone válido com DDD.</span
+          >
+        }
+      </label>
+    </div>
+    <label
+      >Sua mensagem<textarea
+        formControlName="message"
+        placeholder="Quero saber mais sobre os planos de aluguel..."
+        required
+        rows="3"
+        maxlength="1500"
+        [attr.aria-invalid]="
+          form.controls.message.touched && form.controls.message.invalid
+        "
+        aria-describedby="message-error"
+      ></textarea>
+      @if (form.controls.message.touched && form.controls.message.invalid) {
+        <span class="field-error" id="message-error"
+          >Escreva sua mensagem.</span
+        >
+      }
+    </label>
+    <div class="form-bottom">
+      <p>
+        O WhatsApp será aberto com sua mensagem.<br />Você confirma o envio na
+        conversa.
+      </p>
+      <button class="btn" type="submit">
+        Preparar mensagem <svg aria-hidden="true"><use href="#arrow" /></svg>
+      </button>
+    </div>
+  </form>
+</section>

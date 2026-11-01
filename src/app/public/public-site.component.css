@@ -1,0 +1,57 @@
+/* Component-owned styles; responsive rules live beside the template. */
+:host {
+  display: block;
+}
+.floating-wa {
+  position: fixed;
+  z-index: 40;
+  bottom: 25px;
+  right: 25px;
+  background: var(--green);
+  color: #08290f;
+  border: 1px solid #58fc85;
+  box-shadow: 0 5px 30px #0008;
+  border-radius: 50%;
+  height: 57px;
+  width: 57px;
+  display: grid;
+  place-items: center;
+  animation: pulse 4s infinite;
+}
+.floating-wa svg {
+  height: 27px;
+  width: 27px;
+}
+.floating-wa:hover {
+  background: #58fc85;
+}
+@keyframes pulse {
+  0%,
+  65%,
+  100% {
+    box-shadow: 0 0 0 0 #00e64000;
+  }
+  75% {
+    box-shadow: 0 0 0 9px #00e64020;
+  }
+  85% {
+    box-shadow: 0 0 0 16px #00e64000;
+  }
+}
+@media (max-width: 800px) {
+  .floating-wa {
+    width: 50px;
+    height: 50px;
+    right: 18px;
+    bottom: 18px;
+  }
+  .floating-wa svg {
+    width: 25px;
+  }
+}
+@media (max-width: 540px) {
+  .floating-wa {
+    bottom: 16px;
+    right: 16px;
+  }
+}

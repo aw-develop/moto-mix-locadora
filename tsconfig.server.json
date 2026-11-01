@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022", "DOM"],
+    "strict": true,
+    "noImplicitReturns": true,
+    "noUncheckedIndexedAccess": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "useUnknownInCatchVariables": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "allowImportingTsExtensions": true,
+    "esModuleInterop": true,
+    "types": ["@cloudflare/workers-types", "node", "vite/client"]
+  },
+  "include": [
+    "server/**/*.ts",
+    "db/**/*.ts",
+    "cloudflare-env.d.ts",
+    "worker/**/*.ts",
+    "lib/*.d.ts"
+  ],
+  "exclude": ["node_modules"]
+}

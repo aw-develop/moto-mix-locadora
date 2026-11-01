@@ -1,0 +1,81 @@
+<section
+  class="hero"
+  id="inicio"
+  aria-roledescription="carrossel"
+  aria-label="Destaques da Mix"
+  (pointerenter)="pointerEntered($event)"
+  (pointerleave)="hovered.set(false)"
+  (focusin)="focused.set(true)"
+  (focusout)="focused.set(false)"
+>
+  @if (slide(); as banner) {
+    <img
+      class="hero-image"
+      [src]="banner.image"
+      [alt]="banner.title"
+      fetchpriority="high"
+    />
+  }
+  <div class="hero-shade"></div>
+  <div class="wrap hero-content">
+    <div class="eyebrow"><span></span> SUA LIBERDADE TEM UM NOVO ENDEREÇO</div>
+    <h1 [class.long-title]="longTitle()">
+      {{ slide()?.title || "SEU PRÓXIMO MOVIMENTO COMEÇA NA MIX." }}
+    </h1>
+    <p>
+      {{
+        slide()?.subtitle ||
+          "Explore a frota e encontre o plano para o seu ritmo."
+      }}
+    </p>
+    <div class="hero-actions">
+      <a class="btn" [href]="slide()?.link || '#motos'"
+        >Encontre sua moto <svg><use href="#arrow" /></svg></a
+      ><a class="text-link" mixWhatsapp href="#contato"
+        >Fale com a Mix <svg><use href="#wa" /></svg
+      ></a>
+    </div>
+    <div class="hero-checks">
+      <span>✓ Manutenção em dia</span><span>✓ Proteção inclusa*</span
+      ><span>✓ Sem complicação</span>
+    </div>
+  </div>
+  <div class="hero-bottom wrap">
+    <span>DUAS RODAS. INFINITAS POSSIBILIDADES.</span
+    ><a class="explore-fleet" href="#motos" aria-label="Explorar a frota">
+      <span class="explore-label">EXPLORE A FROTA</span>
+      <span class="explore-arrow" aria-hidden="true"
+        ><svg viewBox="0 0 24 24"><path d="M12 4v16m-6-6 6 6 6-6" /></svg
+      ></span>
+    </a>
+  </div>
+  @if (banners().length > 1) {
+    <div class="hero-carousel" aria-label="Banners em destaque">
+      @for (banner of banners(); track banner.id; let i = $index) {
+        <span
+          class="hero-dot"
+          [class.active]="currentIndex() === i"
+          aria-hidden="true"
+        ></span>
+      }
+      <span
+        class="carousel-count"
+        [attr.aria-label]="
+          'Banner ' + (currentIndex() + 1) + ' de ' + banners().length
+        "
+        >{{ currentIndex() + 1 }} / {{ banners().length }}</span
+      >
+    </div>
+  }
+</section>
+<div class="benefit-bar">
+  <div class="wrap benefit-inner">
+    <span
+      ><svg><use href="#shield" /></svg> Proteção em cada viagem</span
+    ><span
+      ><svg><use href="#tool" /></svg> Motos revisadas e prontas</span
+    ><span
+      ><svg><use href="#clock" /></svg> Planos que acompanham você</span
+    >
+  </div>
+</div>

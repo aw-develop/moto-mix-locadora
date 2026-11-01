@@ -1,0 +1,97 @@
+<div class="admin-page-heading">
+  <div>
+    <span class="admin-kicker">PRIMEIRA IMPRESSÃO</span>
+    <h1>Banners do site<span>.</span></h1>
+    <p>Organize as campanhas que dão a largada na experiência Mix.</p>
+  </div>
+  <button mat-flat-button class="admin-primary" (click)="edit()">
+    + Novo banner
+  </button>
+</div>
+@if (notice()) {
+  <div class="admin-success" role="status">
+    ✓ {{ notice()
+    }}<button (click)="notice.set('')" aria-label="Dispensar mensagem">
+      ×
+    </button>
+  </div>
+}
+@if (error()) {
+  <p class="admin-error" role="alert">{{ error() }}</p>
+}
+<div class="banner-summary">
+  <span
+    ><i class="status-dot"></i> {{ admin.activeBanners().length }} ativos</span
+  ><span>{{ admin.banners().length }} banners no total</span
+  ><span>Use as setas para alterar a ordem de exibição.</span>
+</div>
+<div class="admin-banner-list">
+  @for (banner of admin.banners(); track banner.id; let i = $index) {
+    <article class="admin-banner-card">
+      <div class="banner-preview">
+        <img [src]="banner.image" [alt]="banner.title" /><span
+          class="banner-position"
+          >{{ (i + 1).toString().padStart(2, "0") }}</span
+        ><span class="admin-badge" [class.off]="!banner.active">{{
+          banner.active ? "Ativo" : "Pausado"
+        }}</span>
+      </div>
+      <div class="banner-info">
+        <span class="admin-kicker">HERO / POSIÇÃO {{ i + 1 }}</span>
+        <h2>{{ banner.title }}</h2>
+        <p>{{ banner.subtitle }}</p>
+        <code>{{ banner.link }}</code>
+      </div>
+      <div class="banner-tools">
+        <mat-slide-toggle
+          [checked]="banner.active"
+          (change)="toggle(banner)"
+          [aria-label]="'Ativar banner ' + banner.title"
+          >Ativo</mat-slide-toggle
+        >
+        <div class="order-controls">
+          <button
+            (click)="move(banner, -1)"
+            [disabled]="i === 0"
+            [attr.aria-label]="'Mover ' + banner.title + ' para cima'"
+          >
+            ↑</button
+          ><button
+            (click)="move(banner, 1)"
+            [disabled]="i === admin.banners().length - 1"
+            [attr.aria-label]="'Mover ' + banner.title + ' para baixo'"
+          >
+            ↓
+          </button>
+        </div>
+        <div class="row-actions">
+          <button
+            (click)="edit(banner)"
+            [attr.aria-label]="'Editar banner ' + banner.title"
+          >
+            Editar</button
+          ><button
+            class="danger-text"
+            (click)="remove(banner)"
+            [attr.aria-label]="'Excluir banner ' + banner.title"
+          >
+            Excluir
+          </button>
+        </div>
+      </div>
+    </article>
+  } @empty {
+    <section class="admin-panel admin-empty">
+      <span>▧</span>
+      <h2>Uma nova campanha começa aqui.</h2>
+      <p>Adicione o primeiro banner para destacar sua marca.</p>
+      <button mat-flat-button class="admin-primary" (click)="edit()">
+        Adicionar banner
+      </button>
+    </section>
+  }
+</div>
+<p class="admin-footnote">
+  Somente banners ativos aparecem no carrossel. Sem banners ativos, o site exibe
+  um convite básico para conhecer a frota.
+</p>

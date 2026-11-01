@@ -1,0 +1,4 @@
+/* Component-owned styles; responsive rules live beside the template. */
+:host {
+  display: contents;
+}

@@ -1,0 +1,81 @@
+/* Component-owned styles; responsive rules live beside the template. */
+:host {
+  display: block;
+}
+.settings-section {
+  display: grid;
+  grid-template-columns: 1fr 1.7fr;
+  gap: 40px;
+  padding: 30px;
+  margin-bottom: 20px;
+}
+.settings-number {
+  font-family: "Barlow Condensed", Impact, sans-serif;
+  font-size: 29px;
+  color: #355541;
+}
+.settings-section h2 {
+  font-size: 16px;
+  letter-spacing: 0;
+  margin-top: 7px;
+}
+.settings-section > div > p {
+  font-size: 10px;
+  color: #7c9d89;
+  line-height: 1.9;
+  max-width: 235px;
+}
+.settings-status {
+  font-size: 10px;
+  color: #81ad90;
+}
+.settings-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 0 20px;
+}
+.settings-actions > span {
+  font-size: 9px;
+  color: #60816b;
+  margin-right: auto;
+}
+@media (max-width: 1200px) {
+  .settings-section {
+    gap: 25px;
+    grid-template-columns: 1fr 1.5fr;
+  }
+}
+@media (max-width: 960px) {
+  .settings-section {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .settings-section > div > p {
+    max-width: none;
+  }
+  .settings-actions {
+    flex-wrap: wrap;
+  }
+  .settings-actions > span {
+    width: 100%;
+  }
+}
+@media (max-width: 640px) {
+  .settings-section {
+    padding: 22px;
+    gap: 15px;
+  }
+  .settings-section h2 {
+    font-size: 16px;
+  }
+  .settings-actions {
+    gap: 10px;
+  }
+  .settings-actions > .admin-primary {
+    flex: 1;
+  }
+  .settings-actions .mat-mdc-button {
+    font-size: 10px;
+  }
+}

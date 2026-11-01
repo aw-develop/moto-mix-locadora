@@ -1,0 +1,71 @@
+<section class="fleet section wrap" id="motos">
+  <div class="section-top" mixReveal>
+    <div>
+      <div class="eyebrow">01 / NOSSA FROTA</div>
+      <h2>ESCOLHA SEU<br /><em>PRÓXIMO MOVIMENTO.</em></h2>
+    </div>
+    <p>
+      Economia no dia a dia. Liberdade no fim de semana.<br />Encontre a moto
+      que combina com o seu ritmo.
+    </p>
+  </div>
+  <div class="filter-row" [mixReveal]="70">
+    <div class="filter-tabs" role="group" aria-label="Disponibilidade">
+      <button
+        class="filter"
+        [class.active]="availability() === 'all'"
+        [attr.aria-pressed]="availability() === 'all'"
+        (click)="availability.set('all')"
+      >
+        Todas as motos
+        <span>{{ admin.bikes().length.toString().padStart(2, "0") }}</span>
+      </button>
+      <button
+        class="filter"
+        [class.active]="availability() === 'available'"
+        [attr.aria-pressed]="availability() === 'available'"
+        (click)="availability.set('available')"
+      >
+        <i></i> Disponíveis
+      </button>
+    </div>
+    <label class="category-label"
+      ><span class="sr-only">Filtrar por categoria</span
+      ><select
+        id="category"
+        [value]="category()"
+        (change)="setCategory($event)"
+      >
+        <option value="all">Todas as categorias</option>
+        @for (item of categories(); track item) {
+          <option [value]="item">{{ item }}</option>
+        }
+      </select></label
+    >
+  </div>
+  <div class="catalog" id="catalog">
+    @for (bike of filteredBikes(); track bike.id) {
+      <mix-bike-card [bike]="bike" [mixReveal]="$index * 80" />
+    }
+  </div>
+  @if (filteredBikes().length === 0) {
+    <p class="no-results">
+      Nenhuma moto encontrada com esses filtros.
+      <button (click)="reset()">Limpar filtros</button>
+    </p>
+  }
+  <div class="fleet-foot">
+    <p>
+      <span class="dot"></span
+      ><span id="result-count" aria-live="polite"
+        >{{ filteredBikes().length }}
+        {{
+          filteredBikes().length === 1
+            ? "modelo encontrado"
+            : "modelos encontrados"
+        }}</span
+      >
+    </p>
+    <span>Modelos, valores e disponibilidade demonstrativos.</span>
+  </div>
+</section>

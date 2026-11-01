@@ -1,0 +1,9 @@
+/* Global entry point: shared foundations only. Feature styles use component styleUrl. */
+@import "./styles/tokens.css";
+@import "./styles/base.css";
+@import "./styles/utilities.css";
+@import "./styles/public-shared.css";
+@import "./styles/admin-shared.css";
+@import "./styles/material-overrides.css";
+@import "./styles/motion.css";
+@import "./styles/admin-theme.css";

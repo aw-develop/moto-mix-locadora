@@ -1,0 +1,103 @@
+/* Component-owned styles; responsive rules live beside the template. */
+
+.location {
+  background: #141614;
+  border-block: 1px solid var(--border);
+}
+.location-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  border: 1px solid #323932;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 35px;
+}
+.map {
+  position: relative;
+  min-height: 370px;
+  background: #1e2620;
+}
+.map iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 370px;
+  border: 0;
+  filter: grayscale(1) invert(0.9) contrast(0.9);
+}
+.map-caption {
+  position: absolute;
+  bottom: 18px;
+  left: 18px;
+  background: #0c120df0;
+  color: #9eac9e;
+  font-size: 8px;
+  letter-spacing: 1px;
+  padding: 8px 13px;
+  pointer-events: none;
+}
+.contact-info {
+  padding: 32px 38px;
+}
+.contact-info > svg {
+  color: var(--green);
+  height: 25px;
+  width: 25px;
+}
+.contact-info h3 {
+  font-family: var(--display);
+  font-size: 27px;
+  line-height: 1.1;
+  font-weight: 600;
+  margin: 15px 0 25px;
+}
+.info-item > span {
+  font-size: 8px;
+  color: #7f8a7f;
+  letter-spacing: 1.6px;
+}
+.info-item p {
+  white-space: pre-line;
+  font-size: 11px;
+  line-height: 1.9;
+  color: #b6beb6;
+  margin: 5px 0 18px;
+}
+.contact-info .text-link {
+  color: var(--green);
+  font-size: 10px;
+}
+@media (max-width: 800px) {
+  .location-grid {
+    grid-template-columns: 1.2fr 1fr;
+  }
+  .contact-info {
+    padding: 25px;
+  }
+  .contact-info h3 {
+    font-size: 24px;
+  }
+}
+@media (max-width: 540px) {
+  .location-grid {
+    grid-template-columns: 1fr;
+  }
+  .map,
+  .map iframe {
+    min-height: 280px;
+  }
+  .contact-info {
+    padding: 28px;
+  }
+  .contact-info h3 {
+    font-size: 29px;
+  }
+  .contact-info .text-link {
+    font-size: 11px;
+  }
+  .contact-info p {
+    font-size: 12px;
+  }
+}
+:host {
+  display: contents;
+}

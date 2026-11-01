@@ -1,0 +1,146 @@
+<div class="admin-page-heading">
+  <div>
+    <span class="admin-kicker">CONTROLE DO CATÁLOGO</span>
+    <h1>Frota de motos<span>.</span></h1>
+    <p>Gerencie modelos, valores e disponibilidade em um só lugar.</p>
+  </div>
+  <button mat-flat-button class="admin-primary" (click)="edit()">
+    + Adicionar moto
+  </button>
+</div>
+@if (notice()) {
+  <div class="admin-success" role="status">
+    ✓ {{ notice()
+    }}<button (click)="notice.set('')" aria-label="Dispensar mensagem">
+      ×
+    </button>
+  </div>
+}
+@if (error()) {
+  <p class="admin-error" role="alert">{{ error() }}</p>
+}
+<section class="admin-panel">
+  <div class="admin-toolbar">
+    <label class="search-field"
+      ><span aria-hidden="true">⌕</span
+      ><input
+        aria-label="Buscar moto por modelo"
+        placeholder="Buscar modelo ou versão..."
+        [value]="search()"
+        (input)="filter('search', $event)" /></label
+    ><label
+      ><span class="sr-only">Categoria</span
+      ><select [value]="category()" (change)="filter('category', $event)">
+        <option value="all">Todas as categorias</option>
+        <option>Entregas</option>
+        <option>Urbana</option>
+        <option>Touring</option>
+      </select></label
+    ><label
+      ><span class="sr-only">Disponibilidade</span
+      ><select [value]="status()" (change)="filter('status', $event)">
+        <option value="all">Todos os status</option>
+        <option value="available">Disponíveis</option>
+        <option value="rented">Alugadas</option>
+      </select></label
+    >
+  </div>
+  <div class="table-scroll">
+    <table class="admin-table fleet-table">
+      <caption class="sr-only">
+        Frota de motos e controles de edição
+      </caption>
+      <thead>
+        <tr>
+          <th>MODELO / VERSÃO</th>
+          <th>CATEGORIA</th>
+          <th>DIÁRIA</th>
+          <th>SEMANAL</th>
+          <th>STATUS / DISPONIBILIDADE</th>
+          <th>AÇÕES</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (moto of visible(); track moto.id) {
+          <tr>
+            <td>
+              <div class="model-cell">
+                <img [src]="moto.image" [alt]="moto.name" /><span
+                  ><strong>{{ moto.name }}</strong
+                  ><small>{{ moto.version }}</small></span
+                >
+              </div>
+            </td>
+            <td>
+              <span class="table-tag">{{ moto.category }}</span>
+            </td>
+            <td>
+              {{ moto.daily | currency: "BRL" : "symbol" : "1.0-2" : "pt-BR" }}
+            </td>
+            <td>
+              {{ moto.weekly | currency: "BRL" : "symbol" : "1.0-2" : "pt-BR" }}
+            </td>
+            <td>
+              <div class="status-cell">
+                <span class="admin-badge" [class.off]="!moto.available"
+                  ><i></i>{{ moto.available ? "Disponível" : "Alugada" }}</span
+                ><mat-slide-toggle
+                  [checked]="moto.available"
+                  (change)="toggle(moto)"
+                  [aria-label]="'Disponibilidade de ' + moto.name"
+                ></mat-slide-toggle>
+              </div>
+            </td>
+            <td>
+              <div class="row-actions">
+                <button
+                  (click)="edit(moto)"
+                  [attr.aria-label]="'Editar ' + moto.name"
+                >
+                  Editar</button
+                ><button
+                  class="danger-text"
+                  (click)="remove(moto)"
+                  [attr.aria-label]="'Excluir ' + moto.name"
+                >
+                  Excluir
+                </button>
+              </div>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="6" class="empty-cell">
+              Nenhuma moto encontrada. Ajuste os filtros ou adicione um modelo.
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  <div class="table-footer">
+    <span
+      >{{ filtered().length }} modelos encontrados ·
+      {{ admin.bikes().length }} no total</span
+    >
+    <div>
+      <button
+        [disabled]="currentPage() === 1"
+        (click)="page.set(currentPage() - 1)"
+        aria-label="Página anterior"
+      >
+        ←</button
+      ><span>{{ currentPage() }} / {{ pages() }}</span
+      ><button
+        [disabled]="currentPage() === pages()"
+        (click)="page.set(currentPage() + 1)"
+        aria-label="Próxima página"
+      >
+        →
+      </button>
+    </div>
+  </div>
+</section>
+<p class="admin-footnote">
+  O status é atualizado no catálogo público assim que você altera o switch.
+</p>

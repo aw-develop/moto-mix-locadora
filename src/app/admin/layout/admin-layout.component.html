@@ -1,0 +1,103 @@
+<div
+  class="admin-app"
+  [class.sidebar-collapsed]="collapsed()"
+  [class.mobile-open]="mobileOpen()"
+>
+  @if (mobileOpen()) {
+    <button
+      class="sidebar-scrim"
+      aria-label="Fechar menu"
+      (click)="mobileOpen.set(false)"
+    ></button>
+  }
+  <aside class="admin-sidebar" id="admin-sidebar">
+    <a routerLink="/admin/dashboard" class="admin-brand"
+      >M<span>IX</span><small>CONTROL CENTER</small></a
+    >
+    <div class="sidebar-label">WORKSPACE / MIX LOCADORA</div>
+    <nav aria-label="Administração">
+      @for (link of links; track link.path) {
+        <a
+          [routerLink]="'/admin/' + link.path"
+          routerLinkActive="selected"
+          [title]="link.label"
+          (click)="mobileOpen.set(false)"
+          ><span class="nav-icon" aria-hidden="true">{{ link.icon }}</span
+          ><span class="nav-label">{{ link.label }}</span
+          ><span class="nav-chevron">↗</span></a
+        >
+      }
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="demo-indicator"><i></i><span>DADOS NA NUVEM</span></div>
+      <a routerLink="/">↗ <span class="nav-label">Abrir site público</span></a
+      ><button
+        class="collapse-button"
+        (click)="collapsed.set(!collapsed())"
+        [attr.aria-expanded]="!collapsed()"
+        aria-controls="admin-sidebar"
+      >
+        {{ collapsed() ? "→" : "←" }}
+        <span class="nav-label">Recolher menu</span>
+      </button>
+    </div>
+  </aside>
+  <div class="admin-main">
+    <header class="admin-topbar">
+      <button
+        class="admin-menu-toggle"
+        (click)="mobileOpen.set(!mobileOpen())"
+        [attr.aria-expanded]="mobileOpen()"
+        aria-label="Alternar menu administrativo"
+        aria-controls="admin-sidebar"
+      >
+        ☰
+      </button>
+      <div class="breadcrumb">MIX LOCADORA <span>/</span> ADMINISTRAÇÃO</div>
+      <a class="view-site" routerLink="/">Ver site ↗</a>
+      <div class="admin-profile">
+        <span class="avatar">{{ session.profile().initials }}</span
+        ><span
+          >{{ session.profile().name
+          }}<small>Administrador autorizado</small></span
+        ><a
+          class="logout"
+          href="/signout-with-chatgpt?return_to=%2F"
+          target="_top"
+          aria-label="Sair do painel"
+          title="Sair"
+          >↪</a
+        >
+      </div>
+    </header>
+    <div class="admin-demo-banner save-indicator" aria-live="polite">
+      @switch (admin.saveStatus()) {
+        @case ("loading") {
+          <span>Carregando dados salvos…</span>
+        }
+        @case ("saving") {
+          <span>◌ Salvando alterações e imagens… Aguarde antes de fechar.</span>
+        }
+        @case ("saved") {
+          <span>✓ Todas as alterações estão salvas no servidor.</span>
+        }
+        @default {
+          <span class="save-error">{{ admin.saveError() }}</span
+          ><button
+            type="button"
+            (click)="admin.retrySave()"
+            [hidden]="admin.saveStatus() === 'conflict'"
+          >
+            Tentar salvar novamente</button
+          ><button type="button" (click)="reloadSaved()">
+            Recarregar dados salvos
+          </button>
+        }
+      }
+    </div>
+    <main class="admin-content"><router-outlet /></main>
+    <div class="admin-bottom">
+      MIX CONTROL CENTER <span>Angular · Dados persistentes</span>
+    </div>
+  </div>
+</div>

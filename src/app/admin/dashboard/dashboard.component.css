@@ -1,0 +1,234 @@
+/* Component-owned styles; responsive rules live beside the template. */
+:host {
+  display: block;
+}
+.live-indicator i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--green);
+}
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 23px;
+}
+.stat-card {
+  padding: 21px 22px;
+  border: 1px solid #2c352f;
+  background: #161b18;
+  border-radius: 5px;
+}
+.stat-card > span {
+  font-size: 8px;
+  letter-spacing: 1px;
+  color: #8f9f95;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 7px;
+}
+.stat-card > span > b {
+  font-size: 18px;
+  color: #5d7866;
+}
+.stat-card > strong {
+  font-size: 38px;
+  letter-spacing: -1.5px;
+  line-height: 1.1;
+  display: block;
+  margin: 18px 0 11px;
+}
+.stat-card > small {
+  font-size: 8px;
+  color: #657b6d;
+}
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 23px;
+  margin-bottom: 23px;
+}
+.occupancy {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 25px 25px 14px;
+}
+.occupancy > strong {
+  font-size: 43px;
+  line-height: 1.1;
+  letter-spacing: -1.5px;
+}
+.occupancy > strong small {
+  font-size: 24px;
+  margin-left: 3px;
+  color: #76897d;
+}
+.occupancy > span {
+  font-size: 10px;
+  color: #81968a;
+}
+.fleet-meter {
+  height: 8px;
+  background: #795251;
+  margin: 0 25px;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.fleet-meter > span {
+  height: 100%;
+  display: block;
+  background: var(--green);
+}
+.meter-legend {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 25px 24px;
+  gap: 15px;
+  border-bottom: 1px solid #29342d;
+}
+.meter-legend > span {
+  font-size: 9px;
+  color: #8fa296;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.meter-legend b {
+  color: #d2e2d7;
+  margin-left: 8px;
+  font-weight: 500;
+}
+.panel-mini-list > div {
+  display: flex;
+  gap: 13px;
+  align-items: center;
+  padding: 12px 25px;
+  border-bottom: 1px solid #26322a;
+}
+.panel-mini-list > div:last-child {
+  border: 0;
+}
+.panel-mini-list img {
+  width: 55px;
+  height: 37px;
+  object-fit: cover;
+  border-radius: 3px;
+  background: #0d100d;
+}
+.panel-mini-list span {
+  font-size: 10px;
+}
+.panel-mini-list small {
+  font-size: 8px;
+  display: block;
+  color: #718778;
+}
+.panel-mini-list .admin-badge {
+  margin-left: auto;
+}
+.count-pill {
+  background: #213329;
+  color: #99c8a8;
+  border: 1px solid #385141;
+  border-radius: 3px;
+  padding: 2px 7px;
+  font-size: 10px;
+}
+.activity-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 25px;
+  border-bottom: 1px solid #26312b;
+}
+.activity-icon {
+  display: grid;
+  place-items: center;
+  background: #20362a;
+  color: var(--green);
+  border: 1px solid #31523d;
+  border-radius: 3px;
+  width: 31px;
+  height: 31px;
+  font-size: 17px;
+}
+.activity-row strong {
+  font-size: 10px;
+  font-weight: 500;
+}
+.activity-row small {
+  display: block;
+  font-size: 8px;
+  color: #7b9586;
+}
+.activity-row time {
+  margin-left: auto;
+  font-size: 9px;
+  color: #7b9586;
+}
+.live-indicator {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 7px;
+  letter-spacing: 1px;
+  color: #789a84;
+  white-space: nowrap;
+}
+@media (min-width: 1500px) {
+  .stat-card {
+    padding: 25px;
+  }
+}
+@media (max-width: 1200px) {
+  .stat-grid {
+    gap: 12px;
+  }
+  .stat-card {
+    padding: 18px 15px;
+  }
+  .stat-card > span {
+    font-size: 7px;
+    letter-spacing: 0.6px;
+  }
+  .dashboard-grid {
+    gap: 18px;
+  }
+}
+@media (max-width: 960px) {
+  .stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .stat-card {
+    padding: 21px;
+  }
+  .stat-card > span {
+    font-size: 8px;
+  }
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 640px) {
+  .stat-grid {
+    gap: 10px;
+  }
+  .stat-card {
+    padding: 18px 15px;
+  }
+  .stat-card > span {
+    font-size: 7px;
+    letter-spacing: 0.4px;
+    min-height: 22px;
+  }
+  .stat-card > strong {
+    font-size: 34px;
+    margin-top: 12px;
+  }
+  .stat-card > small {
+    font-size: 7px;
+  }
+}

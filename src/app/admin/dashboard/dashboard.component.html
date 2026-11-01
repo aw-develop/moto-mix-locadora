@@ -1,0 +1,154 @@
+<div class="admin-page-heading">
+  <div>
+    <span class="admin-kicker">CENTRAL DE OPERAÇÕES</span>
+    <h1>Visão geral<span>.</span></h1>
+    <p>Um olhar rápido sobre o próximo movimento da Mix.</p>
+  </div>
+  <a class="admin-action primary" routerLink="/admin/motos"
+    >Gerenciar frota <span>↗</span></a
+  >
+</div>
+<div class="stat-grid">
+  <article class="stat-card">
+    <span>FROTA TOTAL <b>◇</b></span
+    ><strong>{{ admin.stats().total.toString().padStart(2, "0") }}</strong
+    ><small>Motos cadastradas</small>
+  </article>
+  <article class="stat-card">
+    <span>DISPONÍVEIS <i class="status-dot"></i></span
+    ><strong class="green">{{
+      admin.stats().available.toString().padStart(2, "0")
+    }}</strong
+    ><small>Prontas para o próximo cliente</small>
+  </article>
+  <article class="stat-card">
+    <span>ALUGADAS / INDISPONÍVEIS <i class="status-dot red"></i></span
+    ><strong>{{ admin.stats().rented.toString().padStart(2, "0") }}</strong
+    ><small>Conforme o status cadastrado</small>
+  </article>
+  <article class="stat-card">
+    <span>ACESSOS RECENTES <b>↗</b></span
+    ><strong>{{ admin.stats().visits.toString().padStart(2, "0") }}</strong
+    ><small>Visitas ao site nesta sessão</small>
+  </article>
+</div>
+<div class="dashboard-grid">
+  <section class="admin-panel">
+    <div class="panel-heading">
+      <div>
+        <span class="admin-kicker">OPERAÇÃO EM TEMPO REAL</span>
+        <h2>Disponibilidade da frota</h2>
+      </div>
+      <span class="muted">{{ admin.stats().total }} motos</span>
+    </div>
+    <div class="occupancy">
+      <strong>{{ occupancy() }}<small>%</small></strong
+      ><span>da frota indisponível</span>
+    </div>
+    <div
+      class="fleet-meter"
+      role="meter"
+      aria-label="Frota indisponível"
+      [attr.aria-valuenow]="occupancy()"
+      aria-valuemin="0"
+      aria-valuemax="100"
+    >
+      <span [style.width.%]="100 - occupancy()"></span>
+    </div>
+    <div class="meter-legend">
+      <span
+        ><i class="status-dot"></i>Disponíveis
+        <b>{{ admin.stats().available }}</b></span
+      ><span
+        ><i class="status-dot red"></i>Indisponíveis
+        <b>{{ admin.stats().rented }}</b></span
+      >
+    </div>
+    <div class="panel-mini-list">
+      @for (bike of admin.bikes().slice(0, 4); track bike.id) {
+        <div>
+          <img [src]="bike.image" [alt]="bike.name" /><span
+            >{{ bike.name }}<small>{{ bike.category }}</small></span
+          ><span class="admin-badge" [class.off]="!bike.available">{{
+            bike.available ? "Disponível" : "Alugada"
+          }}</span>
+        </div>
+      } @empty {
+        <p class="admin-empty">Cadastre a primeira moto para começar.</p>
+      }
+    </div>
+  </section>
+  <section class="admin-panel">
+    <div class="panel-heading">
+      <div>
+        <span class="admin-kicker">INTERESSE PELO SITE</span>
+        <h2>Contatos via WhatsApp</h2>
+      </div>
+      <span class="count-pill">{{ contacts().length }}</span>
+    </div>
+    <p class="panel-description">
+      Cliques registrados nesta aba. Envio e reserva não são confirmados pelo
+      WhatsApp.
+    </p>
+    <div class="activity-list">
+      @for (item of contacts().slice(0, 5); track item.id) {
+        <div class="activity-row">
+          <span class="activity-icon">↗</span>
+          <div>
+            <strong>{{ item.detail }}</strong
+            ><small>Intenção de contato</small>
+          </div>
+          <time>{{ item.at | date: "HH:mm" }}</time>
+        </div>
+      } @empty {
+        <div class="admin-empty">
+          <span>↗</span>
+          <h3>Nenhum contato nesta sessão</h3>
+          <p>Os cliques nos botões do site aparecerão aqui.</p>
+          <a routerLink="/">Visitar site público →</a>
+        </div>
+      }
+    </div>
+  </section>
+</div>
+<section class="admin-panel recent-panel">
+  <div class="panel-heading">
+    <div>
+      <span class="admin-kicker">HISTÓRICO DA OPERAÇÃO</span>
+      <h2>Últimas atividades</h2>
+    </div>
+    <span class="live-indicator"><i></i>ATUALIZADO EM TEMPO REAL</span>
+  </div>
+  <div class="table-scroll">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>EVENTO</th>
+          <th>DETALHE</th>
+          <th>HORÁRIO</th>
+          <th>ORIGEM</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of admin.state().activities.slice(0, 8); track item.id) {
+          <tr>
+            <td>{{ item.title }}</td>
+            <td class="muted">{{ item.detail }}</td>
+            <td>{{ item.at | date: "HH:mm:ss" }}</td>
+            <td>
+              <span class="table-tag">{{
+                item.type === "whatsapp" ? "Site público" : "Administrador"
+              }}</span>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="4" class="empty-cell">
+              As alterações na frota, nos banners e no contato aparecerão aqui.
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</section>

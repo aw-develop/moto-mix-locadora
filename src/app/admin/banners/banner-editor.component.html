@@ -1,0 +1,57 @@
+<div class="admin-dialog-heading">
+  <span class="admin-kicker">COMUNICAÇÃO / HERO</span>
+  <h2 mat-dialog-title>{{ data ? "Editar banner" : "Novo banner" }}</h2>
+  <p>O banner será exibido no topo do site público.</p>
+</div>
+<form class="admin-form" [formGroup]="form" (ngSubmit)="save()" novalidate>
+  <mat-dialog-content
+    ><div class="admin-form-grid">
+      <label class="full"
+        >Título principal<input
+          formControlName="title"
+          maxlength="120"
+          placeholder="ALUGUE SUA MOTO E VÁ MAIS LONGE."
+          required /></label
+      ><label class="full"
+        >Subtítulo<textarea
+          formControlName="subtitle"
+          rows="3"
+          maxlength="300"
+          required
+        ></textarea>
+      </label>
+      <div class="full">
+        <mix-image-upload
+          formControlName="image"
+          label="Imagem do banner"
+          [wide]="true"
+        />
+      </div>
+      <label class="full"
+        >Link do botão<input
+          formControlName="link"
+          placeholder="#motos ou https://..."
+          required
+      /></label>
+      <div class="full form-switch">
+        <mat-slide-toggle formControlName="active"
+          >Banner ativo no site</mat-slide-toggle
+        >
+      </div>
+    </div>
+    @if (error()) {
+      <p class="admin-error" role="alert">{{ error() }}</p>
+    }</mat-dialog-content
+  ><mat-dialog-actions align="end"
+    ><button mat-button type="button" [mat-dialog-close]="false">
+      Cancelar</button
+    ><button
+      mat-flat-button
+      type="submit"
+      class="admin-primary"
+      [disabled]="form.controls.image.hasError('imageProcessing')"
+    >
+      Salvar banner
+    </button></mat-dialog-actions
+  >
+</form>

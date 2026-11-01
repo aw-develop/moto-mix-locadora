@@ -1,0 +1,121 @@
+/* Component-owned styles; responsive rules live beside the template. */
+
+.filter-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 20px;
+  margin-bottom: 27px;
+}
+.filter-tabs {
+  display: flex;
+  gap: 8px;
+}
+.filter {
+  background: transparent;
+  border: 1px solid transparent;
+  color: #909890;
+  font-size: 11px;
+  border-radius: 4px;
+  min-height: 39px;
+  padding: 8px 16px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.filter.active {
+  color: #fff;
+  border-color: #414841;
+  background: #1a1d1a;
+}
+.filter span {
+  font-size: 9px;
+  color: var(--muted);
+}
+.filter i,
+.dot {
+  height: 5px;
+  width: 5px;
+  display: inline-block;
+  border-radius: 50%;
+  background: var(--green);
+}
+.category-label select {
+  border: 1px solid #343934;
+  color: #c1c5c1;
+  padding: 9px 31px 9px 14px;
+  background: #131613;
+  border-radius: 3px;
+  font-size: 11px;
+  min-height: 39px;
+}
+.catalog {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+.fleet-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  color: #717c71;
+  font-size: 9px;
+  margin-top: 20px;
+}
+.fleet-foot p {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.no-results {
+  text-align: center;
+  padding: 40px;
+}
+.no-results button {
+  color: var(--green);
+  border: 0;
+  background: none;
+}
+@media (max-width: 1100px) {
+  .catalog {
+    gap: 14px;
+  }
+}
+@media (max-width: 800px) {
+  .catalog {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 540px) {
+  .filter-row {
+    gap: 12px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding-bottom: 18px;
+  }
+  .filter {
+    padding: 8px 12px;
+    font-size: 10px;
+  }
+  .category-label {
+    width: 100%;
+  }
+  .category-label select {
+    width: 100%;
+  }
+  .catalog {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .fleet-foot {
+    flex-direction: column;
+    gap: 10px;
+    font-size: 9px;
+  }
+}
+:host {
+  display: contents;
+}

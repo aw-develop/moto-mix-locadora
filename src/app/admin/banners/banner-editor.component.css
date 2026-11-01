@@ -1,0 +1,7 @@
+/* Component-owned styles; responsive rules live beside the template. */
+:host {
+  display: contents;
+}
+.admin-form {
+  padding-top: 7px;
+}

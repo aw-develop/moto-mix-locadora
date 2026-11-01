@@ -1,0 +1,121 @@
+/* Component-owned styles; responsive rules live beside the template. */
+
+.header {
+  height: 94px;
+  background: #0d0d0df5;
+  border-bottom: 1px solid #ffffff13;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  backdrop-filter: blur(16px);
+}
+.nav {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+}
+.nav nav {
+  display: flex;
+  gap: 27px;
+}
+.nav nav a {
+  font-size: 12px;
+  font-weight: 500;
+  color: #b7bcb7;
+  transition: color 0.2s;
+}
+.nav nav a:hover {
+  color: var(--green);
+}
+.menu {
+  display: none;
+}
+@media (max-width: 1100px) {
+  .nav nav {
+    gap: 17px;
+  }
+}
+@media (max-width: 800px) {
+  .header {
+    height: 76px;
+  }
+  .nav {
+    gap: 15px;
+  }
+  .nav .small {
+    margin-left: auto;
+    min-height: 38px;
+    font-size: 10px;
+    padding: 8px 12px;
+    gap: 15px;
+  }
+  .menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    border: 1px solid #414b41;
+    border-radius: 3px;
+    width: 39px;
+    height: 39px;
+    background: none;
+  }
+  .menu span {
+    height: 1px;
+    width: 20px;
+    background: #fff;
+    align-self: center;
+  }
+  .nav nav {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 75px;
+    background: #111811;
+    padding: 25px;
+    flex-direction: column;
+    border-bottom: 1px solid #354835;
+    gap: 22px;
+  }
+  .nav nav.open {
+    display: flex;
+  }
+}
+:host {
+  display: contents;
+}
+.header {
+  transition:
+    background-color 250ms ease,
+    border-color 250ms ease,
+    box-shadow 250ms ease;
+}
+.header.is-scrolled {
+  background: #0d0d0dfc;
+  border-bottom-color: #00e64035;
+  box-shadow: 0 8px 30px #0005;
+}
+.scroll-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--green);
+  transform: scaleX(var(--scroll-progress, 0));
+  transform-origin: left center;
+  pointer-events: none;
+}
+.nav-icon {
+  font-size: 20px;
+  line-height: 1;
+  width: 20px;
+  text-align: center;
+}
+.nav-chevron {
+  margin-left: auto;
+  font-size: 13px;
+}

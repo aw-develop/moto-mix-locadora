@@ -1,0 +1,41 @@
+<section id="localizacao" class="location section">
+  <div class="wrap">
+    <div class="section-top" mixReveal>
+      <div>
+        <div class="eyebrow">03 / ENCONTRE A MIX</div>
+        <h2>SEU PRÓXIMO DESTINO<br /><em>COMEÇA AQUI.</em></h2>
+      </div>
+      <p>Venha conhecer a frota.<br />Será um prazer ajudar você a escolher.</p>
+    </div>
+    <div class="location-grid">
+      <div class="map" mixReveal>
+        <iframe
+          [title]="config().mapLabel"
+          [src]="mapUrl()"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe
+        ><span class="map-caption">{{ config().mapLabel }}</span>
+      </div>
+      <div class="contact-info" [mixReveal]="100">
+        <svg><use href="#pin" /></svg>
+        <h3>DE PORTAS ABERTAS<br />PARA O SEU PRÓXIMO CORRE.</h3>
+        <div class="info-item">
+          <span>ENDEREÇO</span>
+          <p id="address">{{ config().address }}</p>
+        </div>
+        <div class="info-item">
+          <span>HORÁRIO DE ATENDIMENTO</span>
+          <p id="hours">{{ config().hours }}</p>
+        </div>
+        <a
+          class="text-link"
+          [href]="directionsUrl()"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Abrir no Google Maps <svg><use href="#arrow" /></svg
+        ></a>
+      </div>
+    </div>
+  </div>
+</section>

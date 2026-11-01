@@ -1,0 +1,96 @@
+<div class="image-upload-field" [attr.aria-busy]="busy()">
+  <span class="image-field-title">{{ label() }}</span>
+  <div
+    class="image-upload-zone"
+    [class.dragging]="dragging()"
+    [class.wide]="wide()"
+    (dragover)="dragOver($event)"
+    (dragleave)="dragging.set(false)"
+    (drop)="drop($event)"
+  >
+    @if (preview() && !previewFailed()) {
+      <img
+        [src]="preview()"
+        [alt]="'Prévia: ' + label()"
+        (error)="previewFailed.set(true)"
+      />
+    } @else {
+      <span class="upload-placeholder" aria-hidden="true">↑</span
+      ><span>{{
+        previewFailed()
+          ? "Não foi possível exibir esta imagem."
+          : "Arraste sua imagem até aqui"
+      }}</span>
+    }
+    <input
+      #filePicker
+      class="sr-only"
+      type="file"
+      accept="image/jpeg,image/png,image/webp"
+      [disabled]="disabled() || busy()"
+      (change)="selected($event)"
+      [attr.aria-label]="'Selecionar ' + label() + ' do dispositivo'"
+    />
+    <div class="image-upload-actions">
+      <button
+        type="button"
+        class="upload-select"
+        [disabled]="disabled() || busy()"
+        (click)="filePicker.click()"
+      >
+        {{
+          busy()
+            ? "Preparando imagem…"
+            : value()
+              ? "Trocar imagem do dispositivo"
+              : "Selecionar do dispositivo"
+        }}
+      </button>
+      @if (value()) {
+        <button
+          type="button"
+          class="upload-remove"
+          [disabled]="disabled() || busy()"
+          (click)="clear()"
+        >
+          Remover
+        </button>
+      }
+    </div>
+  </div>
+  <div class="upload-caption">
+    <span>{{ filename() || "JPG, PNG ou WebP · até 5 MB" }}</span>
+    @if (isLocal()) {
+      <span class="local-image-badge">DO DISPOSITIVO</span>
+    }
+  </div>
+  <small
+    >A imagem será otimizada automaticamente. Após salvar, ficará disponível em
+    todos os dispositivos.</small
+  >
+  <details class="image-url-option">
+    <summary>Ou usar um link de imagem</summary>
+    <label
+      >URL da imagem<input
+        type="url"
+        [value]="isLocal() ? '' : value()"
+        [disabled]="disabled() || busy()"
+        placeholder="https://... ou assets/hero.webp"
+        (input)="urlChanged($event)"
+        (blur)="touch()"
+    /></label>
+  </details>
+  @if (busy()) {
+    <p class="upload-status" role="status">
+      Validando e otimizando a imagem… Aguarde antes de salvar.
+    </p>
+  }
+  @if (error()) {
+    <p class="admin-error" role="alert">
+      {{ error() }}
+      @if (value()) {
+        <span>A imagem anterior foi mantida.</span>
+      }
+    </p>
+  }
+</div>

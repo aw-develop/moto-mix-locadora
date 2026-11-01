@@ -1,0 +1,30 @@
+<header class="header" [class.is-scrolled]="scroll.isScrolled()">
+  <div class="scroll-progress" aria-hidden="true"></div>
+  <div class="wrap nav">
+    <a href="#inicio" class="brand" aria-label="Mix Locadora de Motos, início"
+      ><span class="brand-mark">M<span>IX</span><i></i></span
+      ><span class="brand-label">LOCADORA<br />DE MOTOS</span></a
+    >
+    <nav
+      (click)="closeMenu($event)"
+      id="navigation"
+      [class.open]="menuOpen()"
+      aria-label="Principal"
+    >
+      <a href="#inicio">Início</a><a href="#motos">Nossas motos</a
+      ><a href="#vantagens">Vantagens</a><a href="#localizacao">Localização</a
+      ><a href="#contato">Contato</a>
+    </nav>
+    <a class="btn small" mixWhatsapp href="#contato"
+      >Alugar agora <svg><use href="#arrow" /></svg></a
+    ><button
+      class="menu"
+      [attr.aria-label]="menuOpen() ? 'Fechar menu' : 'Abrir menu'"
+      [attr.aria-expanded]="menuOpen()"
+      (click)="menuOpen.update(toggle)"
+      aria-controls="navigation"
+    >
+      <span></span><span></span>
+    </button>
+  </div>
+</header>

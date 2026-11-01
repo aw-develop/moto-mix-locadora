@@ -1,0 +1,185 @@
+/* Shared styles; selectors are intentionally global. */
+
+:where(.public-site) .wrap {
+  width: min(1240px, calc(100% - 96px));
+  margin: auto;
+}
+:where(.public-site) .brand {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+:where(.public-site) .brand-mark {
+  font-style: italic;
+  font-family: var(--display);
+  font-size: 61px;
+  line-height: 0.9;
+  font-weight: 900;
+  letter-spacing: -4px;
+  position: relative;
+  padding-right: 10px;
+}
+:where(.public-site) .brand-mark > span {
+  color: var(--green);
+}
+:where(.public-site) .brand-mark i {
+  position: absolute;
+  background: var(--green);
+  width: 40px;
+  height: 3px;
+  bottom: -5px;
+  left: 7px;
+  transform: skew(-28deg);
+}
+:where(.public-site) .brand-label {
+  font-size: 9px;
+  letter-spacing: 2px;
+  line-height: 1.5;
+  border-left: 1px solid #424442;
+  padding-left: 14px;
+  font-weight: 600;
+}
+:where(.public-site) .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 27px;
+  background: var(--green);
+  border: 1px solid var(--green);
+  border-radius: 4px;
+  color: #08160b;
+  font-size: 13px;
+  font-weight: 800;
+  min-height: 55px;
+  padding: 14px 23px;
+  transition:
+    background 0.2s,
+    box-shadow 0.2s,
+    transform 0.2s;
+}
+:where(.public-site) .btn:hover {
+  background: #34f266;
+  box-shadow: 0 0 24px #00e64025;
+  transform: translateY(-2px);
+}
+:where(.public-site) .btn.small {
+  font-size: 12px;
+  min-height: 43px;
+  padding: 9px 19px;
+  gap: 23px;
+}
+:where(.public-site) .btn svg {
+  width: 19px;
+}
+:where(.public-site) .eyebrow {
+  font-size: 10px;
+  letter-spacing: 2.2px;
+  font-weight: 700;
+  color: var(--green);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+:where(.public-site) .eyebrow > span {
+  height: 6px;
+  width: 6px;
+  background: var(--green);
+  display: inline-block;
+}
+:where(.public-site) em {
+  font-style: normal;
+  color: var(--green);
+}
+:where(.public-site) .text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+:where(.public-site) .text-link:hover {
+  color: var(--green);
+}
+:where(.public-site) .text-link svg {
+  width: 17px;
+}
+:where(.public-site) .section {
+  padding-top: 90px;
+  padding-bottom: 90px;
+}
+:where(.public-site) .section-top {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 30px;
+  margin-bottom: 38px;
+}
+:where(.public-site) h2 {
+  font-family: var(--display);
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: 0.2px;
+  margin: 15px 0 0;
+}
+:where(.public-site) .section-top > p {
+  font-size: 12px;
+  line-height: 1.9;
+  color: var(--muted);
+  margin: 0 0 3px;
+}
+@media (max-width: 1100px) {
+  :where(.public-site) .wrap {
+    width: calc(100% - 56px);
+  }
+  :where(.public-site) .brand-label {
+    display: none;
+  }
+}
+@media (max-width: 800px) {
+  :where(.public-site) .wrap {
+    width: calc(100% - 40px);
+  }
+  :where(.public-site) .brand-mark {
+    font-size: 49px;
+  }
+  :where(.public-site) .section {
+    padding-block: 65px;
+  }
+  :where(.public-site) .section-top {
+    align-items: flex-start;
+    gap: 20px;
+  }
+  :where(.public-site) .section-top > p {
+    font-size: 10px;
+    max-width: 230px;
+    padding-top: 28px;
+  }
+  :where(.public-site) h2 {
+    font-size: 39px;
+  }
+}
+@media (max-width: 540px) {
+  :where(.public-site) .wrap {
+    width: calc(100% - 36px);
+  }
+  :where(.public-site) .section {
+    padding-block: 52px;
+  }
+  :where(.public-site) .section-top {
+    display: block;
+    margin-bottom: 28px;
+  }
+  :where(.public-site) .section-top > p {
+    padding-top: 18px;
+    max-width: none;
+    font-size: 11px;
+  }
+  :where(.public-site) .eyebrow {
+    font-size: 8px;
+    letter-spacing: 1.8px;
+  }
+  :where(.public-site) h2 {
+    font-size: 40px;
+  }
+}

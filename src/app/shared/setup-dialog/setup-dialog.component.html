@@ -1,0 +1,25 @@
+<dialog
+  #dialog
+  id="setup-dialog"
+  aria-labelledby="setup-title"
+  (close)="dismiss()"
+  (cancel)="dismiss()"
+  (click)="backdrop($event)"
+>
+  <button class="close-dialog" aria-label="Fechar aviso" (click)="dismiss()">
+    ×
+  </button>
+  <div class="eyebrow">PRÉVIA DEMONSTRATIVA</div>
+  <h3 id="setup-title">QUASE PRONTO PARA RODAR.</h3>
+  <p>
+    O telefone da Mix ainda não foi configurado. Para ativar as reservas,
+    substitua <code>whatsappNumber</code> em
+    <code>src/app/core/config/mix.config.ts</code> pelo número com DDI 55 e DDD.
+  </p>
+  <p class="dialog-message">
+    Mensagem preparada: “{{ whatsapp.pendingMessage() }}”
+  </p>
+  <button class="btn" (click)="dismiss()">
+    Entendi <svg aria-hidden="true"><use href="#arrow" /></svg>
+  </button>
+</dialog>
