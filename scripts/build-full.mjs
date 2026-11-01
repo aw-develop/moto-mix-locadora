@@ -34,3 +34,5 @@ writeFileSync(
   readFileSync(".angular/site-client/index.html"),
 );
 run(["scripts/run-framework.mjs", "build"]);
+
+run(["scripts/security-check.mjs"]);

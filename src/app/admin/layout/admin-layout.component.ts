@@ -27,6 +27,7 @@ export class AdminLayoutComponent {
   readonly admin = inject(AdminService);
   private readonly router = inject(Router);
   readonly collapsed = signal(false);
+  readonly signingOut = signal(false);
   readonly mobileOpen = signal(false);
   readonly links: ReadonlyArray<{path: string; icon: BootstrapIconName; label: string}> = [
     { path: "dashboard", icon: "house", label: "Visão geral" },
@@ -43,10 +44,13 @@ export class AdminLayoutComponent {
       void this.admin.initialize();
   }
   async logout(): Promise<void> {
+    if (this.signingOut()) return;
+    this.signingOut.set(true);
     try {
       await this.session.signOut();
       window.location.assign("/signout-with-chatgpt?return_to=%2Fadmin%2Flogin");
     } catch (error) {
+      this.signingOut.set(false);
       window.alert(error instanceof Error ? error.message : "Não foi possível sair.");
     }
   }

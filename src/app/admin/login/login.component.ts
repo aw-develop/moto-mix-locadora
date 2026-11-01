@@ -37,6 +37,6 @@ export class LoginComponent {
       await this.router.navigateByUrl("/admin/dashboard");
     } catch (error) {
       this.error.set(error instanceof Error ? error.message : "Não foi possível entrar.");
-    } finally { this.busy.set(false); }
+    } finally { this.form.controls.password.reset(); this.busy.set(false); }
   }
 }

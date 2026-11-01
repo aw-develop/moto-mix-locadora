@@ -5,7 +5,7 @@
 | Endpoint                   | Acesso        | Função                                                             |
 | -------------------------- | ------------- | ------------------------------------------------------------------ |
 | `GET /api/session`         | Público       | Informa se a identidade autenticada está autorizada                |
-| `GET /api/state`           | Público       | Conteúdo salvo; histórico administrativo é omitido para visitantes |
+| `GET /api/state`           | Público       | Conteúdo público; histórico e banners desativados são omitidos |
 | `PUT /api/state`           | Administrador | Valida e grava o snapshot com versão esperada                      |
 | `GET /api/media/:hash.ext` | Público       | Imagens comerciais salvas no R2                                    |
 
@@ -81,7 +81,9 @@ Fluxo: `Worker → router → route → validação/autorização → serviço �
 
 `tsconfig.server.json` habilita modo estrito, verificação de índices e tratamento de erros como `unknown`. A checagem inclui o Worker e o acesso ao banco e faz parte do build. Não há desativação de tipos com `any`. A fronteira de persistência converte linhas SQL em objetos do domínio.
 
-Os endpoints existentes e o formato de resposta continuam compatíveis com o Angular. O frontend ainda envia um agregado versionado: esta refatoração não implementa endpoints CRUD individuais por recurso. O histórico continua sendo o histórico funcional fornecido pelo cliente; uma auditoria independente gerada no servidor permanece uma evolução separada.
+Os endpoints existentes e o formato de resposta continuam compatíveis com o Angular. A revisão de proteção do browser, do bundle e das dependências está em [SECURITY.md](SECURITY.md).
+
+O frontend ainda envia um agregado versionado: esta refatoração não implementa endpoints CRUD individuais por recurso. O histórico continua sendo o histórico funcional fornecido pelo cliente; uma auditoria independente gerada no servidor permanece uma evolução separada.
 
 ### Recuperação administrativa
 

@@ -200,6 +200,17 @@ O frontend troca um snapshot JSON versionado com a API, mas o backend persiste o
 
 A tabela legada `site_state` é preservada como cópia anterior à normalização. A conversão é transacional e idempotente; o seed só é usado quando ainda não existe cadastro. Consulte a [arquitetura](ARCHITECTURE.md) antes de alterar esquema, migrações ou estratégias de recuperação.
 
+## Segurança e verificação
+
+Consulte [SECURITY.md](SECURITY.md) para a revisão, as proteções implementadas, os limites e o procedimento de comunicação de incidentes. O build verifica o bundle público para detectar arquivos privados e padrões de segredos. O botão Sair revoga a sessão por senha no servidor; banners desativados e histórico administrativo não integram a resposta pública.
+
+```bash
+npm audit
+npm run security:check -- --history
+```
+
+Execute a checagem do bundle após gerar o build. Ela não substitui um pentest ou a revisão das contas de hospedagem.
+
 ## Qualidade e publicação
 
 Antes de enviar uma alteração:

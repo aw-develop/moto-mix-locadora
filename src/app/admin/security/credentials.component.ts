@@ -39,6 +39,6 @@ export class CredentialsComponent {
    this.form.reset(); this.session.logout();
    await this.router.navigate(['/admin/login'],{queryParams:{credentials:'updated'}});
   } catch(error){this.error.set(error instanceof Error?error.message:'Não foi possível alterar as credenciais.');}
-  finally{this.busy.set(false);}
+  finally{this.form.controls.currentPassword.reset();this.form.controls.newPassword.reset();this.form.controls.confirmPassword.reset();this.busy.set(false);}
  }
 }

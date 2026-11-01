@@ -20,7 +20,13 @@ export class CatalogService {
       ? snapshot
       : {
           ...snapshot,
-          state: { ...snapshot.state, activities: [], visits: 0 },
+          state: {
+            bikes: snapshot.state.bikes,
+            banners: snapshot.state.banners.filter(banner => banner.active),
+            settings: snapshot.state.settings,
+            activities: [],
+            visits: 0,
+          },
         };
   }
   async save(command: SaveCatalog): Promise<CatalogSnapshot> {

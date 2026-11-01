@@ -5,6 +5,6 @@ export function sessionRoute({ identity }: RequestContext): Response {
     isAdmin: identity.isAdmin,
     signedIn: identity.signedIn,
     name: identity.isAdmin ? identity.name : "",
-    email: identity.isAdmin ? identity.email : "",
+    email: "",
   });
 }

@@ -19,7 +19,7 @@ describe('CredentialsComponent',()=>{
  });
  it('keeps the session and displays a server rejection',async()=>{
   const {component,logout}=setup();vi.stubGlobal('fetch',vi.fn().mockResolvedValue({ok:false,json:async()=>({error:'Senha atual incorreta.'})}));
-  await component.save();expect(logout).not.toHaveBeenCalled();expect(component.error()).toBe('Senha atual incorreta.');
+  await component.save();expect(logout).not.toHaveBeenCalled();expect(component.error()).toBe('Senha atual incorreta.');expect(component.form.controls.currentPassword.value).toBe('');expect(component.form.controls.newPassword.value).toBe('');
  });
  it('clears secrets and session, then returns to login after a successful change',async()=>{
   const {component,logout,router}=setup();const navigate=vi.spyOn(router,'navigate').mockResolvedValue(true);
