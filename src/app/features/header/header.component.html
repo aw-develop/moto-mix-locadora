@@ -1,19 +1,20 @@
 <header class="header" [class.is-scrolled]="scroll.isScrolled()">
   <div class="scroll-progress" aria-hidden="true"></div>
   <div class="wrap nav">
-    <a href="#inicio" class="brand" aria-label="Mix Locadora de Motos, início"
+    <a mixSectionLink href="#inicio" class="brand" aria-label="Mix Locadora de Motos, início"
       ><span class="brand-mark">M<span>IX</span><i></i></span
       ><span class="brand-label">LOCADORA<br />DE MOTOS</span></a
     >
     <nav
       (click)="closeMenu($event)"
+      (keydown.escape)="menuOpen.set(false)"
       id="navigation"
       [class.open]="menuOpen()"
       aria-label="Principal"
     >
-      <a href="#inicio">Início</a><a href="#motos">Nossas motos</a
-      ><a href="#vantagens">Vantagens</a><a href="#localizacao">Localização</a
-      ><a href="#contato">Contato</a>
+      <a mixSectionLink href="#inicio">Início</a><a mixSectionLink href="#motos">Nossas motos</a
+      ><a mixSectionLink href="#vantagens">Vantagens</a><a mixSectionLink href="#localizacao">Localização</a
+      ><a mixSectionLink href="#contato">Contato</a>
     </nav>
     <a class="btn small" mixWhatsapp href="#contato"
       >Alugar agora <svg><use href="#arrow" /></svg></a

@@ -1,3 +1,4 @@
+import { SectionLinkDirective } from "../../shared/section-link/section-link.directive";
 import { DOCUMENT } from "@angular/common";
 import { Banner } from "../../core/models/admin.model";
 import {
@@ -16,7 +17,7 @@ import { AdminService } from "../../core/services/admin.service";
   selector: "mix-hero",
   standalone: true,
   styleUrl: "./hero.component.css",
-  imports: [WhatsappDirective],
+  imports: [SectionLinkDirective, WhatsappDirective],
   templateUrl: "./hero.component.html",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -1,3 +1,4 @@
+import { SectionLinkDirective } from "../../shared/section-link/section-link.directive";
 import { inject } from "@angular/core";
 import { ScrollEffectsService } from "../../core/services/scroll-effects.service";
 import { Component, ChangeDetectionStrategy, signal } from "@angular/core";
@@ -6,7 +7,7 @@ import { WhatsappDirective } from "../../shared/whatsapp/whatsapp.directive";
   selector: "mix-header",
   standalone: true,
   styleUrl: "./header.component.css",
-  imports: [WhatsappDirective],
+  imports: [SectionLinkDirective, WhatsappDirective],
   templateUrl: "./header.component.html",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
