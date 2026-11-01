@@ -15,6 +15,9 @@ function run(args) {
   if (result.status !== 0) process.exit(result.status ?? 1);
 }
 run(["node_modules/typescript/bin/tsc", "-p", "tsconfig.server.json"]);
+// Generated client assets must never become inputs to the next Angular build.
+rmSync("public/client", { force: true, recursive: true });
+rmSync(".angular/site-client", { force: true, recursive: true });
 run([
   "node_modules/@angular/cli/bin/ng.js",
   "build",
