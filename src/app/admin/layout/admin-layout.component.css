@@ -95,7 +95,6 @@
   background: var(--green);
 }
 .sidebar-collapsed .nav-label,
-.sidebar-collapsed .nav-chevron,
 .sidebar-collapsed .sidebar-label,
 .sidebar-collapsed .demo-indicator,
 .sidebar-collapsed .admin-brand small {
@@ -247,7 +246,6 @@
     padding-inline: 14px;
   }
   .admin-sidebar .nav-label,
-  .admin-sidebar .nav-chevron,
   .sidebar-label,
   .demo-indicator {
     display: none;
@@ -293,7 +291,6 @@
     transform: translateX(0);
   }
   .admin-sidebar .nav-label,
-  .admin-sidebar .nav-chevron,
   .admin-sidebar .sidebar-label,
   .admin-sidebar .demo-indicator,
   .admin-sidebar .admin-brand small {
@@ -406,3 +403,11 @@
 .save-error {
   color: #f3aaaa;
 }
+
+/* Consistent Bootstrap icon alignment in both sidebar widths. */
+.nav-icon {font-size:18px; width:20px; height:20px;}
+.admin-sidebar nav a:focus-visible,.sidebar-bottom > a:focus-visible,.collapse-button:focus-visible {outline:2px solid var(--green); outline-offset:3px;}
+.sidebar-collapsed nav a,.sidebar-collapsed .sidebar-bottom > a,.sidebar-collapsed .collapse-button {justify-content:center; padding-inline:0;}
+.admin-menu-toggle {align-items:center; justify-content:center;}
+@media (min-width:641px) and (max-width:960px){.admin-sidebar nav a,.admin-sidebar .sidebar-bottom > a,.admin-sidebar .collapse-button {justify-content:center; padding-inline:0;}}
+@media (max-width:640px){.admin-menu-toggle{display:flex;}.admin-sidebar nav a,.admin-sidebar .sidebar-bottom > a {min-height:48px;justify-content:flex-start;}}

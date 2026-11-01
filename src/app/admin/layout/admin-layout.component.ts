@@ -11,13 +11,14 @@ import {
   RouterOutlet,
 } from "@angular/router";
 import { MatButtonModule } from "@angular/material/button";
+import { BootstrapIconComponent, BootstrapIconName } from "../../shared/bootstrap-icon/bootstrap-icon.component";
 import { AdminSessionService } from "../../core/services/admin-session.service";
 import { AdminService } from "../../core/services/admin.service";
 @Component({
   selector: "mix-admin-layout",
   standalone: true,
   styleUrl: "./admin-layout.component.css",
-  imports: [RouterLink, RouterLinkActive, RouterOutlet, MatButtonModule],
+  imports: [RouterLink, RouterLinkActive, RouterOutlet, MatButtonModule, BootstrapIconComponent],
   templateUrl: "./admin-layout.component.html",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -27,11 +28,11 @@ export class AdminLayoutComponent {
   private readonly router = inject(Router);
   readonly collapsed = signal(false);
   readonly mobileOpen = signal(false);
-  readonly links = [
-    { path: "dashboard", icon: "◫", label: "Visão geral" },
-    { path: "motos", icon: "◇", label: "Frota de motos" },
-    { path: "banners", icon: "▧", label: "Banners" },
-    { path: "configuracoes", icon: "⚙", label: "Configurações" },
+  readonly links: ReadonlyArray<{path: string; icon: BootstrapIconName; label: string}> = [
+    { path: "dashboard", icon: "speedometer2", label: "Visão geral" },
+    { path: "motos", icon: "scooter", label: "Frota de motos" },
+    { path: "banners", icon: "images", label: "Banners" },
+    { path: "configuracoes", icon: "gear", label: "Configurações" },
   ];
   reloadSaved(): void {
     if (
