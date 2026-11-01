@@ -13,8 +13,9 @@ describe("Admin routing", () => {
     await harness.navigateByUrl("/admin/motos");
     expect(router.url).toBe("/admin/login");
     expect(harness.routeNativeElement?.textContent).toContain(
-      "Entrar com ChatGPT",
+      "Entrar no painel",
     );
+    expect(harness.routeNativeElement?.querySelector('a[href^="/signin-with-chatgpt"]')).toBeNull();
     const session = TestBed.inject(AdminSessionService);
     session.setIdentity({
       isAdmin: true,
