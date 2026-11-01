@@ -405,7 +405,10 @@
 }
 
 /* Consistent Bootstrap icon alignment in both sidebar widths. */
-.nav-icon {font-size:18px; width:20px; height:20px;}
+.nav-icon {font-size:20px; width:20px; height:20px; color:#a3b5aa;}
+.admin-sidebar nav a.selected .nav-icon {color:#60ef88;}
+.admin-sidebar nav a:hover .nav-icon,.sidebar-bottom > a:hover .nav-icon {color:#d7f5e1;}
+.admin-sidebar nav a {gap:14px;}
 .admin-sidebar nav a:focus-visible,.sidebar-bottom > a:focus-visible,.collapse-button:focus-visible {outline:2px solid var(--green); outline-offset:3px;}
 .sidebar-collapsed nav a,.sidebar-collapsed .sidebar-bottom > a,.sidebar-collapsed .collapse-button {justify-content:center; padding-inline:0;}
 .admin-menu-toggle {align-items:center; justify-content:center;}

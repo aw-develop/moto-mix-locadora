@@ -30,7 +30,7 @@
     </nav>
     <div class="sidebar-bottom">
       <div class="demo-indicator"><i></i><span>DADOS NA NUVEM</span></div>
-      <a routerLink="/" aria-label="Abrir site público" title="Abrir site público"><mix-bootstrap-icon class="nav-icon" name="globe2" /><span class="nav-label">Abrir site público</span></a
+      <a routerLink="/" aria-label="Abrir site público" title="Abrir site público"><mix-bootstrap-icon class="nav-icon" name="house-door" /><span class="nav-label">Abrir site público</span></a
       ><button
         class="collapse-button"
         (click)="collapsed.set(!collapsed())"
@@ -39,7 +39,7 @@
         [attr.aria-label]="collapsed() ? 'Expandir menu' : 'Recolher menu'"
         [title]="collapsed() ? 'Expandir menu' : 'Recolher menu'"
       >
-        <mix-bootstrap-icon class="nav-icon" name="layout-sidebar-inset" />
+        <mix-bootstrap-icon class="nav-icon" name="layout-sidebar" />
         <span class="nav-label">{{ collapsed() ? "Expandir menu" : "Recolher menu" }}</span>
       </button>
     </div>
