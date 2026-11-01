@@ -29,10 +29,10 @@ export class AdminLayoutComponent {
   readonly collapsed = signal(false);
   readonly mobileOpen = signal(false);
   readonly links: ReadonlyArray<{path: string; icon: BootstrapIconName; label: string}> = [
-    { path: "dashboard", icon: "grid-1x2", label: "Visão geral" },
+    { path: "dashboard", icon: "house", label: "Visão geral" },
     { path: "motos", icon: "key", label: "Frota de motos" },
     { path: "banners", icon: "image", label: "Banners" },
-    { path: "configuracoes", icon: "sliders2", label: "Configurações" },
+    { path: "configuracoes", icon: "gear", label: "Configurações" },
   ];
   reloadSaved(): void {
     if (
