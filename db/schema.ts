@@ -63,3 +63,10 @@ export const loginAttempts = sqliteTable("login_attempts", {
   attempts: integer("attempts").notNull(),
   windowStart: integer("window_start").notNull(),
 });
+
+export const adminCredentials = sqliteTable("admin_credentials", {
+  id: text("id").primaryKey(),
+  username: text("username").notNull(),
+  passwordHash: text("password_hash").notNull(),
+  revision: text("revision").notNull(),
+});

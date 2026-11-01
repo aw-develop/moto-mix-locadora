@@ -15,6 +15,9 @@
       <span class="admin-kicker">PAINEL ADMINISTRATIVO</span>
       <h2>Bem-vindo à central.</h2>
       <p>Gerencie a Mix com a mesma agilidade do seu corre.</p>
+      @if (credentialsUpdated) {
+        <p class="admin-success" role="status">Login e senha atualizados. Entre com os novos dados.</p>
+      }
       <form [formGroup]="form" (ngSubmit)="submit()" class="login-form">
         <label for="admin-username">Login</label>
         <input id="admin-username" formControlName="username" autocomplete="username" maxlength="80" required />

@@ -59,3 +59,37 @@ test('oversized and malformed authentication payloads are rejected before passwo
  assert.equal((await handleApi(request('{'),env))?.status,400);
  assert.equal((await handleApi(request('{}'),env))?.status,400);
 });
+test('changing credentials requires current password and revokes all sessions; new login persists across environment fallback',async()=>{
+ const {env,db}=await setup();
+ const first=await handleApi(login(),env), second=await handleApi(login(),env);
+ const cookies=[first,second].map(r=>r!.headers.get('set-cookie')!.split(';')[0]!);
+ const change=(password:string, origin='https://mix.test', cookie=cookies[0]!)=>handleApi(new Request('https://mix.test/api/auth/credentials',{method:'POST',headers:{cookie,origin,'content-type':'application/json'},body:JSON.stringify({username:'cliente.mix',currentPassword:password,newPassword:'cliente-password-123',confirmPassword:'cliente-password-123'})}),env);
+ assert.equal((await change('fixture-password','https://foreign.test'))?.status,403);
+ assert.equal((await change('fixture-password','https://mix.test',''))?.status,401);
+ assert.equal((await change('wrong'))?.status,401);
+ assert.equal(db.prepare('SELECT count(*) AS count FROM admin_sessions').get()?.['count'],2);
+ assert.equal((await change('fixture-password'))?.status,200);
+ assert.equal(db.prepare('SELECT count(*) AS count FROM admin_sessions').get()?.['count'],0);
+ for(const cookie of cookies){const session=await handleApi(new Request('https://mix.test/api/session',{headers:{cookie}}),env);assert.equal((await session!.json() as {isAdmin:boolean}).isAdmin,false);}
+ assert.equal((await handleApi(login(),env))?.status,401);
+ const newLogin=new Request('https://mix.test/api/auth/login',{method:'POST',headers:{origin:'https://mix.test','content-type':'application/json'},body:JSON.stringify({username:'cliente.mix',password:'cliente-password-123'})});
+ const response=await handleApi(newLogin,{...env,ADMIN_USERNAME:'original',ADMIN_PASSWORD_HASH:'original:hash'});
+ assert.equal(response?.status,200);
+ const stored=db.prepare('SELECT username,password_hash FROM admin_credentials').get();
+ assert.equal(stored?.['username'],'cliente.mix');assert.ok(!JSON.stringify(stored).includes('cliente-password-123'));
+});
+test('credential change validates confirmation, strength and username; stale concurrent rotation cannot erase new sessions',async()=>{
+ const {env,db}=await setup();
+ const response=await handleApi(login(),env);const cookie=response!.headers.get('set-cookie')!.split(';')[0]!;
+ const valid={username:'cliente',currentPassword:'fixture-password',newPassword:'new-secure-password',confirmPassword:'new-secure-password'};
+ for(const patch of [{username:'a'},{username:'<script>'},{newPassword:'short',confirmPassword:'short'},{confirmPassword:'mismatch'},{newPassword:'fixture-password',confirmPassword:'fixture-password'}]){
+  const result=await handleApi(new Request('https://mix.test/api/auth/credentials',{method:'POST',headers:{cookie,origin:'https://mix.test','content-type':'application/json'},body:JSON.stringify({...valid,...patch})}),env);assert.equal(result?.status,400);
+ }
+ const {credentials,changeCredentials}=await import('../repositories/credentials.repository.ts');
+ const old=await credentials(env);
+ await changeCredentials(env,old,'first','salt:'+'a'.repeat(64));
+ db.prepare('INSERT INTO admin_sessions (token_hash,expires_at) VALUES (?,?)').run('new-session',Date.now()+60000);
+ await assert.rejects(changeCredentials(env,old,'loser','salt:'+'b'.repeat(64)),/outra sessão/);
+ assert.equal(db.prepare('SELECT count(*) AS count FROM admin_sessions').get()?.['count'],1);
+ assert.equal((await credentials(env)).username,'first');
+});

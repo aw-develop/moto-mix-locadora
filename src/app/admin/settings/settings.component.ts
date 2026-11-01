@@ -6,13 +6,14 @@ import {
 } from "@angular/core";
 import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
+import { CredentialsComponent } from "../security/credentials.component";
 import { AdminService } from "../../core/services/admin.service";
 import { optionalHttpsValidator } from "../../core/validation/admin.validators";
 @Component({
   selector: "mix-admin-settings",
   standalone: true,
   styleUrl: "./settings.component.css",
-  imports: [ReactiveFormsModule, MatButtonModule],
+  imports: [ReactiveFormsModule, MatButtonModule, CredentialsComponent],
   templateUrl: "./settings.component.html",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, inject, signal } from "@angular/core";
 import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
-import { Router, RouterLink } from "@angular/router";
+import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { MatButtonModule } from "@angular/material/button";
 import { AdminSessionService } from "../../core/services/admin-session.service";
 import { AdminService } from "../../core/services/admin.service";
@@ -13,6 +13,7 @@ import { AdminService } from "../../core/services/admin.service";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
+  readonly credentialsUpdated = inject(ActivatedRoute).snapshot.queryParamMap.get("credentials") === "updated";
   readonly session = inject(AdminSessionService);
   readonly admin = inject(AdminService);
   private readonly router = inject(Router);

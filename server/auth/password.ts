@@ -1,4 +1,5 @@
 import type { BackendEnvironment, RequestIdentity } from '../models/environment.ts';
+import { credentials } from '../repositories/credentials.repository.ts';
 const encoder = new TextEncoder();
 export const SESSION_COOKIE = '__Host-mix_admin';
 export const SESSION_SECONDS = 8 * 60 * 60;
@@ -33,9 +34,11 @@ export function sessionCookie(token: string, maxAge = SESSION_SECONDS): string {
 }
 export async function passwordIdentity(request: Request, env: BackendEnvironment): Promise<RequestIdentity | null> {
   const token = sessionToken(request);
-  if (!token || !env.ADMIN_USERNAME || !env.ADMIN_PASSWORD_HASH) return null;
+  if (!token) return null;
   const row = await env.DB.prepare('SELECT token_hash FROM admin_sessions WHERE token_hash = ? AND expires_at > ?').bind(await sessionKey(token, env), Date.now()).first();
-  return row ? {isAdmin:true,signedIn:true,userId:'password-admin',email:'',name:env.ADMIN_USERNAME} : null;
+  if (!row) return null;
+  const account = await credentials(env);
+  return {isAdmin:true,signedIn:true,userId:'password-admin',email:'',name:account.username};
 }
 export function newToken(): string {
   return hex(crypto.getRandomValues(new Uint8Array(32)));
