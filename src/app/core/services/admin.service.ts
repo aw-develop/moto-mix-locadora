@@ -217,7 +217,10 @@ export class AdminService {
     });
     if (type !== "whatsapp") this.queueSave();
   }
-  saveMoto(draft: MotoDraft, id?: string): void {
+  addMotoToCard(draft: MotoDraft, parentId: string): void {
+    this.saveMoto(draft, undefined, parentId);
+  }
+  saveMoto(draft: MotoDraft, id?: string, parentId?: string): void {
     this.session.assertAdminSession();
     if (id && !this.bikes().some((b) => b.id === id))
       throw new Error("Moto não encontrada.");
@@ -233,7 +236,16 @@ export class AdminService {
       throw new Error(
         "Escolha uma imagem do dispositivo, uma URL HTTPS ou um arquivo em assets/.",
       );
+    const parent = parentId
+      ? this.bikes().find((bike) => bike.id === parentId)
+      : undefined;
+    if (parentId && !parent)
+      throw new Error("O card de origem não existe mais.");
     const cardGroup = (
+      (parent
+        ? parent.cardGroup ||
+          "Card · " + parent.name.slice(0, 40) + " · " + parent.id.slice(0, 8)
+        : undefined) ??
       draft.cardGroup ??
       this.bikes().find((b) => b.id === id)?.cardGroup ??
       ""
@@ -254,7 +266,12 @@ export class AdminService {
     };
     const bikes = id
       ? this.bikes().map((b) => (b.id === id ? moto : b))
-      : [...this.bikes(), moto];
+      : [
+          ...this.bikes().map((bike) =>
+            bike.id === parentId ? { ...bike, cardGroup } : bike,
+          ),
+          moto,
+        ];
     this.commit(
       { bikes },
       "fleet",

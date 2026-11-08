@@ -46,13 +46,13 @@ A identidade visual combina grafite, verde neon e tipografia marcante, com naveg
 
 > **Escopo da operação:** o WhatsApp inicia o atendimento. Um clique representa intenção de contato; não confirma uma reserva nem efetua pagamento. Os indicadores de visitas e cliques são da sessão, sem analytics globais.
 
-## Várias motos no mesmo card da frota
+## Carrossel dentro de cada card da frota
 
-No painel, abra **Frota → Adicionar moto** ou edite um modelo. No campo **Grupo do card**, informe um nome, por exemplo, `Motos para entregas`. Use o mesmo nome nas outras motos que deseja reunir. Os grupos já cadastrados são sugeridos no campo; deixe-o vazio para exibir a moto em um card individual.
+No painel, abra **Frota** e clique em **+ Moto neste card** na linha da moto desejada. Preencha a foto, o nome, as especificações, os preços e a disponibilidade da nova ficha e clique em **Adicionar ao carrossel**. A moto original e a nova são associadas ao mesmo card em uma única atualização. Cancelar o formulário não altera o catálogo.
 
-Na seção **Nossa Frota**, o card apresenta um seletor de modelos com miniaturas. Ao escolher uma moto, a foto, a versão, a categoria, a descrição, a transmissão, o consumo, os preços e a disponibilidade mudam juntos. O botão de reserva também usa o modelo selecionado. Os filtros consideram cada moto: modelos fora da categoria ou disponibilidade escolhida não aparecem no seletor.
+Na seção **Nossa Frota**, cada card com mais de uma moto passa automaticamente as fichas completas a cada seis segundos, com transição suave e indicadores de posição. Cada card tem seu próprio ciclo. A foto, a descrição, os dados técnicos, os preços, o status e o botão de reserva pertencem sempre à moto exibida. O carrossel pausa durante interação por mouse/teclado ou enquanto a aba está oculta. A preferência por movimento reduzido desativa a rotação automática e mantém os indicadores disponíveis para seleção.
 
-Os dados de cada moto continuam independentes. Para retirar uma moto do grupo, apague seu **Grupo do card** e salve. O agrupamento fica salvo no banco e não altera o banner principal.
+As motos continuam editáveis individualmente. O campo **Grupo do card** permite reunir modelos já cadastrados ou separar uma moto do carrossel, apagando seu grupo. Os filtros são aplicados antes da montagem dos cards. Tudo fica salvo no banco, sem alterar os banners principais.
 
 ## Tecnologias
 

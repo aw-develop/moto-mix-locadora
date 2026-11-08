@@ -17,6 +17,9 @@ import { Moto, MotoDraft } from "../../core/models/admin.model";
 import { MotorcycleCategory } from "../../core/models/motorcycle.model";
 import { AdminService } from "../../core/services/admin.service";
 import { imageValidator } from "../../core/validation/admin.validators";
+export interface AddToCardData {
+  readonly addToCard: string;
+}
 @Component({
   selector: "mix-moto-editor",
   standalone: true,
@@ -32,9 +35,17 @@ import { imageValidator } from "../../core/validation/admin.validators";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MotoEditorComponent {
-  readonly data = inject<Moto | null>(MAT_DIALOG_DATA);
+  private readonly context = inject<Moto | AddToCardData | null>(
+    MAT_DIALOG_DATA,
+  );
+  readonly data = this.context && "id" in this.context ? this.context : null;
+  readonly parentId =
+    this.context && "addToCard" in this.context ? this.context.addToCard : null;
   private readonly ref = inject(MatDialogRef<MotoEditorComponent>);
   private readonly admin = inject(AdminService);
+  readonly parent = this.admin
+    .bikes()
+    .find((bike) => bike.id === this.parentId);
   private readonly fb = inject(FormBuilder);
   readonly error = signal("");
   readonly cardGroups = [
@@ -96,7 +107,9 @@ export class MotoEditorComponent {
       return;
     }
     try {
-      this.admin.saveMoto(this.form.getRawValue() as MotoDraft, this.data?.id);
+      const draft = this.form.getRawValue() as MotoDraft;
+      if (this.parentId) this.admin.addMotoToCard(draft, this.parentId);
+      else this.admin.saveMoto(draft, this.data?.id);
       this.ref.close(true);
     } catch (error) {
       this.error.set(

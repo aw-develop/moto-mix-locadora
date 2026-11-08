@@ -97,6 +97,13 @@
             <td>
               <div class="row-actions">
                 <button
+                  type="button"
+                  (click)="addToCard(moto)"
+                  [attr.aria-label]="'Adicionar moto no card de ' + moto.name"
+                >
+                  + Moto neste card
+                </button>
+                <button
                   (click)="edit(moto)"
                   [attr.aria-label]="'Editar ' + moto.name"
                 >

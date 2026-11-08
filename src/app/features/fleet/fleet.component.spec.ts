@@ -55,7 +55,7 @@ describe("Grouped fleet cards", () => {
     let cards = fixture.nativeElement.querySelectorAll("mix-bike-card");
     expect(cards.length).toBe(2);
     const card = cards[0],
-      options = card.querySelectorAll(".model-picker button");
+      options = card.querySelectorAll(".card-dots button");
     expect(options.length).toBe(2);
     expect(card.querySelector("h3").textContent).toContain(first.name);
     options[1].click();

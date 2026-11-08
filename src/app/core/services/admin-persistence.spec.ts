@@ -47,6 +47,10 @@ describe("Server persistence", () => {
       { ...first.bikes()[0], daily: 79, cardGroup: "Motos para entregas" },
       "cg160",
     );
+    first.addMotoToCard(
+      { ...first.bikes()[1], name: "Outra moto no carrossel" },
+      "cg160",
+    );
     expect(first.saveStatus()).toBe("saving");
     await vi.advanceTimersByTimeAsync(300);
     expect(first.saveStatus()).toBe("saved");
@@ -55,6 +59,8 @@ describe("Server persistence", () => {
     await second.initialize();
     expect(second.bikes()[0].daily).toBe(79);
     expect(second.bikes()[0].cardGroup).toBe("Motos para entregas");
+    expect(second.bikes().at(-1)?.name).toBe("Outra moto no carrossel");
+    expect(second.bikes().at(-1)?.cardGroup).toBe(second.bikes()[0].cardGroup);
   });
   it("mantém os dados locais e mostra conflito quando outro dispositivo já salvou", async () => {
     vi.useFakeTimers();

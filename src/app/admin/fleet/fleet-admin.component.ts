@@ -13,7 +13,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { AdminService } from "../../core/services/admin.service";
 import { Moto } from "../../core/models/admin.model";
-import { MotoEditorComponent } from "./moto-editor.component";
+import { MotoEditorComponent, AddToCardData } from "./moto-editor.component";
 import { ConfirmDialogComponent } from "../shared/confirm-dialog.component";
 @Component({
   selector: "mix-fleet-admin",
@@ -60,10 +60,19 @@ export class FleetAdminComponent {
     this[type].set(this.value(event));
     this.page.set(1);
   }
+  addToCard(moto: Moto): void {
+    this.openEditor(
+      { addToCard: moto.id },
+      "Moto adicionada ao carrossel deste card.",
+    );
+  }
   edit(moto: Moto | null = null): void {
+    this.openEditor(moto, moto ? "Moto atualizada." : "Moto adicionada.");
+  }
+  private openEditor(data: Moto | AddToCardData | null, message: string): void {
     this.dialog
       .open(MotoEditorComponent, {
-        data: moto,
+        data,
         width: "720px",
         maxWidth: "calc(100vw - 24px)",
         maxHeight: "92vh",
@@ -73,8 +82,7 @@ export class FleetAdminComponent {
       .afterClosed()
       .pipe(takeUntilDestroyed(this.destroy))
       .subscribe((saved) => {
-        if (saved)
-          this.notice.set(moto ? "Moto atualizada." : "Moto adicionada.");
+        if (saved) this.notice.set(message);
       });
   }
   toggle(moto: Moto): void {

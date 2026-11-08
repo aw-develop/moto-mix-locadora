@@ -1,7 +1,23 @@
 <div class="admin-dialog-heading">
   <span class="admin-kicker">CATÁLOGO / FROTA</span>
-  <h2 mat-dialog-title>{{ data ? "Editar moto" : "Adicionar moto" }}</h2>
-  <p>Dados que aparecem no catálogo do site público.</p>
+  <h2 mat-dialog-title>
+    {{
+      parentId
+        ? "Adicionar moto neste card"
+        : data
+          ? "Editar moto"
+          : "Adicionar moto"
+    }}
+  </h2>
+  @if (parentId) {
+    <p>
+      A nova ficha será adicionada ao carrossel do card de
+      <strong>{{ parent?.name }}</strong
+      >. Preencha os dados próprios desta moto.
+    </p>
+  } @else {
+    <p>Dados que aparecem no catálogo do site público.</p>
+  }
 </div>
 <form class="admin-form" [formGroup]="form" (ngSubmit)="save()" novalidate>
   <mat-dialog-content
@@ -25,25 +41,27 @@
           <option>Touring</option>
         </select></label
       >
-      <label class="full card-group-field"
-        >Grupo do card (opcional)
-        <input
-          formControlName="cardGroup"
-          maxlength="80"
-          list="fleet-card-groups"
-          placeholder="Ex.: Motos para entregas"
-        />
-        <datalist id="fleet-card-groups">
-          @for (group of cardGroups; track group) {
-            <option [value]="group"></option>
-          }
-        </datalist>
-        <small
-          >Motos com o mesmo nome de grupo aparecem em um único card na Nossa
-          Frota. Cada uma mantém foto, especificações, preço e disponibilidade
-          próprios. Deixe vazio para um card individual.</small
-        >
-      </label>
+      @if (!parentId) {
+        <label class="full card-group-field"
+          >Grupo do card (opcional)
+          <input
+            formControlName="cardGroup"
+            maxlength="80"
+            list="fleet-card-groups"
+            placeholder="Ex.: Motos para entregas"
+          />
+          <datalist id="fleet-card-groups">
+            @for (group of cardGroups; track group) {
+              <option [value]="group"></option>
+            }
+          </datalist>
+          <small
+            >Motos com o mesmo nome de grupo aparecem em um único card na Nossa
+            Frota. Cada uma mantém foto, especificações, preço e disponibilidade
+            próprios. Deixe vazio para um card individual.</small
+          >
+        </label>
+      }
       <div class="full">
         <mix-image-upload formControlName="image" label="Foto da moto" />
       </div>
@@ -100,7 +118,13 @@
       class="admin-primary"
       [disabled]="form.controls.image.hasError('imageProcessing')"
     >
-      {{ data ? "Salvar alterações" : "Adicionar moto" }}
+      {{
+        parentId
+          ? "Adicionar ao carrossel"
+          : data
+            ? "Salvar alterações"
+            : "Adicionar moto"
+      }}
     </button></mat-dialog-actions
   >
 </form>
