@@ -274,7 +274,22 @@ export class AdminService {
     const moto = this.bikes().find((b) => b.id === id);
     if (!moto) throw new Error("Moto não encontrada.");
     this.commit(
-      { bikes: this.bikes().filter((b) => b.id !== id) },
+      {
+        bikes: this.bikes().filter((b) => b.id !== id),
+        banners: this.banners().map((banner) => {
+          const motorcycleIds = banner.motorcycleIds?.filter(
+            (motoId) => motoId !== id,
+          );
+          return {
+            ...banner,
+            ...(motorcycleIds ? { motorcycleIds } : {}),
+            image:
+              !banner.image && !motorcycleIds?.length
+                ? "assets/hero.webp"
+                : banner.image,
+          };
+        }),
+      },
       "fleet",
       "Moto excluída",
       moto.name,
@@ -284,7 +299,22 @@ export class AdminService {
     this.session.assertAdminSession();
     const previous = this.banners().find((b) => b.id === id);
     if (id && !previous) throw new Error("Banner não encontrado.");
-    if (!isSafeImage(draft.image.trim()) || !isSafeLink(draft.link.trim()))
+    const motorcycleIds = [
+      ...(draft.motorcycleIds ?? previous?.motorcycleIds ?? []),
+    ];
+    if (
+      motorcycleIds.length > 6 ||
+      new Set(motorcycleIds).size !== motorcycleIds.length ||
+      motorcycleIds.some(
+        (motoId) => !this.bikes().some((bike) => bike.id === motoId),
+      )
+    )
+      throw new Error("Selecione até 6 motos diferentes cadastradas na frota.");
+    if (
+      (!draft.image.trim() && !motorcycleIds.length) ||
+      (draft.image.trim() && !isSafeImage(draft.image.trim())) ||
+      !isSafeLink(draft.link.trim())
+    )
       throw new Error(
         "Imagem ou link inválido. Use HTTPS ou uma âncora da página.",
       );
@@ -295,6 +325,7 @@ export class AdminService {
       title: this.text(draft.title, "Título", 120),
       subtitle: this.text(draft.subtitle, "Subtítulo", 300),
       image: draft.image.trim(),
+      motorcycleIds,
       link: draft.link.trim(),
       active: !!draft.active,
     };

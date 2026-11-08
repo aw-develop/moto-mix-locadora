@@ -20,6 +20,7 @@ export interface Banner {
   readonly link: string;
   readonly active: boolean;
   readonly order: number;
+  readonly motorcycleIds?: readonly string[];
 }
 export interface SiteSettings {
   readonly whatsappNumber: string;

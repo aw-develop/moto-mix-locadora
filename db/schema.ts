@@ -28,6 +28,10 @@ export const banners = sqliteTable("banners", {
   link: text("link").notNull(),
   active: integer("active", { mode: "boolean" }).notNull(),
   position: integer("position").notNull(),
+  motorcycleIds: text("motorcycle_ids", { mode: "json" })
+    .$type<string[]>()
+    .notNull()
+    .default([]),
 });
 export const settings = sqliteTable("site_settings", {
   id: text("id").primaryKey(),

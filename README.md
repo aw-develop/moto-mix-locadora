@@ -26,7 +26,7 @@ A identidade visual combina grafite, verde neon e tipografia marcante, com naveg
 
 - Catálogo com filtros, preços diários e semanais, especificações e disponibilidade.
 - Contato pelo WhatsApp com mensagem preenchida para o modelo escolhido.
-- Banners com rotação automática a cada seis segundos, sem setas ou botão de pausa.
+- Banners com rotação automática, sem setas ou botão de pausa: 6 segundos para imagens e 12 segundos para campanhas com motos.
 - Seções de vantagens, localização, horários e contato.
 - Botão flutuante de WhatsApp e efeitos de entrada ao rolar a página.
 - Interface adaptada a celulares, tablets e desktops, respeitando a preferência por movimento reduzido.
@@ -36,7 +36,7 @@ A identidade visual combina grafite, verde neon e tipografia marcante, com naveg
 - Visão geral da frota, disponibilidade e atividades.
 - Cadastro, edição e exclusão de motos, com confirmação antes de excluir.
 - Alternância rápida entre moto disponível e indisponível.
-- Gerenciamento de banners: conteúdo, imagem, ordem e ativação.
+- Gerenciamento de banners: conteúdo, imagem, ordem, ativação e seleção de até seis motos na mesma campanha.
 - Upload de imagens do dispositivo, com prévia e otimização.
 - Configuração de WhatsApp, endereço, mapa, horários e redes sociais.
 - Alteração de login e senha no próprio painel, mediante confirmação da senha atual.
@@ -44,6 +44,12 @@ A identidade visual combina grafite, verde neon e tipografia marcante, com naveg
 - Menu lateral retrátil com os SVGs oficiais do Bootstrap Icons escolhidos para a marca.
 
 > **Escopo da operação:** o WhatsApp inicia o atendimento. Um clique representa intenção de contato; não confirma uma reserva nem efetua pagamento. Os indicadores de visitas e cliques são da sessão, sem analytics globais.
+
+## Várias motos no mesmo banner
+
+No painel, abra **Banners → Novo banner** ou edite uma campanha existente. Em **Motos no mesmo banner**, selecione até seis modelos cadastrados na frota e organize a ordem com os controles de posição. A prévia mostra as fichas individuais; a imagem de fundo é opcional quando há motos selecionadas.
+
+Cada ficha apresenta foto, cilindrada/versão, categoria, transmissão, consumo, preços diário e semanal, disponibilidade e reserva pelo WhatsApp. As informações acompanham o cadastro da frota. No desktop, as fichas aparecem lado a lado; no celular, deslize horizontalmente para comparar. Excluir uma moto da frota também remove sua associação aos banners. Campanhas somente com imagem continuam funcionando.
 
 ## Tecnologias
 

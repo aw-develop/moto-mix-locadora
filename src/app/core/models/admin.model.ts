@@ -9,6 +9,7 @@ export interface Banner {
   readonly link: string;
   readonly active: boolean;
   readonly order: number;
+  readonly motorcycleIds?: readonly string[];
 }
 export type BannerDraft = Omit<Banner, "id" | "order">;
 export interface SiteSettings {

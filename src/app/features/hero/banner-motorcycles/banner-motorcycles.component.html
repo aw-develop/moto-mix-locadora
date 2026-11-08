@@ -1,0 +1,84 @@
+<div class="banner-motorcycles" [class.is-preview]="preview()">
+  @if (motorcycles().length > 1) {
+    <p class="mobile-hint">
+      Deslize para comparar as motos <span aria-hidden="true">↔</span>
+    </p>
+  }
+  <div
+    class="motorcycle-grid"
+    role="list"
+    aria-label="Motos deste banner"
+    [class.one-moto]="motorcycles().length === 1"
+    [class.two-motos]="motorcycles().length === 2"
+  >
+    @for (moto of motorcycles(); track moto.id) {
+      <article
+        class="motorcycle-offer"
+        role="listitem"
+        [class.unavailable]="!moto.available"
+      >
+        <div class="offer-image">
+          <img
+            [src]="moto.image"
+            [alt]="moto.name"
+            width="600"
+            height="400"
+            decoding="async"
+          />
+          <span class="offer-status" [class.rented]="!moto.available"
+            ><i aria-hidden="true"></i
+            >{{ moto.available ? "Disponível" : "Alugada" }}</span
+          >
+          <span class="offer-category">{{ moto.category }}</span>
+        </div>
+        <div class="offer-body">
+          <p class="offer-version">{{ moto.version }}</p>
+          <h2>{{ moto.name }}</h2>
+          <p class="offer-description">{{ moto.description }}</p>
+          <dl class="offer-specs">
+            <div>
+              <dt>Transmissão</dt>
+              <dd>{{ moto.transmission }}</dd>
+            </div>
+            <div>
+              <dt>Consumo médio</dt>
+              <dd>{{ moto.consumption }}</dd>
+            </div>
+          </dl>
+          <div class="offer-prices">
+            <p>
+              {{ moto.daily | currency: "BRL" : "symbol" : "1.2-2" : "pt-BR"
+              }}<small>/ dia</small>
+            </p>
+            <span
+              >{{
+                moto.weekly | currency: "BRL" : "symbol" : "1.2-2" : "pt-BR"
+              }}
+              / semana</span
+            >
+          </div>
+          @if (preview()) {
+            <span class="offer-action preview-action">{{
+              moto.available
+                ? "Reservar este modelo"
+                : "Indisponível no momento"
+            }}</span>
+          } @else if (moto.available) {
+            <a
+              class="offer-action"
+              [mixWhatsapp]="whatsapp.reserveMessage(moto.name)"
+              [mixModel]="moto.name"
+              [attr.aria-label]="'Reservar ' + moto.name"
+              >Reservar este modelo
+              <svg aria-hidden="true"><use href="#arrow" /></svg
+            ></a>
+          } @else {
+            <button class="offer-action" type="button" disabled>
+              Indisponível no momento
+            </button>
+          }
+        </div>
+      </article>
+    }
+  </div>
+</div>

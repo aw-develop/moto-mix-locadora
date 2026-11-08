@@ -30,7 +30,7 @@ Em falhas de rede, os dados locais continuam disponíveis e o usuário pode tent
 | Tabela             | Responsabilidade                                                                          |
 | ------------------ | ----------------------------------------------------------------------------------------- |
 | `motorcycles`      | Uma linha por moto, com colunas tipadas para preços, categoria, disponibilidade e posição |
-| `banners`          | Uma linha por banner, com conteúdo, imagem, link, status e posição                        |
+| `banners`          | Uma linha por banner, com conteúdo, imagem, link, status, posição e IDs ordenados das motos                        |
 | `site_settings`    | Configurações públicas, em colunas próprias                                               |
 | `admin_activities` | Histórico administrativo preservado pelo contrato atual                                   |
 | `catalog_metadata` | Versão global, horário e token interno de controle de escrita                             |
@@ -48,7 +48,7 @@ As imagens comerciais são públicas, identificadas por hash e servidas com MIME
 
 Mantém `/`, `/admin/login`, `/admin/dashboard`, `/admin/motos`, `/admin/banners` e `/admin/configuracoes`. As rotas e páginas Angular continuam lazy-loaded. O Worker valida a sessão antes de entregar documentos administrativos protegidos, e os guards revalidam `/api/session` a cada navegação. A tela de login permanece pública, sem divulgação no rodapé. Todos os dispositivos carregam o estado salvo ao abrir ou recarregar o site. Não há atualização push entre dispositivos; conflitos em novas gravações são detectados pelo servidor.
 
-O carrossel mantém rotação automática de 6 segundos sem controles manuais. Upload com prévia, drag and drop, catálogo filtrável, configurações de contato e efeitos de scroll continuam disponíveis.
+O carrossel mantém rotação automática sem controles manuais: 6 segundos para imagens e 12 segundos para banners com fichas de motos. Upload com prévia, drag and drop, catálogo filtrável, configurações de contato e efeitos de scroll continuam disponíveis.
 
 ## Operação
 
@@ -88,3 +88,7 @@ O frontend ainda envia um agregado versionado: esta refatoração não implement
 ### Recuperação administrativa
 
 As credenciais de runtime são apenas o bootstrap inicial. Se a senha for perdida após a inicialização, um operador autorizado com acesso ao D1 deve redefinir o hash e a revisão de `admin_credentials` e remover `admin_sessions` na mesma transação. Não exponha esse procedimento como endpoint público e nunca salve senhas em texto puro. A seção do painel exige a senha atual inclusive para sessões ChatGPT.
+
+## Motos nos banners
+
+A migração `0004` acrescenta `banners.motorcycle_ids` como JSON com padrão `[]`, preservando os banners existentes. Cada banner pode associar até seis IDs únicos de motos da frota; o servidor rejeita referências inexistentes. A seleção é persistida no mesmo batch transacional do catálogo, sem aumentar o número de instruções. Fotos, especificações, preços e disponibilidade são resolvidos pelo cadastro de motos, evitando cópias divergentes. A exclusão de uma moto remove sua referência de todos os banners na mesma gravação; se a campanha ficar sem motos e sem imagem, a interface define a imagem padrão.

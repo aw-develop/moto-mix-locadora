@@ -376,3 +376,71 @@
     bottom: 82px;
   }
 }
+
+/* A campaign can showcase several fleet models within the same banner. */
+.hero.with-motorcycles {
+  min-height: 0;
+  padding-bottom: 102px;
+}
+.with-motorcycles .hero-image {
+  width: 100%;
+  height: 100%;
+  right: 0;
+  opacity: 0.16;
+  object-position: center;
+}
+.with-motorcycles .hero-shade {
+  background: #0d120fd9;
+}
+.with-motorcycles .hero-content {
+  padding-top: 44px;
+  padding-bottom: 26px;
+}
+.with-motorcycles h1,
+.with-motorcycles h1.long-title {
+  font-size: clamp(35px, 4vw, 56px);
+  max-width: 1000px;
+  margin-block: 17px;
+}
+.with-motorcycles .hero-content > p {
+  max-width: 750px;
+}
+.with-motorcycles .hero-actions {
+  margin-top: 20px;
+}
+.with-motorcycles .hero-checks {
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+.hero-motorcycle-showcase {
+  position: relative;
+  z-index: 1;
+}
+.with-motorcycles .hero-carousel {
+  bottom: 69px;
+}
+.with-motorcycles .hero-bottom {
+  bottom: 12px;
+}
+@media (max-width: 700px) {
+  .with-motorcycles .hero-content {
+    padding-top: 32px;
+  }
+  .with-motorcycles h1,
+  .with-motorcycles h1.long-title {
+    font-size: 39px;
+  }
+  .with-motorcycles .hero-actions {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .hero.with-motorcycles {
+    padding-bottom: 96px;
+  }
+  .with-motorcycles .hero-carousel {
+    bottom: 69px;
+  }
+  .with-motorcycles .hero-bottom .explore-fleet {
+    min-height: 42px;
+  }
+}

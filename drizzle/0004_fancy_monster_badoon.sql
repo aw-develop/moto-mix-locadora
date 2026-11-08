@@ -1,0 +1,1 @@
+ALTER TABLE `banners` ADD `motorcycle_ids` text DEFAULT '[]' NOT NULL;

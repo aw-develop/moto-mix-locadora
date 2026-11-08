@@ -29,9 +29,17 @@
   @for (banner of admin.banners(); track banner.id; let i = $index) {
     <article class="admin-banner-card">
       <div class="banner-preview">
-        <img [src]="banner.image" [alt]="banner.title" /><span
-          class="banner-position"
-          >{{ (i + 1).toString().padStart(2, "0") }}</span
+        @if (banner.image) {
+          <img [src]="banner.image" [alt]="banner.title" />
+        } @else {
+          <div class="banner-group-cover">
+            <b>{{ banner.motorcycleIds?.length || 0 }}</b
+            ><span>MOTOS NO BANNER</span>
+          </div>
+        }
+        <span class="banner-position">{{
+          (i + 1).toString().padStart(2, "0")
+        }}</span
         ><span class="admin-badge" [class.off]="!banner.active">{{
           banner.active ? "Ativo" : "Pausado"
         }}</span>
@@ -41,6 +49,11 @@
         <h2>{{ banner.title }}</h2>
         <p>{{ banner.subtitle }}</p>
         <code>{{ banner.link }}</code>
+        @if (banner.motorcycleIds?.length) {
+          <p class="banner-group-note">
+            {{ banner.motorcycleIds?.length }} motos · fichas individuais
+          </p>
+        }
       </div>
       <div class="banner-tools">
         <mat-slide-toggle

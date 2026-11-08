@@ -36,10 +36,24 @@ export function motorcycle(value: Record<string, unknown>): Motorcycle {
     available: boolean(value["available"]),
   };
 }
+export function bannerMotorcycleIds(value: unknown): string[] {
+  if (value === undefined) return [];
+  if (!Array.isArray(value) || value.length > 6)
+    fail("Selecione até 6 motos por banner.");
+  const ids = value.map((id) => text(id, "Moto do banner", 80));
+  if (new Set(ids).size !== ids.length)
+    fail("Não repita uma moto no mesmo banner.");
+  return ids;
+}
 export function banner(
   value: Record<string, unknown>,
   position: number,
 ): Banner {
+  const motorcycleIds = bannerMotorcycleIds(value["motorcycleIds"]);
+  const image =
+    value["image"] === "" && motorcycleIds.length
+      ? ""
+      : imageReference(value["image"]);
   const link = text(value["link"], "Link", 2000);
   if (!/^#[a-zA-Z][\w-]*$/.test(link) && !https(link))
     fail("Link de banner inválido.");
@@ -47,7 +61,8 @@ export function banner(
     id: text(value["id"], "ID", 80),
     title: text(value["title"], "Título", 120),
     subtitle: text(value["subtitle"], "Subtítulo", 300),
-    image: imageReference(value["image"]),
+    image,
+    ...(motorcycleIds.length ? { motorcycleIds } : {}),
     link,
     active: boolean(value["active"]),
     order:
@@ -89,12 +104,18 @@ export function activity(value: Record<string, unknown>): Activity {
 }
 export function catalogState(value: unknown): CatalogState {
   const state = object(value);
+  const bikes = rows(state["bikes"], 100, "Frota").map(motorcycle);
+  const banners = rows(state["banners"], 30, "Banners")
+    .map(banner)
+    .sort((a, b) => a.order - b.order)
+    .map((value, order) => ({ ...value, order }));
+  const ids = new Set(bikes.map((bike) => bike.id));
+  for (const banner of banners)
+    if (banner.motorcycleIds?.some((id) => !ids.has(id)))
+      fail("Uma das motos do banner não está cadastrada na frota.");
   return {
-    bikes: rows(state["bikes"], 100, "Frota").map(motorcycle),
-    banners: rows(state["banners"], 30, "Banners")
-      .map(banner)
-      .sort((a, b) => a.order - b.order)
-      .map((value, order) => ({ ...value, order })),
+    bikes,
+    banners,
     settings: settings(state["settings"]),
     activities: rows(state["activities"] ?? [], 80, "Histórico").map(activity),
     visits: 0,

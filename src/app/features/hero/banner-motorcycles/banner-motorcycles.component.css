@@ -1,0 +1,248 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+.motorcycle-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+.motorcycle-grid.one-moto {
+  grid-template-columns: minmax(0, 420px);
+}
+.motorcycle-grid.two-motos {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.motorcycle-offer {
+  background: #171b18;
+  border: 1px solid #354238;
+  border-radius: 6px;
+  overflow: hidden;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.offer-image {
+  position: relative;
+  background: #111511;
+  aspect-ratio: 1.8;
+  overflow: hidden;
+}
+.offer-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.offer-status {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #a5f6bc;
+  background: #12291bee;
+  border: 1px solid #315c3d;
+  padding: 6px 9px;
+  border-radius: 3px;
+}
+.offer-status i {
+  width: 5px;
+  height: 5px;
+  background: #00e640;
+  border-radius: 50%;
+}
+.offer-status.rented {
+  background: #251b1bee;
+  border-color: #694444;
+  color: #e8aaaa;
+}
+.offer-status.rented i {
+  background: #e08e8e;
+}
+.offer-category {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  background: #0d140fee;
+  color: #b1c4b6;
+  padding: 5px 7px;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.offer-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.offer-version {
+  color: #7eaa8a;
+  font-size: 9px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  line-height: 1.5;
+  margin: 0 0 7px;
+}
+h2 {
+  font-family: var(--display, Arial, sans-serif);
+  font-size: 29px;
+  letter-spacing: -0.3px;
+  line-height: 1.1;
+  color: #f0f6f1;
+  margin: 0 0 12px;
+}
+.offer-description {
+  font-size: 11px;
+  line-height: 1.8;
+  color: #a8b4ab;
+  margin: 0 0 18px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+.offer-specs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  border-block: 1px solid #2e3a31;
+  padding: 13px 0;
+  margin: auto 0 0;
+}
+dt {
+  font-size: 9px;
+  color: #8d9f92;
+  line-height: 1.5;
+}
+dd {
+  margin: 5px 0 0;
+  font-size: 11px;
+  color: #e1e9e3;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.offer-prices {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 18px 0;
+}
+.offer-prices p {
+  color: #f2f7f3;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0;
+}
+.offer-prices small {
+  font-size: 10px;
+  color: #97aa9d;
+  font-weight: 400;
+  margin-left: 5px;
+}
+.offer-prices > span {
+  font-size: 10px;
+  color: #97aa9d;
+}
+.offer-action {
+  min-height: 44px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #00e640;
+  border-radius: 4px;
+  background: #00e640;
+  color: #07140b;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 11px 13px;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+.offer-action svg {
+  width: 17px;
+  height: 17px;
+}
+.offer-action:hover {
+  background: #2bf164;
+}
+.offer-action:focus-visible {
+  outline: 2px solid #ecfff1;
+  outline-offset: 3px;
+}
+.offer-action:disabled,
+.unavailable .preview-action {
+  background: #222b25;
+  border-color: #3b4940;
+  color: #91a397;
+  cursor: default;
+}
+.mobile-hint {
+  display: none;
+}
+.is-preview .motorcycle-grid {
+  grid-auto-flow: column;
+  grid-template-columns: none;
+  grid-auto-columns: minmax(240px, 1fr);
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+.is-preview .offer-body {
+  padding: 15px;
+}
+.is-preview h2 {
+  font-size: 23px;
+}
+@media (min-width: 701px) and (max-width: 1000px) {
+  .motorcycle-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 700px) {
+  .motorcycle-grid,
+  .motorcycle-grid.one-moto,
+  .motorcycle-grid.two-motos {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(250px, 83%);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 1px;
+    overscroll-behavior-x: contain;
+    gap: 12px;
+    padding: 2px 2px 14px;
+    scrollbar-width: thin;
+    scrollbar-color: #336a44 #17251b;
+  }
+  .motorcycle-grid.one-moto {
+    grid-auto-columns: 100%;
+  }
+  .motorcycle-offer {
+    scroll-snap-align: start;
+  }
+  .mobile-hint {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    font-size: 10px;
+    color: #95b49f;
+    margin: 0 0 12px;
+  }
+  .mobile-hint span {
+    color: #00e640;
+  }
+  .offer-body {
+    padding: 18px;
+  }
+  h2 {
+    font-size: 27px;
+  }
+}

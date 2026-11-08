@@ -1,5 +1,6 @@
 <section
   class="hero"
+  [class.with-motorcycles]="motorcycles().length > 0"
   id="inicio"
   aria-roledescription="carrossel"
   aria-label="Destaques da Mix"
@@ -9,12 +10,14 @@
   (focusout)="focused.set(false)"
 >
   @if (slide(); as banner) {
-    <img
-      class="hero-image"
-      [src]="banner.image"
-      [alt]="banner.title"
-      fetchpriority="high"
-    />
+    @if (banner.image) {
+      <img
+        class="hero-image"
+        [src]="banner.image"
+        [alt]="banner.title"
+        fetchpriority="high"
+      />
+    }
   }
   <div class="hero-shade"></div>
   <div class="wrap hero-content">
@@ -40,9 +43,19 @@
       ><span>✓ Sem complicação</span>
     </div>
   </div>
+  @if (motorcycles().length) {
+    <div class="wrap hero-motorcycle-showcase">
+      <mix-banner-motorcycles [motorcycles]="motorcycles()" />
+    </div>
+  }
   <div class="hero-bottom wrap">
     <span>DUAS RODAS. INFINITAS POSSIBILIDADES.</span
-    ><a mixSectionLink class="explore-fleet" href="#motos" aria-label="Explorar a frota">
+    ><a
+      mixSectionLink
+      class="explore-fleet"
+      href="#motos"
+      aria-label="Explorar a frota"
+    >
       <span class="explore-label">EXPLORE A FROTA</span>
       <span class="explore-arrow" aria-hidden="true"
         ><svg viewBox="0 0 24 24"><path d="M12 4v16m-6-6 6 6 6-6" /></svg
