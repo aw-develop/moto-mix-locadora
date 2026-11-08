@@ -77,13 +77,11 @@ describe("Independent card carousels", () => {
     vi.useFakeTimers();
     vi.stubGlobal(
       "matchMedia",
-      vi
-        .fn()
-        .mockReturnValue({
-          matches: true,
-          addEventListener: vi.fn(),
-          removeEventListener: vi.fn(),
-        }),
+      vi.fn().mockReturnValue({
+        matches: true,
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+      }),
     );
     const fixture = create();
     expect(fixture.componentInstance.rotating()).toBe(false);
@@ -93,6 +91,57 @@ describe("Independent card carousels", () => {
     fixture.nativeElement.querySelectorAll(".card-dots button")[1].click();
     fixture.detectChanges();
     expect(fixture.componentInstance.selectedBike().id).toBe("fazer250");
+    fixture.destroy();
+  });
+  it("mantém navegação limitada com 11 motos e permite percorrer todo o ciclo por botões e teclado", () => {
+    vi.useFakeTimers();
+    const models = Array.from({ length: 11 }, (_, i) => ({
+      ...mixConfig.bikes[0],
+      id: "moto-" + i,
+      name: "Moto " + (i + 1),
+    }));
+    const fixture = create(models),
+      component = fixture.componentInstance;
+    const page = () => fixture.nativeElement.querySelector(".card-pagination");
+    const next = () =>
+      page().querySelector('[aria-label="Próxima moto neste card"]');
+    expect(page().querySelectorAll(".card-dots button").length).toBe(5);
+    for (let i = 1; i < 11; i++) {
+      next().click();
+      fixture.detectChanges();
+      expect(component.selectedBike().id).toBe("moto-" + i);
+    }
+    expect(page().querySelector(".card-count").textContent).toContain(
+      "11 / 11",
+    );
+    expect(page().querySelectorAll(".card-dots button").length).toBe(5);
+    expect(
+      page().querySelector('[aria-pressed="true"]').getAttribute("aria-label"),
+    ).toBe("Ver Moto 11");
+    next().click();
+    fixture.detectChanges();
+    expect(component.currentIndex()).toBe(0);
+    page().querySelector('[aria-label="Moto anterior neste card"]').click();
+    fixture.detectChanges();
+    expect(component.currentIndex()).toBe(10);
+    page().dispatchEvent(
+      new KeyboardEvent("keydown", {
+        key: "ArrowRight",
+        bubbles: true,
+        cancelable: true,
+      }),
+    );
+    fixture.detectChanges();
+    expect(component.currentIndex()).toBe(0);
+    page().dispatchEvent(
+      new KeyboardEvent("keydown", {
+        key: "ArrowLeft",
+        bubbles: true,
+        cancelable: true,
+      }),
+    );
+    fixture.detectChanges();
+    expect(component.currentIndex()).toBe(10);
     fixture.destroy();
   });
 });

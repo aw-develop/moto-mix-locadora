@@ -219,28 +219,41 @@
 .card-pagination {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 0 26px 14px;
+  gap: 8px;
+  padding: 0 16px 16px;
+  flex-wrap: nowrap;
+}
+.card-position {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
 }
 .card-dots {
   display: flex;
-  flex-wrap: wrap;
-  gap: 1px;
+  align-items: center;
+  flex-wrap: nowrap;
+  flex-shrink: 0;
+  gap: 0;
 }
 .card-dots button {
-  width: 28px;
-  min-height: 32px;
+  width: 20px;
+  min-width: 20px;
+  height: 36px;
+  min-height: 36px;
   display: grid;
   place-items: center;
   border: 0;
   background: transparent;
   cursor: pointer;
   padding: 0;
+  flex: 0 0 20px;
 }
 .card-dots button span {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   background: #536257;
   transition:
@@ -248,19 +261,72 @@
     width 0.2s;
 }
 .card-dots button.selected span {
-  width: 18px;
+  width: 14px;
   border-radius: 4px;
   background: var(--green);
 }
-.card-dots button:focus-visible {
-  outline: 1px solid var(--green);
-  outline-offset: 0;
-  border-radius: 3px;
+.card-dots button:focus-visible,
+.card-nav:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+.card-nav {
+  display: grid;
+  place-items: center;
+  flex: 0 0 32px;
+  width: 32px;
+  height: 36px;
+  min-width: 32px;
+  min-height: 36px;
+  padding: 0;
+  border: 1px solid #344238;
+  border-radius: 4px;
+  background: #121a14;
+  color: #b8d2bf;
+  cursor: pointer;
+  transition:
+    color 0.2s,
+    border-color 0.2s,
+    background 0.2s;
+}
+.card-nav:hover {
+  color: var(--green);
+  border-color: #44714f;
+  background: #183220;
+}
+.card-nav svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 .card-count {
   color: #99aa9d;
   font-size: 10px;
+  line-height: 1;
   white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  min-width: 36px;
+  text-align: center;
+  flex-shrink: 0;
+}
+@media (max-width: 360px) {
+  .card-pagination {
+    padding-inline: 12px;
+    gap: 6px;
+  }
+  .card-position {
+    gap: 6px;
+  }
+  .card-dots button {
+    width: 18px;
+    min-width: 18px;
+    flex-basis: 18px;
+  }
 }
 @keyframes card-enter {
   from {

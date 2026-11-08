@@ -39,6 +39,23 @@ export class BikeCardComponent {
       ),
     ),
   );
+  readonly navigationModels = computed(() => {
+    const models = this.alternatives();
+    const start = Math.min(
+      Math.max(this.currentIndex() - 2, 0),
+      Math.max(models.length - 5, 0),
+    );
+    return models.slice(start, start + 5);
+  });
+  navigate(direction: -1 | 1, event?: Event): void {
+    event?.preventDefault();
+    const models = this.alternatives();
+    if (models.length < 2) return;
+    this.select(
+      models[(this.currentIndex() + direction + models.length) % models.length]
+        .id,
+    );
+  }
   readonly hovered = signal(false);
   readonly focused = signal(false);
   private readonly ready = signal(false);

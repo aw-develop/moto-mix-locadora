@@ -84,23 +84,55 @@
     </div>
   }
   @if (alternatives().length > 1) {
-    <div class="card-pagination" role="group" aria-label="Motos neste card">
-      <div class="card-dots">
-        @for (model of alternatives(); track model.id) {
-          <button
-            type="button"
-            [class.selected]="selectedBike().id === model.id"
-            [attr.aria-pressed]="selectedBike().id === model.id"
-            [attr.aria-label]="'Ver ' + model.name"
-            (click)="select(model.id)"
-          >
-            <span></span>
-          </button>
-        }
-      </div>
-      <span class="card-count"
-        >{{ currentIndex() + 1 }} / {{ alternatives().length }}</span
+    <div
+      class="card-pagination"
+      role="group"
+      aria-label="Navegar entre as motos deste card"
+      (keydown.arrowleft)="navigate(-1, $event)"
+      (keydown.arrowright)="navigate(1, $event)"
+    >
+      <button
+        class="card-nav"
+        type="button"
+        aria-label="Moto anterior neste card"
+        (click)="navigate(-1)"
       >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m14 6-6 6 6 6" />
+        </svg>
+      </button>
+      <div class="card-position">
+        <div class="card-dots">
+          @for (model of navigationModels(); track model.id) {
+            <button
+              type="button"
+              [class.selected]="selectedBike().id === model.id"
+              [attr.aria-pressed]="selectedBike().id === model.id"
+              [attr.aria-label]="'Ver ' + model.name"
+              (click)="select(model.id)"
+            >
+              <span></span>
+            </button>
+          }
+        </div>
+        <span
+          class="card-count"
+          [attr.aria-label]="
+            'Moto ' + (currentIndex() + 1) + ' de ' + alternatives().length
+          "
+          >{{ currentIndex() + 1 }} / {{ alternatives().length }}</span
+        >
+      </div>
+      <button
+        class="card-nav"
+        type="button"
+        aria-label="Próxima moto neste card"
+        (click)="navigate(1)"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m10 6 6 6-6 6" />
+        </svg>
+      </button>
     </div>
   }
 </article>
