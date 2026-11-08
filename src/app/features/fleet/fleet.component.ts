@@ -7,7 +7,10 @@ import {
   signal,
 } from "@angular/core";
 import { AdminService } from "../../core/services/admin.service";
-import { MotorcycleCategory } from "../../core/models/motorcycle.model";
+import {
+  Motorcycle,
+  MotorcycleCategory,
+} from "../../core/models/motorcycle.model";
 import { BikeCardComponent } from "../bike-card/bike-card.component";
 @Component({
   selector: "mix-fleet",
@@ -33,6 +36,19 @@ export class FleetComponent {
           (this.category() === "all" || bike.category === this.category()),
       ),
   );
+  readonly cards = computed(() => {
+    const groups = new Map<string, { id: string; bikes: Motorcycle[] }>();
+    for (const bike of this.filteredBikes()) {
+      const label = bike.cardGroup?.trim();
+      const id = label
+        ? "group:" + label.normalize("NFC").toLocaleLowerCase("pt-BR")
+        : "moto:" + bike.id;
+      const group = groups.get(id);
+      if (group) group.bikes.push(bike);
+      else groups.set(id, { id, bikes: [bike] });
+    }
+    return [...groups.values()];
+  });
   setCategory(event: Event): void {
     this.category.set(
       (event.target as HTMLSelectElement).value as MotorcycleCategory | "all",

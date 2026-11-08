@@ -212,3 +212,83 @@
 .bike-card {
   height: 100%;
 }
+
+.card-group-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px 12px;
+  border-bottom: 1px solid var(--border);
+}
+.card-group-heading > span {
+  font-size: 13px;
+  font-weight: 700;
+  color: #e6eee7;
+  overflow-wrap: anywhere;
+}
+.card-group-heading > small {
+  font-size: 10px;
+  line-height: 1.5;
+  color: #93a499;
+  white-space: nowrap;
+}
+.model-picker {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 12px;
+  scrollbar-width: thin;
+  scrollbar-color: #34523b #121612;
+  overscroll-behavior-x: contain;
+}
+.model-picker button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  max-width: 240px;
+  min-height: 48px;
+  padding: 6px 10px 6px 4px;
+  color: #a4b1a7;
+  background: #111611;
+  border: 1px solid #344037;
+  border-radius: 4px;
+  text-align: left;
+  cursor: pointer;
+}
+.model-picker button.selected {
+  color: #e5ffed;
+  border-color: var(--green);
+  background: #14271a;
+}
+.model-picker button:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+.model-picker img {
+  object-fit: contain;
+  border-radius: 2px;
+}
+.model-picker span {
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.model-picker small {
+  display: block;
+  font-size: 9px;
+  font-weight: 400;
+  color: #9eafa3;
+}
+@media (max-width: 480px) {
+  .card-group-heading {
+    padding-inline: 14px;
+  }
+  .model-picker {
+    gap: 6px;
+  }
+  .model-picker button {
+    max-width: 210px;
+  }
+}

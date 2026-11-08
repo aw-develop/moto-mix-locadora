@@ -1,9 +1,7 @@
 <div class="admin-dialog-heading">
   <span class="admin-kicker">COMUNICAÇÃO / HERO</span>
   <h2 mat-dialog-title>{{ data ? "Editar banner" : "Novo banner" }}</h2>
-  <p>
-    Monte uma campanha com imagem ou reúna até 6 motos com suas especificações.
-  </p>
+  <p>O banner será exibido no topo do site público.</p>
 </div>
 <form class="admin-form" [formGroup]="form" (ngSubmit)="save()" novalidate>
   <mat-dialog-content
@@ -22,96 +20,10 @@
           required
         ></textarea>
       </label>
-      <fieldset class="full motorcycle-selection">
-        <legend>Motos no mesmo banner</legend>
-        <p>
-          Selecione até 6 modelos. Fotos, especificações, preços e
-          disponibilidade acompanham o cadastro da frota.
-        </p>
-        <div class="motorcycle-options">
-          @for (moto of bikes(); track moto.id) {
-            <label
-              class="motorcycle-option"
-              [class.selected]="selectedIds().includes(moto.id)"
-            >
-              <input
-                type="checkbox"
-                [checked]="selectedIds().includes(moto.id)"
-                [disabled]="
-                  selectedIds().length >= 6 && !selectedIds().includes(moto.id)
-                "
-                (change)="selectMotorcycle(moto.id, $event)"
-                [attr.aria-label]="'Destacar ' + moto.name"
-              />
-              <img [src]="moto.image" alt="" width="64" height="44" />
-              <span
-                >{{ moto.name
-                }}<small
-                  >{{ moto.version }} ·
-                  {{ moto.available ? "Disponível" : "Alugada" }}</small
-                ></span
-              >
-            </label>
-          } @empty {
-            <p>Cadastre motos na seção Frota para adicioná-las aqui.</p>
-          }
-        </div>
-        @if (selectedMotorcycles().length) {
-          <div class="selection-heading">
-            <b>Ordem das motos</b
-            ><span>{{ selectedIds().length }} / 6 selecionadas</span>
-          </div>
-          <ol class="selected-motorcycles">
-            @for (
-              moto of selectedMotorcycles();
-              track moto.id;
-              let i = $index
-            ) {
-              <li>
-                <span>{{ moto.name }}</span>
-                <div>
-                  <button
-                    type="button"
-                    (click)="moveMotorcycle(i, -1)"
-                    [disabled]="i === 0"
-                    [attr.aria-label]="'Mover ' + moto.name + ' para antes'"
-                  >
-                    ↑
-                  </button>
-                  <button
-                    type="button"
-                    (click)="moveMotorcycle(i, 1)"
-                    [disabled]="i === selectedMotorcycles().length - 1"
-                    [attr.aria-label]="'Mover ' + moto.name + ' para depois'"
-                  >
-                    ↓
-                  </button>
-                  <button
-                    type="button"
-                    (click)="removeMotorcycle(moto.id)"
-                    [attr.aria-label]="'Retirar ' + moto.name + ' do banner'"
-                  >
-                    ×
-                  </button>
-                </div>
-              </li>
-            }
-          </ol>
-          <p class="preview-title">Prévia das motos no banner</p>
-          <mix-banner-motorcycles
-            [motorcycles]="selectedMotorcycles()"
-            [preview]="true"
-          />
-        }
-      </fieldset>
       <div class="full">
         <mix-image-upload
           formControlName="image"
-          [label]="
-            selectedIds().length
-              ? 'Imagem de fundo (opcional)'
-              : 'Imagem do banner'
-          "
+          label="Imagem do banner"
           [wide]="true"
         />
       </div>

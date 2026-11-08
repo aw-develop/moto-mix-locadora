@@ -67,8 +67,11 @@
               <div class="model-cell">
                 <img [src]="moto.image" [alt]="moto.name" /><span
                   ><strong>{{ moto.name }}</strong
-                  ><small>{{ moto.version }}</small></span
-                >
+                  ><small>{{ moto.version }}</small>
+                  @if (moto.cardGroup) {
+                    <small>Card: {{ moto.cardGroup }}</small>
+                  }
+                </span>
               </div>
             </td>
             <td>

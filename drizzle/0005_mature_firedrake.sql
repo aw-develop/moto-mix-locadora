@@ -1,0 +1,1 @@
+ALTER TABLE `motorcycles` ADD `card_group` text DEFAULT '' NOT NULL;

@@ -1,44 +1,83 @@
-<article class="bike-card" [class.unavailable]="!bike().available">
+<article class="bike-card" [class.unavailable]="!selectedBike().available">
+  @if (alternatives().length > 1) {
+    <div class="card-group-heading">
+      <span>{{ selectedBike().cardGroup }}</span
+      ><small>{{ alternatives().length }} motos neste card</small>
+    </div>
+    <div
+      class="model-picker"
+      role="group"
+      [attr.aria-label]="'Escolher moto em ' + selectedBike().cardGroup"
+    >
+      @for (model of alternatives(); track model.id) {
+        <button
+          type="button"
+          [class.selected]="selectedBike().id === model.id"
+          [attr.aria-pressed]="selectedBike().id === model.id"
+          (click)="select(model.id)"
+        >
+          <img
+            [src]="model.image"
+            alt=""
+            width="60"
+            height="40"
+            loading="lazy"
+          />
+          <span
+            >{{ model.name }}<small>{{ model.version }}</small></span
+          >
+        </button>
+      }
+    </div>
+  }
   <div class="bike-visual">
-    <span class="badge" [class.available]="bike().available"
-      ><i></i>{{ bike().available ? "DISPONÍVEL" : "ALUGADA" }}</span
-    ><span class="bike-category">{{ bike().category }}</span
+    <span class="badge" [class.available]="selectedBike().available"
+      ><i></i>{{ selectedBike().available ? "DISPONÍVEL" : "ALUGADA" }}</span
+    ><span class="bike-category">{{ selectedBike().category }}</span
     ><img
-      [src]="bike().image"
-      [alt]="bike().name + ' — imagem ilustrativa'"
+      [src]="selectedBike().image"
+      [alt]="selectedBike().name + ' — imagem ilustrativa'"
       loading="lazy"
       width="600"
       height="400"
     /><span class="visual-index"
-      >MIX / {{ bike().version.split(" · ")[1] }}</span
+      >MIX /
+      {{
+        selectedBike().version.split(" · ")[1] || selectedBike().version
+      }}</span
     >
   </div>
-  <div class="bike-content">
-    <div class="bike-version">{{ bike().version }}</div>
-    <h3>{{ bike().name }}</h3>
-    <p class="bike-description">{{ bike().description }}</p>
+  <div class="bike-content" aria-live="polite" aria-atomic="true">
+    <div class="bike-version">{{ selectedBike().version }}</div>
+    <h3>{{ selectedBike().name }}</h3>
+    <p class="bike-description">{{ selectedBike().description }}</p>
     <div class="specs">
-      <span><b aria-hidden="true">⚙</b> {{ bike().transmission }}</span
-      ><span><b aria-hidden="true">◉</b> {{ bike().consumption }}</span>
+      <span><b aria-hidden="true">⚙</b> {{ selectedBike().transmission }}</span
+      ><span><b aria-hidden="true">◉</b> {{ selectedBike().consumption }}</span>
     </div>
     <div class="price-row">
       <div>
         <span>DIÁRIA A PARTIR DE</span>
         <p>
-          {{ bike().daily | currency: "BRL" : "symbol" : "1.0-0" : "pt-BR"
+          {{
+            selectedBike().daily
+              | currency: "BRL" : "symbol" : "1.2-2" : "pt-BR"
           }}<small> / dia</small>
         </p>
       </div>
       <div class="weekly">
-        {{ bike().weekly | currency: "BRL" : "symbol" : "1.0-0" : "pt-BR"
+        {{
+          selectedBike().weekly
+            | currency: "BRL" : "symbol" : "1.2-2" : "pt-BR"
         }}<span>/ semana</span>
       </div>
     </div>
-    @if (bike().available) {
+    @if (selectedBike().available) {
       <a
         class="btn reserve"
-        [mixWhatsapp]="whatsapp.reserveMessage(bike().name)"
-        [mixModel]="bike().name"
+        [attr.aria-label]="'Reservar ' + selectedBike().name"
+        [mixWhatsapp]="whatsapp.reserveMessage(selectedBike().name)"
+        [mixModel]="selectedBike().name"
         >Reservar este modelo <svg aria-hidden="true"><use href="#arrow" /></svg
       ></a>
     } @else {

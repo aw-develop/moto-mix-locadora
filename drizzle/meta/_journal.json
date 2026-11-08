@@ -36,6 +36,13 @@
       "when": 1794165721258,
       "tag": "0004_fancy_monster_badoon",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1794166898034,
+      "tag": "0005_mature_firedrake",
+      "breakpoints": true
     }
   ]
 }

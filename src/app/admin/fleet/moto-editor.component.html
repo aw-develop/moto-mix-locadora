@@ -25,6 +25,25 @@
           <option>Touring</option>
         </select></label
       >
+      <label class="full card-group-field"
+        >Grupo do card (opcional)
+        <input
+          formControlName="cardGroup"
+          maxlength="80"
+          list="fleet-card-groups"
+          placeholder="Ex.: Motos para entregas"
+        />
+        <datalist id="fleet-card-groups">
+          @for (group of cardGroups; track group) {
+            <option [value]="group"></option>
+          }
+        </datalist>
+        <small
+          >Motos com o mesmo nome de grupo aparecem em um único card na Nossa
+          Frota. Cada uma mantém foto, especificações, preço e disponibilidade
+          próprios. Deixe vazio para um card individual.</small
+        >
+      </label>
       <div class="full">
         <mix-image-upload formControlName="image" label="Foto da moto" />
       </div>

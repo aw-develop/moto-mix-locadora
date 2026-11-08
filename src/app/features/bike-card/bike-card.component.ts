@@ -3,6 +3,8 @@ import {
   ChangeDetectionStrategy,
   inject,
   input,
+  computed,
+  signal,
 } from "@angular/core";
 import { CurrencyPipe } from "@angular/common";
 import { Motorcycle } from "../../core/models/motorcycle.model";
@@ -18,5 +20,16 @@ import { WhatsappDirective } from "../../shared/whatsapp/whatsapp.directive";
 })
 export class BikeCardComponent {
   readonly bike = input.required<Motorcycle>();
+  readonly alternatives = input<readonly Motorcycle[]>([]);
+  private readonly selectedId = signal<string | null>(null);
+  readonly selectedBike = computed(
+    () =>
+      this.alternatives().find((bike) => bike.id === this.selectedId()) ??
+      this.alternatives()[0] ??
+      this.bike(),
+  );
+  select(id: string): void {
+    this.selectedId.set(id);
+  }
   readonly whatsapp = inject(WhatsappService);
 }

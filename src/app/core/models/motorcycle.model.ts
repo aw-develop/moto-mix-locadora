@@ -2,6 +2,7 @@ export type MotorcycleCategory = "Entregas" | "Urbana" | "Touring";
 export interface Motorcycle {
   readonly id: string;
   readonly name: string;
+  readonly cardGroup?: string;
   readonly version: string;
   readonly category: MotorcycleCategory;
   readonly transmission: string;

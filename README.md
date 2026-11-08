@@ -26,7 +26,7 @@ A identidade visual combina grafite, verde neon e tipografia marcante, com naveg
 
 - Catálogo com filtros, preços diários e semanais, especificações e disponibilidade.
 - Contato pelo WhatsApp com mensagem preenchida para o modelo escolhido.
-- Banners com rotação automática, sem setas ou botão de pausa: 6 segundos para imagens e 12 segundos para campanhas com motos.
+- Banners principais com rotação automática a cada seis segundos, sem setas ou botão de pausa.
 - Seções de vantagens, localização, horários e contato.
 - Botão flutuante de WhatsApp e efeitos de entrada ao rolar a página.
 - Interface adaptada a celulares, tablets e desktops, respeitando a preferência por movimento reduzido.
@@ -36,7 +36,8 @@ A identidade visual combina grafite, verde neon e tipografia marcante, com naveg
 - Visão geral da frota, disponibilidade e atividades.
 - Cadastro, edição e exclusão de motos, com confirmação antes de excluir.
 - Alternância rápida entre moto disponível e indisponível.
-- Gerenciamento de banners: conteúdo, imagem, ordem, ativação e seleção de até seis motos na mesma campanha.
+- Agrupamento de várias motos no mesmo card da Nossa Frota, com seleção individual do modelo.
+- Gerenciamento de banners principais: conteúdo, imagem, ordem e ativação.
 - Upload de imagens do dispositivo, com prévia e otimização.
 - Configuração de WhatsApp, endereço, mapa, horários e redes sociais.
 - Alteração de login e senha no próprio painel, mediante confirmação da senha atual.
@@ -45,11 +46,13 @@ A identidade visual combina grafite, verde neon e tipografia marcante, com naveg
 
 > **Escopo da operação:** o WhatsApp inicia o atendimento. Um clique representa intenção de contato; não confirma uma reserva nem efetua pagamento. Os indicadores de visitas e cliques são da sessão, sem analytics globais.
 
-## Várias motos no mesmo banner
+## Várias motos no mesmo card da frota
 
-No painel, abra **Banners → Novo banner** ou edite uma campanha existente. Em **Motos no mesmo banner**, selecione até seis modelos cadastrados na frota e organize a ordem com os controles de posição. A prévia mostra as fichas individuais; a imagem de fundo é opcional quando há motos selecionadas.
+No painel, abra **Frota → Adicionar moto** ou edite um modelo. No campo **Grupo do card**, informe um nome, por exemplo, `Motos para entregas`. Use o mesmo nome nas outras motos que deseja reunir. Os grupos já cadastrados são sugeridos no campo; deixe-o vazio para exibir a moto em um card individual.
 
-Cada ficha apresenta foto, cilindrada/versão, categoria, transmissão, consumo, preços diário e semanal, disponibilidade e reserva pelo WhatsApp. As informações acompanham o cadastro da frota. No desktop, as fichas aparecem lado a lado; no celular, deslize horizontalmente para comparar. Excluir uma moto da frota também remove sua associação aos banners. Campanhas somente com imagem continuam funcionando.
+Na seção **Nossa Frota**, o card apresenta um seletor de modelos com miniaturas. Ao escolher uma moto, a foto, a versão, a categoria, a descrição, a transmissão, o consumo, os preços e a disponibilidade mudam juntos. O botão de reserva também usa o modelo selecionado. Os filtros consideram cada moto: modelos fora da categoria ou disponibilidade escolhida não aparecem no seletor.
+
+Os dados de cada moto continuam independentes. Para retirar uma moto do grupo, apague seu **Grupo do card** e salve. O agrupamento fica salvo no banco e não altera o banner principal.
 
 ## Tecnologias
 

@@ -43,7 +43,10 @@ describe("Server persistence", () => {
     );
     const first = TestBed.inject(AdminService);
     await first.initialize();
-    first.saveMoto({ ...first.bikes()[0], daily: 79 }, "cg160");
+    first.saveMoto(
+      { ...first.bikes()[0], daily: 79, cardGroup: "Motos para entregas" },
+      "cg160",
+    );
     expect(first.saveStatus()).toBe("saving");
     await vi.advanceTimersByTimeAsync(300);
     expect(first.saveStatus()).toBe("saved");
@@ -51,6 +54,7 @@ describe("Server persistence", () => {
     const second = TestBed.inject(AdminService);
     await second.initialize();
     expect(second.bikes()[0].daily).toBe(79);
+    expect(second.bikes()[0].cardGroup).toBe("Motos para entregas");
   });
   it("mantém os dados locais e mostra conflito quando outro dispositivo já salvou", async () => {
     vi.useFakeTimers();

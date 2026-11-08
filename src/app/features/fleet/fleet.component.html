@@ -44,8 +44,12 @@
     >
   </div>
   <div class="catalog" id="catalog">
-    @for (bike of filteredBikes(); track bike.id) {
-      <mix-bike-card [bike]="bike" [mixReveal]="$index * 80" />
+    @for (card of cards(); track card.id) {
+      <mix-bike-card
+        [bike]="card.bikes[0]"
+        [alternatives]="card.bikes"
+        [mixReveal]="$index * 80"
+      />
     }
   </div>
   @if (filteredBikes().length === 0) {

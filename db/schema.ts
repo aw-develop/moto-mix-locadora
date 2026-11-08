@@ -7,6 +7,7 @@ export const siteState = sqliteTable("site_state", {
 });
 
 export const motorcycles = sqliteTable("motorcycles", {
+  cardGroup: text("card_group").notNull().default(""),
   id: text("id").primaryKey(),
   name: text("name").notNull(),
   version: text("version").notNull(),

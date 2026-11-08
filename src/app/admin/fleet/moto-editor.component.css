@@ -5,3 +5,10 @@
 .admin-form {
   padding-top: 7px;
 }
+
+.card-group-field small {
+  color: #9caaa0;
+  font-size: 12px;
+  line-height: 1.7;
+  font-weight: 400;
+}

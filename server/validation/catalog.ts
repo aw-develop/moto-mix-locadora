@@ -18,7 +18,12 @@ import {
 } from "./fields.ts";
 import { imageReference } from "./images.ts";
 export function motorcycle(value: Record<string, unknown>): Motorcycle {
+  const cardGroup =
+    value["cardGroup"] === undefined
+      ? ""
+      : text(value["cardGroup"], "Grupo do card", 80, true);
   return {
+    ...(cardGroup ? { cardGroup } : {}),
     id: text(value["id"], "ID", 80),
     name: text(value["name"], "Modelo", 80),
     version: text(value["version"], "Versão", 80),

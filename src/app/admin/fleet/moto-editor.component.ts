@@ -37,7 +37,16 @@ export class MotoEditorComponent {
   private readonly admin = inject(AdminService);
   private readonly fb = inject(FormBuilder);
   readonly error = signal("");
+  readonly cardGroups = [
+    ...new Set(
+      this.admin
+        .bikes()
+        .map((bike) => bike.cardGroup)
+        .filter((group): group is string => !!group),
+    ),
+  ];
   readonly form = this.fb.nonNullable.group({
+    cardGroup: [this.data?.cardGroup ?? "", Validators.maxLength(80)],
     name: [
       this.data?.name ?? "",
       [Validators.required, Validators.pattern(/\S/), Validators.maxLength(80)],

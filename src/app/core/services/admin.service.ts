@@ -233,8 +233,16 @@ export class AdminService {
       throw new Error(
         "Escolha uma imagem do dispositivo, uma URL HTTPS ou um arquivo em assets/.",
       );
+    const cardGroup = (
+      draft.cardGroup ??
+      this.bikes().find((b) => b.id === id)?.cardGroup ??
+      ""
+    ).trim();
+    if (cardGroup.length > 80)
+      throw new Error("Grupo do card: use até 80 caracteres.");
     const moto = {
       ...draft,
+      cardGroup,
       id: id || crypto.randomUUID(),
       name: this.text(draft.name, "Modelo", 80),
       version: this.text(draft.version, "Versão", 80),
