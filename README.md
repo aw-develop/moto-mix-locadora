@@ -236,6 +236,10 @@ A publicação atual usa **Sites com Cloudflare Workers, D1 e R2**. O fluxo prep
 
 Não publique somente o cliente Angular como um site estático se precisar manter login, upload e salvamento. Gere novas migrações para alterações de schema; não edite migrações já aplicadas.
 
+## Preparação do D1 de produção
+
+O banco configurado é `bd_moto-mixlocadora`, com binding `DB` e migrações em `drizzle/`. Consulte [D1 de produção](docs/D1-PRODUCAO.md) para gerar o build, verificar tabelas e aplicar somente as migrações pendentes. A preparação do código não executa migrações remotas automaticamente.
+
 ## Build com Docker
 
 Para gerar os artefatos em um ambiente isolado com Node.js 24:

@@ -38,7 +38,7 @@ Novas exportações substituem somente `docker-output/dist`, `docker-output/driz
 
 Gerar o build **não publica** e **não executa migrações** no banco remoto. Para a hospedagem atual, preserve o fluxo Sites de versionamento, empacotamento e publicação.
 
-Se a operação for transferida para uma conta própria da Cloudflare, será necessário configurar nessa conta o Worker, os assets e os bindings `DB` (D1) e `BUCKET` (R2), aplicar as migrações e registrar os segredos administrativos no ambiente do Worker. A configuração gerada em `dist/server/wrangler.json` contém nomes e ID de banco de desenvolvimento; não a publique sem adaptar e revisar esses recursos. Os arquivos gerados não transferem o banco, as imagens existentes ou as credenciais do Sites para outra conta.
+Se a operação for transferida para uma conta própria da Cloudflare, será necessário configurar nessa conta o Worker, os assets e os bindings `DB` (D1) e `BUCKET` (R2), aplicar as migrações e registrar os segredos administrativos no ambiente do Worker. A configuração gerada aponta para o D1 `bd_moto-mixlocadora` informado pelo responsável. O nome do bucket R2 ainda é de desenvolvimento; não publique sem revisar todos os bindings e a autenticação. Consulte [D1 de produção](D1-PRODUCAO.md) no repositório. Os arquivos gerados não transferem o banco, as imagens existentes ou as credenciais do Sites para outra conta.
 
 Não publique apenas `dist/client`, porque isso não leva a API, a autenticação nem o salvamento. Não rode o servidor de desenvolvimento como hospedagem de produção. Não copie `.env`, `.dev.vars`, hashes administrativos, tokens de conta ou bancos locais para a imagem. O build não precisa desses segredos.
 

@@ -12,7 +12,10 @@
     "dev:angular": "ng serve --host 0.0.0.0",
     "test:api": "node --experimental-strip-types --test server/tests/*.test.ts",
     "typecheck:server": "tsc -p tsconfig.server.json",
-    "security:check": "node scripts/security-check.mjs"
+    "security:check": "node scripts/security-check.mjs",
+    "db:check:production": "wrangler d1 execute bd_moto-mixlocadora --remote --config dist/server/wrangler.json --command \"SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' ORDER BY name;\"",
+    "db:migrations:list:production": "wrangler d1 migrations list bd_moto-mixlocadora --remote --config dist/server/wrangler.json",
+    "db:migrate:production": "wrangler d1 migrations apply bd_moto-mixlocadora --remote --config dist/server/wrangler.json"
   },
   "dependencies": {
     "@angular/common": "^21.2.0",
