@@ -240,6 +240,10 @@ Não publique somente o cliente Angular como um site estático se precisar mante
 
 O banco configurado é `bd_moto-mixlocadora`, com binding `DB` e migrações em `drizzle/`. Consulte [D1 de produção](docs/D1-PRODUCAO.md) para gerar o build, verificar tabelas e aplicar somente as migrações pendentes. A preparação do código não executa migrações remotas automaticamente.
 
+## R2 de produção
+
+O bucket de imagens configurado é `moto-mixlocadora`, com binding `BUCKET`. O backend acessa o storage pela API de Workers e entrega as imagens por `/api/media/`; nenhuma chave S3 é necessária no frontend. Consulte [R2 de produção](docs/R2-PRODUCAO.md) para conferir o binding e testar uploads após publicar o Worker na conta própria.
+
 ## Build com Docker
 
 Para gerar os artefatos em um ambiente isolado com Node.js 24:
