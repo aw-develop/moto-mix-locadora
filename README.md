@@ -236,6 +236,16 @@ A publicação atual usa **Sites com Cloudflare Workers, D1 e R2**. O fluxo prep
 
 Não publique somente o cliente Angular como um site estático se precisar manter login, upload e salvamento. Gere novas migrações para alterações de schema; não edite migrações já aplicadas.
 
+## Build com Docker
+
+Para gerar os artefatos em um ambiente isolado com Node.js 24:
+
+```bash
+docker compose run --rm --build build
+```
+
+O resultado fica em `docker-output/`. O Compose é uma ferramenta de build; a produção continua usando **Cloudflare Workers, D1 e R2**, pelo fluxo atual do Sites. Gerar os arquivos não publica o site, aplica migrações nem transfere dados para outra conta. Consulte [Docker e Cloudflare](docs/DOCKER.md) para os requisitos, a saída gerada e os limites da configuração.
+
 ## Pontos de operação
 
 - Dados de outros dispositivos são carregados ao abrir ou recarregar a página; não há atualização push entre sessões.

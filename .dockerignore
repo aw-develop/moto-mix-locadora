@@ -1,0 +1,50 @@
+# Dependencies and generated output are recreated inside Docker.
+**/node_modules
+.angular
+.next
+.vinext
+.wrangler
+.sites-runtime
+dist
+public/client
+app/angular-shell.html
+coverage
+outputs
+docker-output
+
+# Git history, editor files and machine-specific configuration.
+.git
+.github
+.vscode
+.idea
+.DS_Store
+**/.npmrc
+**/.yarnrc*
+
+# Never send credentials, environment files or local databases to the builder.
+.env
+.env.*
+**/.env
+**/.env.*
+.dev.vars
+.dev.vars.*
+**/.dev.vars
+**/.dev.vars.*
+secrets
+**/secrets
+**/*.pem
+**/*.key
+**/id_rsa*
+**/id_ed25519*
+**/*.sqlite
+**/*.sqlite*
+**/*.db
+**/*.db-*
+**/*.log
+**/*.zip
+**/*.tar
+**/*.tar.gz
+
+# Keep the source hosting manifest required by vite.config.ts.
+.openai/*
+!.openai/hosting.json

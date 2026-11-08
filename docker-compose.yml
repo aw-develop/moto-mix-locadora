@@ -1,0 +1,26 @@
+name: mix-locadora-build
+
+# This is a one-shot artifact builder, not a production hosting stack.
+# Cloudflare Workers uses the generated Worker and assets; it does not run Compose.
+services:
+  build:
+    image: mix-locadora-build:local
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: build
+    init: true
+    # Only the artifact export runs with this UID. The image builds as "node".
+    # On Linux, set DOCKER_UID/DOCKER_GID to your host IDs if desired.
+    user: "${DOCKER_UID:-0}:${DOCKER_GID:-0}"
+    network_mode: none
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - type: bind
+        source: ./docker-output
+        target: /artifacts
+    restart: "no"

@@ -18,3 +18,6 @@ node_modules/
 next-env.d.ts
 *.tsbuildinfo
 outputs/
+
+# Docker exports contain generated deployment artifacts.
+docker-output/
