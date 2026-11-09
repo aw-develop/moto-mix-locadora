@@ -1,3 +1,4 @@
+import { createHmac, pbkdf2Sync } from "node:crypto";
 import { DatabaseSync } from "node:sqlite";
 import type { SQLInputValue } from "node:sqlite";
 import { readFileSync, readdirSync } from "node:fs";
@@ -37,7 +38,14 @@ class Statement {
     };
   }
 }
-export function environment() {
+const fixtureToken = "a".repeat(64);
+const fixtureSecret = "b".repeat(64);
+const fixtureHash =
+  "fixture-salt:" +
+  pbkdf2Sync("fixture-password", "fixture-salt", 100000, 32, "sha256").toString(
+    "hex",
+  );
+export function environment(options: { authenticated?: boolean } = {}) {
   const db = new DatabaseSync(":memory:");
   for (const filename of readdirSync(new URL("../../drizzle/", import.meta.url))
     .filter((name) => name.endsWith(".sql"))
@@ -77,7 +85,9 @@ export function environment() {
     },
   };
   const env = {
-    ADMIN_EMAILS: "admin@example.com",
+    SESSION_SECRET: fixtureSecret,
+    ADMIN_USERNAME: "admin",
+    ADMIN_PASSWORD_HASH: fixtureHash,
     DB: binding,
     BUCKET: {
       put: async (
@@ -93,6 +103,17 @@ export function environment() {
       get: async (key: string) => files.get(key) || null,
     },
   } as unknown as BackendEnvironment;
+  if (options.authenticated !== false) {
+    db.prepare(
+      "INSERT INTO admin_credentials(id,username,password_hash,revision) VALUES('main','admin',?,'fixture-revision')",
+    ).run(fixtureHash);
+    db.prepare(
+      "INSERT INTO admin_sessions(token_hash,expires_at) VALUES(?,?)",
+    ).run(
+      createHmac("sha256", fixtureSecret).update(fixtureToken).digest("hex"),
+      Date.now() + 3600000,
+    );
+  }
   return {
     env,
     db,
@@ -124,8 +145,7 @@ export function request(
     headers: {
       ...(admin
         ? {
-            "oai-authenticated-user-id": "owner",
-            "oai-authenticated-user-email": "admin@example.com",
+            cookie: "__Host-mix_admin=" + fixtureToken,
           }
         : {}),
       ...(body ? { "content-type": "application/json", origin } : {}),

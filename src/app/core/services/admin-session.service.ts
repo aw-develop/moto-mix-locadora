@@ -22,18 +22,29 @@ export class AdminSessionService {
     this.identity.set(identity);
   }
   verifySession(): Promise<boolean> {
-    if (!this.verification) this.verification = this.readSession().finally(() => { this.verification = null; });
+    if (!this.verification)
+      this.verification = this.readSession().finally(() => {
+        this.verification = null;
+      });
     return this.verification;
   }
   private async readSession(): Promise<boolean> {
     const revision = this.revision;
     try {
-      const response = await fetch("/api/session", { cache: "no-store", signal: AbortSignal.timeout(10000) });
+      const response = await fetch("/api/session", {
+        credentials: "same-origin",
+        cache: "no-store",
+        signal: AbortSignal.timeout(10000),
+      });
       if (!response.ok) throw new Error("Sessão indisponível.");
       const value = await response.json();
       if (revision !== this.revision) return false;
-      this.setIdentity({ isAdmin: value?.isAdmin === true, signedIn: value?.signedIn === true,
-        name: typeof value?.name === "string" ? value.name.slice(0,160) : "", email: "" });
+      this.setIdentity({
+        isAdmin: value?.isAdmin === true,
+        signedIn: value?.signedIn === true,
+        name: typeof value?.name === "string" ? value.name.slice(0, 160) : "",
+        email: "",
+      });
       return this.active();
     } catch {
       if (revision === this.revision) this.logout();
@@ -42,16 +53,25 @@ export class AdminSessionService {
   }
   async login(username: string, password: string): Promise<void> {
     const response = await fetch("/api/auth/login", {
-      method: "POST", headers: {"content-type":"application/json"},
-      body: JSON.stringify({username,password}), signal: AbortSignal.timeout(15000),
+      method: "POST",
+      credentials: "same-origin",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ username, password }),
+      signal: AbortSignal.timeout(15000),
     });
     const result = await response.json();
-    if (!response.ok) throw new Error(result.error || "Não foi possível entrar.");
+    if (!response.ok)
+      throw new Error(result.error || "Não foi possível entrar.");
     this.setIdentity(result);
   }
   async signOut(): Promise<void> {
-    const response = await fetch("/api/auth/logout", { method: "POST", signal: AbortSignal.timeout(15000) });
-    if (!response.ok) throw new Error("Não foi possível encerrar a sessão. Tente novamente.");
+    const response = await fetch("/api/auth/logout", {
+      method: "POST",
+      credentials: "same-origin",
+      signal: AbortSignal.timeout(15000),
+    });
+    if (!response.ok)
+      throw new Error("Não foi possível encerrar a sessão. Tente novamente.");
     this.logout();
   }
   logout(): void {

@@ -14,6 +14,17 @@ const isCodexSeatbeltSandbox = process.env.CODEX_SANDBOX === "seatbelt";
 const managedLinux = readExecutionProfile() === "managed-linux";
 
 const localBindingConfig = {
+  name: "mix-locadora-angular",
+  workers_dev: true,
+  observability: {
+    enabled: true,
+    logs: { enabled: true, invocation_logs: false },
+    traces: { enabled: true },
+  },
+  account_id: "825f844ee27d60a88ad9a5ed44568ed8",
+  secrets: {
+    required: ["ADMIN_USERNAME", "ADMIN_PASSWORD_HASH", "SESSION_SECRET"],
+  },
   main: "./worker/index.ts",
   compatibility_flags: ["nodejs_compat"],
   d1_databases: d1

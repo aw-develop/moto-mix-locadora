@@ -5,7 +5,7 @@ import type {
 import { passwordIdentity } from "./auth/password.ts";
 import { credentialsRoute } from "./routes/credentials.route.ts";
 import { authRoute } from "./routes/auth.route.ts";
-import { resolveIdentity } from "./auth/identity.ts";
+import { anonymousIdentity } from "./auth/identity.ts";
 import { errorResponse, json } from "./http/responses.ts";
 import { catalogRoute } from "./routes/catalog.route.ts";
 import { sessionRoute } from "./routes/session.route.ts";
@@ -21,11 +21,14 @@ export async function handleApi(
       request,
       env,
       url,
-      identity: (await passwordIdentity(request, env)) ?? resolveIdentity(request, env),
+      identity: (await passwordIdentity(request, env)) ?? anonymousIdentity(),
     };
     if (url.pathname === "/api/auth/credentials" && request.method === "POST")
       return await credentialsRoute(context);
-    if (["/api/auth/login", "/api/auth/logout"].includes(url.pathname) && request.method === "POST")
+    if (
+      ["/api/auth/login", "/api/auth/logout"].includes(url.pathname) &&
+      request.method === "POST"
+    )
       return await authRoute(context);
     if (url.pathname === "/api/session" && request.method === "GET")
       return sessionRoute(context);

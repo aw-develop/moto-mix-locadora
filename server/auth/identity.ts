@@ -1,26 +1,8 @@
-import type {
-  BackendEnvironment,
-  RequestIdentity,
-} from "../models/environment.ts";
+import type { RequestIdentity } from "../models/environment.ts";
 import { fail } from "../http/errors.ts";
-/** Identity headers are supplied by Sites dispatch, never accepted as application credentials. */
-export function resolveIdentity(
-  request: Request,
-  env: BackendEnvironment,
-): RequestIdentity {
-  const userId = request.headers.get("oai-authenticated-user-id"),
-    email = request.headers.get("oai-authenticated-user-email");
-  const allowed = (env.ADMIN_EMAILS || "")
-    .split(",")
-    .map((value) => value.trim().toLowerCase())
-    .filter(Boolean);
-  return {
-    isAdmin: !!userId && !!email && allowed.includes(email.toLowerCase()),
-    signedIn: !!userId,
-    userId,
-    email: email || "",
-    name: email?.split("@")[0] || "Administrador",
-  };
+/** Only a validated server session can authorize an administrator. */
+export function anonymousIdentity(): RequestIdentity {
+  return { isAdmin: false, signedIn: false, userId: null, email: "", name: "" };
 }
 export function requireAdmin(identity: RequestIdentity): void {
   if (!identity.isAdmin)

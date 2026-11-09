@@ -125,9 +125,9 @@ Use [.env.example](.env.example) como referência de nomes. Valores reais de pro
 | `BUCKET` | Binding do armazenamento Cloudflare R2 |
 | `ADMIN_USERNAME` | Login inicial, usado para inicializar a conta no banco |
 | `ADMIN_PASSWORD_HASH` | Hash inicial no formato `salt:hash`, nunca a senha em texto puro |
-| `ADMIN_EMAILS` | Contas autorizadas para a alternativa de entrada com ChatGPT, separadas por vírgula |
+| `SESSION_SECRET` | Chave aleatória de sessão, independente do hash da senha |
 
-O manifesto [.openai/hosting.json](.openai/hosting.json) mantém a identidade da publicação e os bindings. Ele não deve conter segredos. A conta autorizada com ChatGPT é validada no servidor; os guards Angular apenas controlam a navegação.
+O manifesto [.openai/hosting.json](.openai/hosting.json) mantém a identidade da publicação e os bindings. Ele não deve conter segredos. A autorização administrativa depende somente de sessão por senha validada no servidor; headers de identidade do Sites não concedem acesso. Os guards Angular apenas controlam a navegação.
 
 ## Acesso e entrega ao cliente
 
@@ -136,7 +136,7 @@ O manifesto [.openai/hosting.json](.openai/hosting.json) mantém a identidade da
 3. Informe a senha atual, o novo login e a nova senha com confirmação.
 4. Salve e entre novamente com os novos dados.
 
-A nova senha deve ter **12 a 128 caracteres**. A troca fica salva no D1, entra em vigor imediatamente e encerra as sessões por senha. **Não é necessário alterar a hospedagem ou republicar o site.** O acesso proprietário com ChatGPT permanece disponível.
+A nova senha deve ter **12 a 128 caracteres**. A troca fica salva no D1, entra em vigor imediatamente e encerra as sessões por senha. **Não é necessário alterar a hospedagem ou republicar o site.**
 
 Os segredos de runtime inicializam a conta apenas uma vez. Depois dessa inicialização, `admin_credentials` é a fonte das credenciais: mudar `ADMIN_USERNAME` ou `ADMIN_PASSWORD_HASH` na hospedagem não substitui automaticamente a conta salva.
 
@@ -235,6 +235,10 @@ Os testes cobrem a interface administrativa, validações, persistência, imagen
 A publicação atual usa **Sites com Cloudflare Workers, D1 e R2**. O fluxo prepara o código versionado, gera o artefato completo e publica uma versão salva. As migrações são aplicadas pelo fluxo de hospedagem. **Enviar um commit ao GitHub não publica automaticamente o site:** não há pipeline de deploy do GitHub configurado neste repositório.
 
 Não publique somente o cliente Angular como um site estático se precisar manter login, upload e salvamento. Gere novas migrações para alterações de schema; não edite migrações já aplicadas.
+
+## Autenticação de produção
+
+A administração usa login e senha com sessão opaca em cookie `HttpOnly`, `Secure`, `SameSite=Strict` e prefixo `__Host-`. O token não fica no localStorage nem é devolvido no JSON. Veja [autenticação e segredos](docs/AUTH-PRODUCAO.md) para configurar os três segredos com senha oculta no terminal.
 
 ## Preparação do D1 de produção
 

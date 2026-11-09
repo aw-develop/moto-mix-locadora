@@ -22,7 +22,7 @@ Não guarde documentos privados, dados de identidade ou contratos de clientes no
 - Autorização no backend para cada gravação e troca de credenciais; guards Angular não concedem permissão ao servidor.
 - Login por senha com PBKDF2-SHA256, salt individual e verificação de hash; apenas hashes ficam no banco.
 - Sessões opacas com até oito horas de duração, identificador aleatório de 256 bits e hash do token no D1.
-- Botão **Sair** conectado à revogação da sessão no backend, além do encerramento do acesso ChatGPT.
+- Botão **Sair** conectado à revogação da sessão por senha no backend.
 - Troca de credenciais exige senha atual, novo login válido e confirmação; revoga sessões por senha na mesma transação.
 - Limite de dez tentativas por IP em 15 minutos. O IP é utilizado em forma de hash para a chave de limitação.
 - Validação de origem e rejeição de requisições cross-site nas operações protegidas.
@@ -32,7 +32,7 @@ Não guarde documentos privados, dados de identidade ou contratos de clientes no
 - Minimização das respostas: visitantes não recebem histórico ou campanhas desativadas; o endpoint de sessão não retorna e-mail.
 - Bloqueio de caminhos de código/configuração no Worker e ausência desses arquivos no diretório público de build.
 
-A identidade ChatGPT é fornecida pela camada de dispatch do Sites e autorizada pela lista privada `ADMIN_EMAILS`. A implantação depende dessa fronteira de confiança; o Worker não deve ser exposto por uma rota alternativa que permita ao visitante forjar esses cabeçalhos.
+A autorização por identidade dos headers do Sites foi removida. Mesmo com um email anteriormente autorizado, esses headers não substituem a sessão por senha. O navegador recebe somente um token opaco de 256 bits no cookie `__Host-mix_admin`, com `HttpOnly`, `Secure`, `SameSite=Strict`, `Path=/` e sem `Domain`. O D1 guarda apenas o HMAC-SHA-256 do token, calculado com a chave privada `SESSION_SECRET`. Senhas são verificadas por PBKDF2-SHA-256 com salt aleatório; os segredos nunca entram no cliente Angular.
 
 ## Proteções do navegador
 

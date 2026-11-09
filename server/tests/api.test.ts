@@ -18,9 +18,10 @@ test("rejects anonymous/non-admin and cross-origin writes before touching storag
     (await call(request("PUT", body, true, "https://evil.test"), env)).status,
     403,
   );
-  const other = request("PUT", body);
-  other.headers.set("oai-authenticated-user-email", "visitor@example.com");
-  assert.equal((await call(other, env)).status, 403);
+  const other = request("PUT", body, false);
+  other.headers.set("oai-authenticated-user-email", "admin@example.com");
+  other.headers.set("oai-authenticated-user-id", "owner");
+  assert.equal((await call(other, env)).status, 401);
   assert.equal(
     db.prepare("SELECT count(*) AS count FROM catalog_metadata").get()?.[
       "count"

@@ -15,7 +15,7 @@ function inspect(name,bytes,browser=false){
  for(const [label,pattern] of secretPatterns)if(pattern.test(text))issues.push(`${name}: possible ${label}`);
  if(browser){
   if(/\.(?:map|sql|tsx?|mjs|cjs|env)$/.test(name)||/(?:^|\/)(?:\.git|\.env|server|db|drizzle|node_modules)(?:\/|$)/.test(name))issues.push(`${name}: private artifact in browser output`);
-  if(/\b(?:ADMIN_PASSWORD_HASH|ADMIN_EMAILS|ADMIN_USERNAME|admin_credentials|admin_sessions|login_attempts|PBKDF2)\b/.test(text))issues.push(`${name}: server-only authentication identifier in browser output`);
+  if(/\b(?:ADMIN_PASSWORD_HASH|SESSION_SECRET|ADMIN_EMAILS|ADMIN_USERNAME|admin_credentials|admin_sessions|login_attempts|PBKDF2)\b/.test(text))issues.push(`${name}: server-only authentication identifier in browser output`);
   if(name.endsWith('.html') && /<[^>]+\son[a-z]+\s*=/i.test(text))issues.push(`${name}: inline event handler incompatible with strict script CSP`);
  }
 }

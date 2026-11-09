@@ -42,7 +42,7 @@ A publicação do Worker deve acontecer na conta indicada acima. Se for conferir
 
 ## Verificação depois da publicação
 
-1. Conclua a configuração do login por senha para a hospedagem própria antes de expor o painel.
+1. Configure os três segredos de runtime descritos em [autenticação de produção](AUTH-PRODUCAO.md) antes de expor o painel.
 2. Publique o Worker na conta própria usando o build atualizado.
 3. Entre no painel e envie uma foto do dispositivo ao cadastrar ou editar uma moto.
 4. Aguarde a confirmação de salvamento.

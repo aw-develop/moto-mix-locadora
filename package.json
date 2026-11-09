@@ -15,7 +15,9 @@
     "security:check": "node scripts/security-check.mjs",
     "db:check:production": "wrangler d1 execute bd_moto-mixlocadora --remote --config dist/server/wrangler.json --command \"SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' ORDER BY name;\"",
     "db:migrations:list:production": "wrangler d1 migrations list bd_moto-mixlocadora --remote --config dist/server/wrangler.json",
-    "db:migrate:production": "wrangler d1 migrations apply bd_moto-mixlocadora --remote --config dist/server/wrangler.json"
+    "db:migrate:production": "wrangler d1 migrations apply bd_moto-mixlocadora --remote --config dist/server/wrangler.json",
+    "admin:setup": "node scripts/admin-setup.mjs",
+    "test:secrets": "node --experimental-strip-types --test scripts/tests/admin-credentials.test.mjs"
   },
   "dependencies": {
     "@angular/common": "^21.2.0",
