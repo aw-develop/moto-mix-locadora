@@ -1,3 +1,13 @@
+@if (opening()) {
+  <main class="mix-startup" role="status" aria-live="polite">
+    <div class="mix-startup__content">
+      <div class="mix-startup__brand" aria-hidden="true"><span class="mix-startup__wordmark">M<span>IX</span></span></div>
+      <div class="mix-startup__track" aria-hidden="true"></div>
+      <p class="mix-startup__status">Abrindo seu painel…</p>
+      <p class="mix-startup__caption">Preparando a central de operações</p>
+    </div>
+  </main>
+} @else {
 <main class="admin-login">
   <div class="login-visual">
     <a routerLink="/" class="admin-brand"
@@ -28,11 +38,6 @@
           {{ busy() ? 'Entrando…' : 'Entrar no painel' }}
         </button>
       </form>
-      @if (session.active()) {
-        <a mat-flat-button class="admin-primary" routerLink="/admin/dashboard"
-          >Abrir painel</a
-        >
-      }
       @if (admin.saveError()) {
         <p class="admin-error" role="alert">{{ admin.saveError() }}</p>
       }
@@ -40,3 +45,5 @@
     </div>
   </div>
 </main>
+
+}

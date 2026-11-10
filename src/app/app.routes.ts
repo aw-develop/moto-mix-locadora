@@ -1,5 +1,5 @@
 import { Routes } from "@angular/router";
-import { adminGuard, adminChildGuard } from "./core/guards/admin.guard";
+import { adminGuard, adminChildGuard, loginGuard } from "./core/guards/admin.guard";
 export const routes: Routes = [
   {
     path: "",
@@ -12,6 +12,7 @@ export const routes: Routes = [
   },
   {
     path: "admin/login",
+    canMatch: [loginGuard],
     loadComponent: () =>
       import("./admin/login/login.component").then((m) => m.LoginComponent),
     title: "Mix | Acesso administrativo",

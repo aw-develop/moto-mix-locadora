@@ -41,4 +41,12 @@ describe('Admin routing',()=>{
   const harness=await RouterTestingHarness.create();TestBed.inject(AdminSessionService).setIdentity(identity);
   await harness.navigateByUrl('/admin/motos');expect(TestBed.inject(Router).url).toBe('/admin/login');
  });
+ it('skips the login form when the server confirms an existing administrator session',async()=>{
+  serverSession(()=>true);
+  const harness=await RouterTestingHarness.create();
+  await harness.navigateByUrl('/admin/login');
+  expect(TestBed.inject(Router).url).toBe('/admin/dashboard');
+  expect(harness.routeNativeElement?.querySelector('.login-form')).toBeNull();
+ });
+
 });

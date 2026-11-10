@@ -19,6 +19,7 @@ export class LoginComponent {
   private readonly router = inject(Router);
   private readonly fb = inject(FormBuilder);
   readonly busy = signal(false);
+  readonly opening = signal(false);
   readonly error = signal("");
   readonly form = this.fb.nonNullable.group({
     username: ["", [Validators.required, Validators.maxLength(80)]],
@@ -30,13 +31,15 @@ export class LoginComponent {
     try {
       const {username,password} = this.form.getRawValue();
       await this.session.login(username,password);
+      this.opening.set(true);
       this.form.controls.password.reset();
       await this.admin.initialize();
       if (!this.session.active() || this.admin.saveStatus() === "error")
         throw new Error("Não foi possível carregar o painel. Tente novamente.");
-      await this.router.navigateByUrl("/admin/dashboard");
+      if (!await this.router.navigateByUrl("/admin/dashboard", { replaceUrl: true }))
+        throw new Error("Não foi possível abrir o painel. Tente novamente.");
     } catch (error) {
       this.error.set(error instanceof Error ? error.message : "Não foi possível entrar.");
-    } finally { this.form.controls.password.reset(); this.busy.set(false); }
+    } finally { this.form.controls.password.reset(); this.opening.set(false); this.busy.set(false); }
   }
 }
