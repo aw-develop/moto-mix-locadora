@@ -1,0 +1,59 @@
+/* Initial loading screen: available before Angular and its component styles. */
+html, body { margin: 0; background: #0d0d0d; }
+.mix-startup {
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 32px 24px;
+  background: #0d0d0d;
+  color: #f3f5f3;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+}
+.mix-startup *, .mix-startup *::before, .mix-startup *::after { box-sizing: border-box; }
+.mix-startup__content { width: min(100%, 320px); }
+.mix-startup__brand { display: inline-block; position: relative; padding-bottom: 16px; }
+.mix-startup__wordmark {
+  display: block;
+  padding-right: 12px;
+  font-family: "Arial Black", Arial, sans-serif;
+  font-style: italic;
+  font-size: clamp(76px, 18vw, 106px);
+  font-weight: 900;
+  letter-spacing: -12px;
+  line-height: .95;
+}
+.mix-startup__wordmark span { color: #00e640; }
+.mix-startup__brand::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 18px;
+  width: 74px;
+  height: 4px;
+  transform: skewX(-24deg);
+  background: #00e640;
+}
+.mix-startup__name { margin: 22px 0 0; color: #bdc7bd; font-size: 10px; font-weight: 700; letter-spacing: 4px; }
+.mix-startup__track { height: 2px; margin: 42px 0 22px; overflow: hidden; background: #293129; }
+.mix-startup__track::after {
+  content: "";
+  display: block;
+  height: 100%;
+  width: 40%;
+  background: #00e640;
+  animation: mix-startup-travel 1.65s cubic-bezier(.45, 0, .25, 1) infinite;
+  will-change: transform;
+}
+.mix-startup__status { margin: 0; color: #d4ddd4; font-size: 13px; line-height: 1.6; }
+.mix-startup__caption { margin: 9px 0 0; color: #889788; font-size: 9px; letter-spacing: 2px; line-height: 1.8; text-transform: uppercase; }
+.mix-startup noscript p { margin-top: 24px; color: #bdc7bd; font-size: 12px; line-height: 1.6; }
+@keyframes mix-startup-travel {
+  from { transform: translateX(-110%); }
+  to { transform: translateX(360%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mix-startup__track::after { animation: none; width: 100%; will-change: auto; }
+}

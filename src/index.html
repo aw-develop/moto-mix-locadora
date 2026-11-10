@@ -9,6 +9,7 @@
       name="description"
       content="Mix Locadora de Motos. Escolha sua próxima moto, conheça os planos e fale com nossa equipe."
     />
+    <link rel="stylesheet" href="/assets/startup.css" />
     <title>Mix Locadora de Motos | Seu próximo movimento</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -18,20 +19,19 @@
     />
   </head>
   <body>
-    <mix-app
-      ><div
-        style="
-          background: #0d0d0d;
-          color: #00e640;
-          min-height: 100vh;
-          display: grid;
-          place-items: center;
-          font-family: Arial, sans-serif;
-          font-size: 14px;
-        "
-      >
-        Carregando Mix…
-      </div></mix-app
-    >
+    <mix-app>
+      <div class="mix-startup" role="status" aria-live="polite" aria-label="Carregando o site da Mix Locadora de Motos">
+        <div class="mix-startup__content">
+          <div class="mix-startup__brand" aria-hidden="true">
+            <span class="mix-startup__wordmark">M<span>IX</span></span>
+          </div>
+          <p class="mix-startup__name" aria-hidden="true">LOCADORA DE MOTOS</p>
+          <div class="mix-startup__track" aria-hidden="true"></div>
+          <p class="mix-startup__status">Preparando seu próximo movimento.</p>
+          <p class="mix-startup__caption">Carregando a experiência Mix</p>
+          <noscript><p>Ative o JavaScript no navegador para acessar o site.</p></noscript>
+        </div>
+      </div>
+    </mix-app>
   </body>
 </html>
