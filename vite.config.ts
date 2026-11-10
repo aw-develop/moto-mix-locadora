@@ -16,6 +16,7 @@ const managedLinux = readExecutionProfile() === "managed-linux";
 const localBindingConfig = {
   name: "mix-locadora-angular",
   workers_dev: true,
+  preview_urls: false,
   observability: {
     enabled: true,
     logs: { enabled: true, invocation_logs: false },
