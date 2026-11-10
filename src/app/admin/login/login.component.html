@@ -25,18 +25,18 @@
         <input id="admin-password" type="password" formControlName="password" autocomplete="current-password" maxlength="256" required />
         @if (error()) { <p class="admin-error" role="alert">{{ error() }}</p> }
         <button mat-flat-button class="admin-primary" type="submit" [disabled]="busy() || form.invalid">
-          {{ busy() ? 'Entrando…' : 'Entrar no painel →' }}
+          {{ busy() ? 'Entrando…' : 'Entrar no painel' }}
         </button>
       </form>
       @if (session.active()) {
         <a mat-flat-button class="admin-primary" routerLink="/admin/dashboard"
-          >Abrir painel →</a
+          >Abrir painel</a
         >
       }
       @if (admin.saveError()) {
         <p class="admin-error" role="alert">{{ admin.saveError() }}</p>
       }
-      <a routerLink="/">← Voltar ao site</a>
+      <a routerLink="/">Voltar ao site</a>
     </div>
   </div>
 </main>

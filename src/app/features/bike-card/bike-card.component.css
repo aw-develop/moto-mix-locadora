@@ -160,7 +160,7 @@
   width: 100%;
   min-height: 44px;
   font-size: 10px;
-  justify-content: space-between;
+  justify-content: center;
   padding: 9px 15px;
 }
 .disabled {

@@ -75,13 +75,10 @@
             [attr.aria-label]="'Reservar ' + model.name"
             [mixWhatsapp]="whatsapp.reserveMessage(model.name)"
             [mixModel]="model.name"
-            >Reservar este modelo
-            <svg aria-hidden="true"><use href="#arrow" /></svg
-          ></a>
+            >Reservar este modelo</a>
         } @else {
           <button class="btn reserve disabled" disabled>
             Indisponível no momento
-            <svg aria-hidden="true"><use href="#arrow" /></svg>
           </button>
         }
       </div>

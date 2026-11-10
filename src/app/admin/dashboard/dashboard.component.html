@@ -5,7 +5,7 @@
     <p>Um olhar rápido sobre o próximo movimento da Mix.</p>
   </div>
   <a class="admin-action primary" routerLink="/admin/motos"
-    >Gerenciar frota <span>↗</span></a
+    >Gerenciar frota </a
   >
 </div>
 <div class="stat-grid">
@@ -27,7 +27,7 @@
     ><small>Conforme o status cadastrado</small>
   </article>
   <article class="stat-card">
-    <span>ACESSOS RECENTES <b>↗</b></span
+    <span>ACESSOS RECENTES </span
     ><strong>{{ admin.stats().visits.toString().padStart(2, "0") }}</strong
     ><small>Visitas ao site nesta sessão</small>
   </article>
@@ -93,7 +93,6 @@
     <div class="activity-list">
       @for (item of contacts().slice(0, 5); track item.id) {
         <div class="activity-row">
-          <span class="activity-icon">↗</span>
           <div>
             <strong>{{ item.detail }}</strong
             ><small>Intenção de contato</small>
@@ -102,10 +101,9 @@
         </div>
       } @empty {
         <div class="admin-empty">
-          <span>↗</span>
           <h3>Nenhum contato nesta sessão</h3>
           <p>Os cliques nos botões do site aparecerão aqui.</p>
-          <a routerLink="/">Visitar site público →</a>
+          <a routerLink="/">Visitar site público</a>
         </div>
       }
     </div>
