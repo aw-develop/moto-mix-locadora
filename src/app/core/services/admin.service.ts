@@ -417,6 +417,8 @@ export class AdminService {
       );
     if ([draft.instagram, draft.facebook].some((url) => !!url && !isHttps(url)))
       throw new Error("Redes sociais: use links HTTPS.");
+    if (draft.rentalConditions && Object.values(draft.rentalConditions).some((value) => typeof value !== "string" || value.length > 800))
+      throw new Error("Condições do aluguel: use textos de até 800 caracteres.");
     const settings = {
       ...draft,
       address: this.text(draft.address, "Endereço", 400),

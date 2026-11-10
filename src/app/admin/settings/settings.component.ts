@@ -6,6 +6,7 @@ import {
 } from "@angular/core";
 import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
+import { rentalFields } from "../../core/config/rental-conditions";
 import { CredentialsComponent } from "../security/credentials.component";
 import { AdminService } from "../../core/services/admin.service";
 import { optionalHttpsValidator } from "../../core/validation/admin.validators";
@@ -20,6 +21,7 @@ import { optionalHttpsValidator } from "../../core/validation/admin.validators";
 export class SettingsComponent {
   private readonly admin = inject(AdminService);
   private readonly fb = inject(FormBuilder);
+  readonly rentalFields = rentalFields;
   readonly error = signal("");
   readonly saved = signal(false);
   private readonly initial = this.admin.settings();
@@ -62,6 +64,14 @@ export class SettingsComponent {
     ],
     instagram: [this.initial.instagram, optionalHttpsValidator],
     facebook: [this.initial.facebook, optionalHttpsValidator],
+    rentalConditions: this.fb.nonNullable.group({
+      dailyPlan: [this.initial.rentalConditions?.dailyPlan ?? "", Validators.maxLength(800)],
+      weeklyPlan: [this.initial.rentalConditions?.weeklyPlan ?? "", Validators.maxLength(800)],
+      deposit: [this.initial.rentalConditions?.deposit ?? "", Validators.maxLength(800)],
+      documents: [this.initial.rentalConditions?.documents ?? "", Validators.maxLength(800)],
+      coverage: [this.initial.rentalConditions?.coverage ?? "", Validators.maxLength(800)],
+      included: [this.initial.rentalConditions?.included ?? "", Validators.maxLength(800)],
+    }),
   });
   save(): void {
     this.saved.set(false);
@@ -84,7 +94,7 @@ export class SettingsComponent {
     }
   }
   reset(): void {
-    this.form.reset(this.admin.settings());
+    this.form.reset({ ...this.admin.settings(), rentalConditions: { dailyPlan: "", weeklyPlan: "", deposit: "", documents: "", coverage: "", included: "", ...this.admin.settings().rentalConditions } });
     this.error.set("");
     this.saved.set(false);
   }

@@ -8,44 +8,48 @@
   (focusin)="focused.set(true)"
   (focusout)="focused.set(false)"
 >
-  @for (model of [selectedBike()]; track model.id) {
+  <div class="card-stage">
+  @for (model of models(); track model.id) {
     <div
       class="card-slide"
+      [class.is-active]="model.id === selectedBike().id"
+      [attr.aria-hidden]="model.id !== selectedBike().id"
+      [attr.inert]="model.id !== selectedBike().id ? '' : null"
       [attr.aria-label]="
-        'Moto ' + (currentIndex() + 1) + ' de ' + (alternatives().length || 1)
+        'Moto ' + ($index + 1) + ' de ' + (alternatives().length || 1)
       "
     >
-      <div class="bike-visual">
-        <span class="badge" [class.available]="selectedBike().available"
+      <div class="bike-visual" (pointerdown)="swipeStart($event)" (pointerup)="swipeEnd($event)" (pointercancel)="swipeCancel()" (lostpointercapture)="swipeCancel()">
+        <span class="badge" [class.available]="model.available"
           ><i></i
-          >{{ selectedBike().available ? "DISPONÍVEL" : "ALUGADA" }}</span
-        ><span class="bike-category">{{ selectedBike().category }}</span
-        ><img
-          [src]="selectedBike().image"
-          [alt]="selectedBike().name + ' — imagem ilustrativa'"
+          >{{ model.available ? "DISPONÍVEL" : "ALUGADA" }}</span
+        ><span class="bike-category">{{ model.category }}</span
+        >@if (model.id === selectedBike().id) {<img
+          [src]="model.image"
+          [alt]="model.name + ' — imagem ilustrativa'"
           loading="lazy"
           width="600"
           height="400"
-        /><span class="visual-index"
+        />}<span class="visual-index"
           >MIX /
           {{
-            selectedBike().version.split(" · ")[1] || selectedBike().version
+            model.version.split(" · ")[1] || model.version
           }}</span
         >
       </div>
       <div
         class="bike-content"
-        [attr.aria-live]="rotating() ? 'off' : 'polite'"
+        [attr.aria-live]="rotating() || model.id !== selectedBike().id ? 'off' : 'polite'"
         aria-atomic="true"
       >
-        <div class="bike-version">{{ selectedBike().version }}</div>
-        <h3>{{ selectedBike().name }}</h3>
-        <p class="bike-description">{{ selectedBike().description }}</p>
+        <div class="bike-version">{{ model.version }}</div>
+        <h3>{{ model.name }}</h3>
+        <p class="bike-description">{{ model.description }}</p>
         <div class="specs">
           <span
-            ><b aria-hidden="true">⚙</b> {{ selectedBike().transmission }}</span
+            ><b aria-hidden="true">⚙</b> {{ model.transmission }}</span
           ><span
-            ><b aria-hidden="true">◉</b> {{ selectedBike().consumption }}</span
+            ><b aria-hidden="true">◉</b> {{ model.consumption }}</span
           >
         </div>
         <div class="price-row">
@@ -53,24 +57,24 @@
             <span>DIÁRIA A PARTIR DE</span>
             <p>
               {{
-                selectedBike().daily
+                model.daily
                   | currency: "BRL" : "symbol" : "1.2-2" : "pt-BR"
               }}<small> / dia</small>
             </p>
           </div>
           <div class="weekly">
             {{
-              selectedBike().weekly
+              model.weekly
                 | currency: "BRL" : "symbol" : "1.2-2" : "pt-BR"
             }}<span>/ semana</span>
           </div>
         </div>
-        @if (selectedBike().available) {
+        @if (model.available) {
           <a
             class="btn reserve"
-            [attr.aria-label]="'Reservar ' + selectedBike().name"
-            [mixWhatsapp]="whatsapp.reserveMessage(selectedBike().name)"
-            [mixModel]="selectedBike().name"
+            [attr.aria-label]="'Reservar ' + model.name"
+            [mixWhatsapp]="whatsapp.reserveMessage(model.name)"
+            [mixModel]="model.name"
             >Reservar este modelo
             <svg aria-hidden="true"><use href="#arrow" /></svg
           ></a>
@@ -83,6 +87,7 @@
       </div>
     </div>
   }
+  </div>
   @if (alternatives().length > 1) {
     <div
       class="card-pagination"

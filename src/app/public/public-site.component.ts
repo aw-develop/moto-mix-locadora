@@ -7,6 +7,7 @@ import { WhatsappDirective } from "../shared/whatsapp/whatsapp.directive";
 import { SetupDialogComponent } from "../shared/setup-dialog/setup-dialog.component";
 import { HeaderComponent } from "../features/header/header.component";
 import { HeroComponent } from "../features/hero/hero.component";
+import { RentalConditionsComponent } from "../features/rental-conditions/rental-conditions.component";
 import { FleetComponent } from "../features/fleet/fleet.component";
 import { AdvantagesComponent } from "../features/advantages/advantages.component";
 import { StepsComponent } from "../features/steps/steps.component";
@@ -26,6 +27,7 @@ registerLocaleData(localePt);
     HeaderComponent,
     HeroComponent,
     FleetComponent,
+    RentalConditionsComponent,
     AdvantagesComponent,
     StepsComponent,
     LocationComponent,

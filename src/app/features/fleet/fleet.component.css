@@ -124,3 +124,14 @@
 :host {
   display: contents;
 }
+
+.fleet-search { display: grid; gap: 8px; margin-bottom: 16px; color: var(--muted); font-size: 10px; letter-spacing: 1.5px; }
+.fleet-search input { width: 100%; min-height: 44px; border: 1px solid var(--border); border-radius: 4px; padding: 10px 14px; background: #131613; color: #fff; font: inherit; font-size: 13px; letter-spacing: normal; }
+.filter-selects { display: flex; gap: 10px; }
+.fleet-foot a { color: #a8b5a8; }
+@media(max-width: 800px) { .filter-row { flex-wrap: wrap; gap: 12px; } .filter-selects { flex: 1 1 100%; } .filter-selects label { flex: 1; } .filter-selects select { width: 100%; } }
+@media(max-width: 380px) { .filter-selects { flex-direction: column; } }
+
+.filter-selects, .filter-selects label { min-width: 0; }
+.filter-selects select { max-width: 100%; }
+@media(max-width: 540px) { .filter-selects { flex-direction: column; } }

@@ -23,7 +23,17 @@ export interface Banner {
   readonly order: number;
   readonly motorcycleIds?: readonly string[];
 }
+export interface RentalConditions {
+  readonly dailyPlan: string;
+  readonly weeklyPlan: string;
+  readonly deposit: string;
+  readonly documents: string;
+  readonly coverage: string;
+  readonly included: string;
+}
+
 export interface SiteSettings {
+  readonly rentalConditions?: RentalConditions;
   readonly whatsappNumber: string;
   readonly address: string;
   readonly hours: string;

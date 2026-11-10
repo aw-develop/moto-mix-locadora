@@ -38,7 +38,7 @@ npm run db:check:production
 npm run db:migrations:list:production
 ```
 
-O Wrangler registra os nomes dos arquivos aplicados em `d1_migrations`. Confirme o banco e as alterações exibidas no terminal antes de aceitar. O repositório tem seis migrações (`0000` até `0005`) para as nove tabelas da aplicação e as colunas adicionais de banners e grupos dos cards.
+O Wrangler registra os nomes dos arquivos aplicados em `d1_migrations`. Confirme o banco e as alterações exibidas no terminal antes de aceitar. O repositório tem sete migrações (`0000` até `0006`) para as nove tabelas da aplicação e as colunas adicionais de banners e grupos dos cards, além das condições do aluguel em `site_settings.rental_conditions`.
 
 Se já existirem `motorcycles`, `banners`, `site_state`, `admin_credentials` ou outras tabelas da aplicação, compare o esquema e o histórico antes de executar `apply`. As migrações incluem `CREATE TABLE` e `ALTER TABLE` e não devem ser reaplicadas manualmente. Não exclua tabelas, não altere migrações antigas e não preencha o histórico artificialmente para ignorar conflitos. Faça backup antes de ajustar um banco já utilizado.
 
@@ -66,3 +66,15 @@ O exportador transforma o diretório das migrações em `../../drizzle`, relativ
 Esta preparação trata apenas do D1. Não configura o bucket R2 de produção, não troca a autenticação, não transfere dados entre contas e não publica um Worker na conta própria. A aplicação atualmente publicada no Sites continua com seus recursos existentes.
 
 Referências: [migrações D1](https://developers.cloudflare.com/d1/reference/migrations/) e [configuração programática do plugin Vite](https://developers.cloudflare.com/workers/vite-plugin/reference/programmatic-configuration/).
+
+## Atualização das condições do aluguel
+
+A migração `0006_glamorous_king_cobra.sql` adiciona apenas a coluna JSON `site_settings.rental_conditions`, inicialmente `{}`. Não exclui dados nem preenche regras comerciais. Se `0000`–`0005` já estiverem aplicadas, o Wrangler deve listar somente `0006` como pendente. Aplique-a antes de publicar o backend atualizado:
+
+```bash
+npm run build
+npm run db:migrations:list:production
+npm run db:migrate:production
+```
+
+Depois, confira `PRAGMA table_info(site_settings);` no console D1 e preencha os textos no painel em **Configurações → Condições do aluguel**. O código usa orientações de consulta para campos vazios. Esta alteração de código não aplica a migração remota automaticamente.

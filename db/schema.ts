@@ -43,6 +43,7 @@ export const settings = sqliteTable("site_settings", {
   mapLabel: text("map_label").notNull(),
   instagram: text("instagram").notNull(),
   facebook: text("facebook").notNull(),
+  rentalConditions: text("rental_conditions", { mode: "json" }).$type<Record<string, string>>().notNull().default({}),
 });
 export const activities = sqliteTable("admin_activities", {
   id: text("id").primaryKey(),

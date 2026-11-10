@@ -57,22 +57,22 @@ describe("Grouped fleet cards", () => {
     const card = cards[0],
       options = card.querySelectorAll(".card-dots button");
     expect(options.length).toBe(2);
-    expect(card.querySelector("h3").textContent).toContain(first.name);
+    expect(card.querySelector(".card-slide.is-active h3").textContent).toContain(first.name);
     options[1].click();
     fixture.detectChanges();
     expect(options[1].getAttribute("aria-pressed")).toBe("true");
-    expect(card.querySelector("h3").textContent).toContain(second.name);
-    expect(card.querySelector(".bike-visual img").getAttribute("src")).toBe(
+    expect(card.querySelector(".card-slide.is-active h3").textContent).toContain(second.name);
+    expect(card.querySelector(".card-slide.is-active .bike-visual img").getAttribute("src")).toBe(
       second.image,
     );
-    expect(card.querySelector(".specs").textContent).toContain(
+    expect(card.querySelector(".card-slide.is-active .specs").textContent).toContain(
       second.consumption,
     );
-    expect(card.querySelector(".price-row").textContent).toContain("76,50");
-    expect(card.querySelector(".reserve").disabled).toBe(true);
+    expect(card.querySelector(".card-slide.is-active .price-row").textContent).toContain("76,50");
+    expect(card.querySelector(".card-slide.is-active .reserve").disabled).toBe(true);
     admin.toggleMoto(second.id);
     fixture.detectChanges();
-    expect(card.querySelector(".reserve").getAttribute("aria-label")).toBe(
+    expect(card.querySelector(".card-slide.is-active .reserve").getAttribute("aria-label")).toBe(
       "Reservar " + second.name,
     );
     fixture.componentInstance.category.set("Entregas");
@@ -80,7 +80,7 @@ describe("Grouped fleet cards", () => {
     expect(fixture.componentInstance.filteredBikes().map((b) => b.id)).toEqual([
       first.id,
     ]);
-    expect(card.querySelector("h3").textContent).toContain(first.name);
+    expect(card.querySelector(".card-slide.is-active h3").textContent).toContain(first.name);
     fixture.componentInstance.reset();
     fixture.componentInstance.availability.set("available");
     admin.toggleMoto(second.id);
@@ -93,6 +93,35 @@ describe("Grouped fleet cards", () => {
     expect(fixture.nativeElement.querySelectorAll("mix-bike-card").length).toBe(
       0,
     );
+    fixture.destroy();
+  });
+});
+
+
+describe("Busca e preços da frota", () => {
+  it("combina pesquisa sem acentos, categoria e disponibilidade; ordena e restaura sem alterar a frota", () => {
+    const fixture = TestBed.createComponent(FleetComponent);
+    fixture.detectChanges();
+    const fleet = fixture.componentInstance;
+    const original = fleet.admin.bikes().map(b => b.id);
+    const input = fixture.nativeElement.querySelector('input[type="search"]');
+    input.value = "  hÓnda  ";
+    input.dispatchEvent(new Event("input"));
+    fixture.detectChanges();
+    expect(fleet.filteredBikes().map(b => b.id)).toEqual(["cg160", "xre300"]);
+    fleet.availability.set("available");
+    expect(fleet.filteredBikes().map(b => b.id)).toEqual(["cg160"]);
+    fleet.category.set("Touring");
+    expect(fleet.filteredBikes()).toEqual([]);
+    fleet.reset();
+    fleet.order.set("daily-desc");
+    expect(fleet.filteredBikes().map(b => b.id)).toEqual(["xre300", "fazer250", "cg160"]);
+    fleet.order.set("weekly-asc");
+    expect(fleet.filteredBikes().map(b => b.id)).toEqual(["cg160", "fazer250", "xre300"]);
+    expect(fleet.admin.bikes().map(b => b.id)).toEqual(original);
+    fleet.reset();
+    expect(fleet.search()).toBe("");
+    expect(fleet.order()).toBe("default");
     fixture.destroy();
   });
 });

@@ -106,6 +106,15 @@
       /></label>
     </div>
   </section>
+  <section class="admin-panel settings-section">
+    <div><span class="settings-number">04</span><h2>Condições do aluguel</h2>
+      <p>Informe as regras reais da empresa. Campos em branco exibem uma orientação para consultar a Mix.</p></div>
+    <div class="admin-form-grid" formGroupName="rentalConditions">
+      @for (field of rentalFields; track field.key) {
+        <label class="full">{{ field.label }}<textarea [formControlName]="field.key" rows="3" maxlength="800"></textarea><small>Até 800 caracteres. Texto exibido no site público.</small></label>
+      }
+    </div>
+  </section>
   <div class="settings-actions">
     <span>As alterações serão salvas no servidor.</span
     ><button mat-button type="button" (click)="reset()">

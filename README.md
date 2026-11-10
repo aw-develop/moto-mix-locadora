@@ -54,6 +54,14 @@ Na seção **Nossa Frota**, cada card com mais de uma moto passa automaticamente
 
 As motos continuam editáveis individualmente. O campo **Grupo do card** permite reunir modelos já cadastrados ou separar uma moto do carrossel, apagando seu grupo. Os filtros são aplicados antes da montagem dos cards. Tudo fica salvo no banco, sem alterar os banners principais.
 
+### Busca, preços e condições do aluguel
+
+A frota permite pesquisar por nome ou versão, sem diferenciar acentos ou maiúsculas, combinar categoria e disponibilidade e ordenar por diária ou valor semanal. Nos cards agrupados, os filtros consideram cada moto individualmente. Deslize horizontalmente sobre a foto no celular para trocar a ficha; a rolagem vertical continua disponível. As variantes compartilham uma área dimensionada pela ficha mais alta, sem salto de altura durante a troca. Conteúdos inativos ficam ocultos e fora da navegação por teclado.
+
+Em **Configurações → Condições do aluguel**, edite os planos diário e semanal, caução, documentos, cobertura e itens incluídos. Os textos são persistidos no D1 e exibidos na seção pública **Planos e condições**. Campos vazios exibem orientações de consulta, sem presumir regras comerciais. Os preços iniciais usam os modelos disponíveis e não substituem o orçamento da contratação.
+
+A migração `0006_glamorous_king_cobra.sql` adiciona `site_settings.rental_conditions` com valor inicial vazio e preserva os demais dados. No Worker próprio, aplique as migrações pendentes antes de publicar esta versão; preparar ou enviar o código ao GitHub não altera o banco remoto.
+
 ## Tecnologias
 
 | Camada | Tecnologias | Responsabilidade |

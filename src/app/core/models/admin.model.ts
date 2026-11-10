@@ -12,7 +12,17 @@ export interface Banner {
   readonly motorcycleIds?: readonly string[];
 }
 export type BannerDraft = Omit<Banner, "id" | "order">;
+export interface RentalConditions {
+  readonly dailyPlan: string;
+  readonly weeklyPlan: string;
+  readonly deposit: string;
+  readonly documents: string;
+  readonly coverage: string;
+  readonly included: string;
+}
+
 export interface SiteSettings {
+  readonly rentalConditions?: RentalConditions;
   readonly whatsappNumber: string;
   readonly address: string;
   readonly hours: string;

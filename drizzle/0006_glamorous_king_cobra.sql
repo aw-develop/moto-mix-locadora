@@ -1,0 +1,1 @@
+ALTER TABLE `site_settings` ADD `rental_conditions` text DEFAULT '{}' NOT NULL;

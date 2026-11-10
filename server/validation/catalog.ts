@@ -89,6 +89,18 @@ export function settings(value: unknown): SiteSettings {
     mapLabel: text(s["mapLabel"], "Legenda", 100),
     instagram: text(s["instagram"], "Instagram", 2000, true),
     facebook: text(s["facebook"], "Facebook", 2000, true),
+    ...(s["rentalConditions"] === undefined ? {} : { rentalConditions: (() => {
+      const conditions = object(s["rentalConditions"], "Condições do aluguel");
+      return {
+        dailyPlan: text(conditions["dailyPlan"], "Condições do aluguel", 800, true),
+        weeklyPlan: text(conditions["weeklyPlan"], "Condições do aluguel", 800, true),
+        deposit: text(conditions["deposit"], "Condições do aluguel", 800, true),
+        documents: text(conditions["documents"], "Condições do aluguel", 800, true),
+        coverage: text(conditions["coverage"], "Condições do aluguel", 800, true),
+        included: text(conditions["included"], "Condições do aluguel", 800, true),
+      };
+    })() }),
+
   };
   if ([result.instagram, result.facebook].some((url) => url && !https(url)))
     fail("Rede social inválida.");

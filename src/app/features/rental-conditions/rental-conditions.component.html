@@ -1,0 +1,25 @@
+<section class="section wrap rental" id="condicoes">
+  <div class="section-top" mixReveal>
+    <div><div class="eyebrow">PLANOS E CONDIÇÕES</div><h2>ANTES DE ACELERAR,<br /><em>TUDO ÀS CLARAS.</em></h2></div>
+    <p>Escolha o seu ritmo.<br />Conheça as condições antes de reservar.</p>
+  </div>
+  <div class="rental-grid">
+    <div class="plans" mixReveal>
+      @for (plan of plans(); track plan.name) {
+        <article class="plan"><span class="plan-label">PLANO {{ plan.name }}</span>
+          @if (plan.price !== null) {
+            <p class="starting">A PARTIR DE</p><p class="plan-price">{{ plan.price | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}<small> / {{ plan.period }}</small></p>
+          } @else { <p class="plan-price consult">Consulte valores</p> }
+          <p class="plan-description">{{ plan.description }}</p>
+        </article>
+      }
+      <p class="price-note">Valores iniciais dos modelos disponíveis. O total depende da moto, do período e das condições da contratação.</p>
+    </div>
+    <div class="terms" mixReveal>
+      @for (field of details; track field.key) {
+        <details><summary>{{ field.label }}<span aria-hidden="true">+</span></summary><p>{{ conditions()[field.key] }}</p></details>
+      }
+      <a class="btn" [mixWhatsapp]="'Olá! Quero conhecer os planos, a caução, os documentos exigidos e as condições do aluguel.'">Tire suas dúvidas com a Mix <svg aria-hidden="true"><use href="#arrow" /></svg></a>
+    </div>
+  </div>
+</section>

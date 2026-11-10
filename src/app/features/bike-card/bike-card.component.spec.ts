@@ -27,17 +27,17 @@ describe("Independent card carousels", () => {
     TestBed.tick();
     fixture.detectChanges();
     expect(card.selectedBike().id).toBe("fazer250");
-    expect(fixture.nativeElement.querySelector("h3").textContent).toContain(
+    expect(fixture.nativeElement.querySelector(".card-slide.is-active h3").textContent).toContain(
       "Yamaha Fazer 250",
     );
     expect(
       fixture.nativeElement
-        .querySelector(".reserve")
+        .querySelector(".card-slide.is-active .reserve")
         .getAttribute("aria-label"),
     ).toBe("Reservar Yamaha Fazer 250");
     expect(
       fixture.nativeElement
-        .querySelector(".bike-visual img")
+        .querySelector(".card-slide.is-active .bike-visual img")
         .getAttribute("src"),
     ).toBe(mixConfig.bikes[1].image);
     vi.advanceTimersByTime(6000);
@@ -144,4 +144,29 @@ describe("Independent card carousels", () => {
     expect(component.currentIndex()).toBe(10);
     fixture.destroy();
   });
+  it("desliza em ambos os sentidos, ignora gestos verticais e mantém variantes inativas fora da interação", () => {
+    const fixture = create();
+    const card = fixture.componentInstance;
+    const target = { setPointerCapture: vi.fn() };
+    const event = (x: number, y: number, id = 1) => ({ pointerType: "touch", isPrimary: true, pointerId: id, clientX: x, clientY: y, currentTarget: target }) as unknown as PointerEvent;
+    card.swipeStart(event(200, 80));
+    card.swipeEnd(event(100, 90));
+    fixture.detectChanges();
+    expect(card.selectedBike().id).toBe("fazer250");
+    expect(fixture.nativeElement.querySelectorAll(".card-slide").length).toBe(2);
+    const hidden = fixture.nativeElement.querySelector('.card-slide[aria-hidden="true"]');
+    expect(hidden.hasAttribute("inert")).toBe(true);
+    card.swipeStart(event(100, 80));
+    card.swipeEnd(event(200, 90));
+    expect(card.selectedBike().id).toBe("cg160");
+    card.swipeStart(event(200, 80));
+    card.swipeEnd(event(150, 220));
+    expect(card.selectedBike().id).toBe("cg160");
+    card.swipeStart(event(200, 80));
+    card.swipeCancel();
+    card.swipeEnd(event(100, 90));
+    expect(card.selectedBike().id).toBe("cg160");
+    fixture.destroy();
+  });
+
 });

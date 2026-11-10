@@ -24,6 +24,9 @@ import { WhatsappDirective } from "../../shared/whatsapp/whatsapp.directive";
 export class BikeCardComponent {
   readonly bike = input.required<Motorcycle>();
   readonly alternatives = input<readonly Motorcycle[]>([]);
+  readonly models = computed(() => this.alternatives().length ? this.alternatives() : [this.bike()]);
+  private readonly touching = signal(false);
+  private gesture: { id: number; x: number; y: number } | null = null;
   private readonly selectedId = signal<string | null>(null);
   readonly selectedBike = computed(
     () =>
@@ -69,6 +72,7 @@ export class BikeCardComponent {
       !this.reducedMotion() &&
       !this.hovered() &&
       !this.focused() &&
+      !this.touching() &&
       this.alternatives().length > 1,
   );
   constructor() {
@@ -107,6 +111,22 @@ export class BikeCardComponent {
   pointerEntered(event: PointerEvent): void {
     if (event.pointerType === "mouse") this.hovered.set(true);
   }
+  swipeStart(event: PointerEvent): void {
+    if (event.pointerType !== "touch" || event.isPrimary === false || this.models().length < 2) return;
+    this.gesture = { id: event.pointerId, x: event.clientX, y: event.clientY };
+    this.touching.set(true);
+    (event.currentTarget as HTMLElement).setPointerCapture?.(event.pointerId);
+  }
+  swipeEnd(event: PointerEvent): void {
+    const start = this.gesture;
+    if (!start || event.pointerId !== start.id) return;
+    const dx = event.clientX - start.x, dy = event.clientY - start.y;
+    this.swipeCancel();
+    if (Math.abs(dx) >= 48 && Math.abs(dx) > Math.abs(dy) * 1.3) {
+      this.navigate(dx < 0 ? 1 : -1);
+    }
+  }
+  swipeCancel(): void { this.gesture = null; this.touching.set(false); }
   select(id: string): void {
     this.selectedId.set(id);
   }

@@ -351,3 +351,13 @@
     transition: none;
   }
 }
+
+/* All variants share one grid cell; the tallest reserves space without fixed pixel heights. */
+.card-stage { display: grid; }
+.card-stage > .card-slide { grid-area: 1 / 1; visibility: hidden; pointer-events: none; animation: none; }
+.card-stage > .card-slide.is-active { visibility: visible; pointer-events: auto; animation: card-enter .35s ease; }
+.bike-visual { touch-action: pan-y pinch-zoom; user-select: none; }
+.bike-visual img { -webkit-user-drag: none; }
+@media(prefers-reduced-motion: reduce) { .card-stage > .card-slide.is-active { animation: none; } }
+
+.bike-content { overflow-wrap: anywhere; }

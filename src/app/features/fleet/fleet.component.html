@@ -9,6 +9,7 @@
       que combina com o seu ritmo.
     </p>
   </div>
+  <label class="fleet-search"><span>BUSQUE SUA MOTO</span><input type="search" placeholder="Digite o nome ou modelo" aria-label="Buscar moto por nome" maxlength="120" [value]="search()" (input)="setSearch($event)" /></label>
   <div class="filter-row" [mixReveal]="70">
     <div class="filter-tabs" role="group" aria-label="Disponibilidade">
       <button
@@ -29,7 +30,7 @@
         <i></i> Disponíveis
       </button>
     </div>
-    <label class="category-label"
+    <div class="filter-selects"><label class="category-label"
       ><span class="sr-only">Filtrar por categoria</span
       ><select
         id="category"
@@ -42,6 +43,9 @@
         }
       </select></label
     >
+    <label class="category-label"><span class="sr-only">Ordenar motos por preço</span><select [value]="order()" (change)="setOrder($event)">
+      <option value="default">Ordem original</option><option value="daily-asc">Menor diária</option><option value="daily-desc">Maior diária</option><option value="weekly-asc">Menor valor semanal</option><option value="weekly-desc">Maior valor semanal</option>
+    </select></label></div>
   </div>
   <div class="catalog" id="catalog">
     @for (card of cards(); track card.id) {
@@ -70,6 +74,6 @@
         }}</span
       >
     </p>
-    <span>Modelos, valores e disponibilidade demonstrativos.</span>
+    <a href="#condicoes">Consulte planos e condições do aluguel →</a>
   </div>
 </section>
