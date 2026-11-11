@@ -37,5 +37,6 @@ export function secureResponse(response: Response, request: Request): Response {
     headers.set('cache-control','no-store');
   }
   if (administrativePath(normalizedPath(new URL(request.url).pathname))) headers.set('x-robots-tag','noindex, nofollow, noarchive, nosnippet');
+  if (['/api/state','/api/session'].includes(normalizedPath(new URL(request.url).pathname))) headers.set('x-robots-tag','noindex');
   return new Response(response.body,{status:response.status,statusText:response.statusText,headers});
 }

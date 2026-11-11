@@ -376,3 +376,7 @@
     bottom: 82px;
   }
 }
+
+.hero-content h1 em { color: var(--green); font-style: normal; }
+.hero-content .hero-campaign { font-size: 12px; line-height: 1.7; margin-top: 14px; max-width: 540px; }
+.hero-campaign strong { color: #d7e2d7; display: block; font-size: 11px; letter-spacing: 1px; }

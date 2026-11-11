@@ -1,3 +1,5 @@
+import { publicPage } from "../server/seo/public-page.ts";
+import { renderPublicPage } from "../.angular/site-client/server/server.mjs";
 import { protectedSourcePath, secureResponse } from "../server/http/security.ts";
 import { json } from "../server/http/responses.ts";
 import { adminPageGate } from "../server/auth/admin-page.ts";
@@ -16,6 +18,8 @@ const worker = {
       return secureResponse(json({error:"Recurso não encontrado."},404),request);
     const gate = await adminPageGate(request,env);
     if (gate) return secureResponse(gate,request);
+    const publicResponse = await publicPage(request, env, renderPublicPage);
+    if (publicResponse) return secureResponse(publicResponse, request);
     const response = await handleApi(request, env);
     if (response) return secureResponse(response,request);
     let binding = ctx.props?.CONNECTORS;

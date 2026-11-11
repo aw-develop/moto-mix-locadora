@@ -19,15 +19,11 @@
   <div class="hero-shade"></div>
   <div class="wrap hero-content">
     <div class="eyebrow"><span></span> SUA LIBERDADE TEM UM NOVO ENDEREÇO</div>
-    <h1 [class.long-title]="longTitle()">
-      {{ slide()?.title || "SEU PRÓXIMO MOVIMENTO COMEÇA NA MIX." }}
-    </h1>
-    <p>
-      {{
-        slide()?.subtitle ||
-          "Explore a frota e encontre o plano para o seu ritmo."
-      }}
-    </p>
+    <h1>ALUGUEL DE MOTOS<br /><em>EM PALHOÇA – SC.</em></h1>
+    <p class="hero-local-description">A Mix Locadora oferece aluguel de motos em Palhoça, Santa Catarina. Conheça a frota e consulte os planos e as condições de locação.</p>
+    @if (slide(); as campaign) {
+      <p class="hero-campaign"><strong>{{ campaign.title }}</strong> {{ campaign.subtitle }}</p>
+    }
     <div class="hero-actions">
       <a mixSectionLink class="btn" [href]="slide()?.link || '#motos'"
         >Encontre sua moto</a

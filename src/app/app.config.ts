@@ -1,3 +1,4 @@
+import { provideClientHydration, withNoHttpTransferCache } from "@angular/platform-browser";
 import { AdminService } from "./core/services/admin.service";
 import { registerLocaleData } from "@angular/common";
 import localePt from "@angular/common/locales/pt";
@@ -13,6 +14,9 @@ import {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZonelessChangeDetection(),
+    ...(typeof window === "undefined" || window.location.pathname === "/"
+      ? [provideClientHydration(withNoHttpTransferCache())]
+      : []),
     provideAppInitializer(() => inject(AdminService).initialize()),
     provideRouter(
       routes,

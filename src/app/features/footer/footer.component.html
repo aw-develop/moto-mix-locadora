@@ -9,6 +9,7 @@
   <div class="wrap footer-contact">
     <span>{{ settings().address }}</span
     ><span>{{ settings().hours }}</span>
+    @if (phone(); as contact) { <a [href]="contact.href">{{ contact.label }}</a> }
   </div>
   <div class="wrap footer-socials">
     @if (settings().instagram) {
@@ -26,8 +27,7 @@
     <span
       >© <span>{{ year }}</span> Mix Locadora de Motos.</span
     ><span
-      >Site demonstrativo · Imagens ilustrativas · Dados comerciais a
-      confirmar.</span
+      >Palhoça – SC · Consulte os planos e as condições de locação.</span
     >
   </div>
 </footer>

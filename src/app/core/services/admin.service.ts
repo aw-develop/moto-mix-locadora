@@ -4,7 +4,13 @@ import {
   Injectable,
   signal,
   DestroyRef,
+  PLATFORM_ID,
+  REQUEST_CONTEXT,
+  TransferState,
+  makeStateKey,
+  afterNextRender,
 } from "@angular/core";
+import { isPlatformServer } from "@angular/common";
 import { toSignal } from "@angular/core/rxjs-interop";
 import { BehaviorSubject } from "rxjs";
 import { MIX_CONFIG } from "../config/mix.config";
@@ -22,9 +28,16 @@ import {
 } from "../validation/admin.validators";
 import { AdminSessionService } from "./admin-session.service";
 
+interface PublicSnapshot { state: AdminState; version: number; updatedAt: string | null; }
+const PUBLIC_CATALOG = makeStateKey<PublicSnapshot | null>("mix.public-catalog");
+
 /** Reactive repository synchronized with the authenticated D1/R2 backend. */
 @Injectable({ providedIn: "root" })
 export class AdminService {
+  private readonly transferState = inject(TransferState);
+  private refreshAfterHydration = false;
+  private readonly serverRendering = isPlatformServer(inject(PLATFORM_ID));
+  private readonly renderContext = inject(REQUEST_CONTEXT, { optional: true }) as { publicCatalog?: PublicSnapshot } | null;
   private readonly config = inject(MIX_CONFIG);
   private readonly session = inject(AdminSessionService);
   private readonly subject = new BehaviorSubject<AdminState>({
@@ -81,6 +94,12 @@ export class AdminService {
   private running = false;
   private timer: ReturnType<typeof setTimeout> | undefined;
   constructor() {
+    afterNextRender(() => {
+      if (this.refreshAfterHydration) {
+        this.refreshAfterHydration = false;
+        void this.initialize();
+      }
+    });
     const guard = (event: BeforeUnloadEvent) => {
       if (this.generation > this.savedGeneration) {
         event.preventDefault();
@@ -96,6 +115,33 @@ export class AdminService {
     });
   }
   async initialize(): Promise<void> {
+    if (this.serverRendering) {
+      const snapshot = this.renderContext?.publicCatalog;
+      if (snapshot) {
+        const publicSnapshot: PublicSnapshot = {
+          ...snapshot,
+          state: { ...snapshot.state, banners: snapshot.state.banners.filter(b => b.active), activities: [], visits: 0 },
+        };
+        this.subject.next(publicSnapshot.state);
+        this.version = publicSnapshot.version;
+        this.savedAt.set(publicSnapshot.updatedAt);
+        this.saveStatus.set("saved");
+        this.transferState.set(PUBLIC_CATALOG, publicSnapshot);
+      }
+      // No HTTP requests, credentials or browser APIs during SSR/route discovery.
+      return;
+    }
+    const transferred = this.transferState.get(PUBLIC_CATALOG, null);
+    if (transferred) {
+      this.transferState.remove(PUBLIC_CATALOG);
+      this.subject.next(transferred.state);
+      this.version = transferred.version;
+      this.savedAt.set(transferred.updatedAt);
+      this.saveStatus.set("saved");
+      this.hydrated = true;
+      this.refreshAfterHydration = true;
+      return;
+    }
     this.saveStatus.set("loading");
     try {
       const [sessionResponse, stateResponse] = await Promise.all([

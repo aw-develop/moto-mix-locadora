@@ -28,10 +28,10 @@ run([
 ]);
 rmSync("public/client", { force: true, recursive: true });
 mkdirSync("public/client", { recursive: true });
-cpSync(".angular/site-client", "public/client", { recursive: true });
+cpSync(".angular/site-client/browser", "public/client", { recursive: true });
 writeFileSync(
   "app/angular-shell.html",
-  readFileSync(".angular/site-client/index.html"),
+  readFileSync(".angular/site-client/browser/index.csr.html"),
 );
 run(["scripts/run-framework.mjs", "build"]);
 

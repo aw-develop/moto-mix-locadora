@@ -17,6 +17,10 @@ const localBindingConfig = {
   name: "mix-locadora-angular",
   workers_dev: true,
   preview_urls: false,
+  routes: [
+    { pattern: "mixlocadora.com.br", custom_domain: true },
+    { pattern: "www.mixlocadora.com.br", custom_domain: true },
+  ],
   observability: {
     enabled: true,
     logs: { enabled: true, invocation_logs: false },

@@ -77,6 +77,10 @@ A migração `0006_glamorous_king_cobra.sql` adiciona `site_settings.rental_cond
 
 **Angular é responsável por toda a interface.** Vinext integra a entrega do shell Angular à hospedagem do servidor; não há uma segunda interface React para administrar.
 
+## SEO local e renderização pública
+
+A página inicial entrega HTML renderizado pelo Angular no Worker com os dados públicos atuais do D1, incluindo frota, endereço e condições. O painel continua em CSR com sessão protegida. Metadados locais, canonical, JSON-LD `LocalBusiness`, robots e sitemap são gerados para `mixlocadora.com.br`. Consulte [SEO local](docs/SEO-LOCAL.md) para arquitetura, testes e as etapas de Search Console/Perfil da Empresa que dependem da conta Google.
+
 ## Começar a desenvolver
 
 ### Pré-requisitos

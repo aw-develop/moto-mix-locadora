@@ -8,7 +8,7 @@ export const routes: Routes = [
       import("./public/public-site.component").then(
         (m) => m.PublicSiteComponent,
       ),
-    title: "Mix Locadora de Motos | Seu próximo movimento",
+    title: "Aluguel de Motos em Palhoça – SC | Mix Locadora",
   },
   {
     path: "admin/login",
