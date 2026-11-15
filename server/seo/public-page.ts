@@ -5,6 +5,7 @@ import { CatalogService } from '../services/catalog.service.ts';
 import { MediaService } from '../services/media.service.ts';
 import { SITE_ORIGIN, PRODUCTION_ALIASES } from './site-identity.ts';
 import { localBusiness, serializeStructuredData } from './structured-data.ts';
+import { buildSitemap } from './sitemap.ts';
 type Renderer = (request: Request, context: { publicCatalog: CatalogSnapshot }) => Promise<Response | null>;
 const publicHeaders = { 'cache-control': 'no-store', 'x-robots-tag': 'noindex' };
 export async function publicPage(request: Request, env: BackendEnvironment, render: Renderer): Promise<Response | null> {
@@ -25,13 +26,14 @@ export async function publicPage(request: Request, env: BackendEnvironment, rend
       : 'User-agent: *\nDisallow: /\n';
     return new Response(request.method === 'HEAD' ? null : body, {headers: {...publicHeaders, 'content-type':'text/plain; charset=utf-8'}});
   }
-  if (url.pathname === '/sitemap.xml') {
-    const body = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>${SITE_ORIGIN}/</loc></url></urlset>`;
-    return new Response(request.method === 'HEAD' ? null : body, {headers:{...publicHeaders,'content-type':'application/xml; charset=utf-8'}});
-  }
   try {
     const service = new CatalogService(new CatalogRepository(env.DB), new MediaService(env.BUCKET));
     const snapshot = await service.read(false);
+    if (url.pathname === '/sitemap.xml') {
+      return new Response(request.method === 'HEAD' ? null : buildSitemap(snapshot.state), {
+        headers: { 'cache-control': 'no-store', 'content-type': 'application/xml; charset=utf-8' },
+      });
+    }
     // Sanitize headers as well as data: the public render never receives credentials or cookies.
     const publicRequest = new Request(url, {method:'GET', headers:{accept:'text/html'}});
     const response = await render(publicRequest, {publicCatalog:snapshot});

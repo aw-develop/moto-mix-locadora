@@ -48,3 +48,36 @@ Após publicar, confira o código-fonte recebido de `https://mixlocadora.com.br/
 5. O endereço antigo hospedado em `chatgpt.site` é uma implantação separada. O deploy no Worker próprio não a altera; o código novo já reconhece esse hostname e redireciona os documentos públicos, mas a implantação antiga precisa receber essa versão ou ser encerrada separadamente para não manter uma cópia pública antiga.
 
 Essas etapas não prometem posicionamento. A indexação e a classificação dependem do Google e dos sinais reais da empresa.
+
+
+## Sitemap para o Google Search Console
+
+**URL de envio:** `https://mixlocadora.com.br/sitemap.xml`.
+
+O arquivo é gerado pelo Worker em `server/seo/sitemap.ts`, atendido por `server/seo/public-page.ts`. Não é necessário criar ou enviar um XML manual ao Google. A resposta usa UTF-8, `application/xml`, o namespace oficial de sitemaps e a extensão de imagens do Google.
+
+- Inclui a URL canônica `https://mixlocadora.com.br/`, única página pública atual.
+- Fotos da frota e banners ativos hospedados em `/assets/` ou `/api/media/` são associados à página pela extensão `image:image`, com URLs HTTPS absolutas, sem duplicatas e com escape XML. Limite de 1.000 imagens por página.
+- Imagens externas, uploads inline, banners inativos, painel, APIs administrativas, parâmetros de navegação e âncoras não viram páginas do sitemap.
+- As imagens refletem o catálogo público atual no D1, sem precisar de novo build após salvar pelo painel. Uma falha no banco devolve 503 com `Retry-After`, nunca um XML de sucesso com dados falsos.
+- Não usa `priority` ou `changefreq`, ignorados pelo Google. `lastmod` foi omitido: o timestamp atual do catálogo também muda por eventos administrativos e não comprova alteração significativa da página. Não substitua pela data de cada acesso ou deploy.
+- Endereço, telefone, horários e serviços pertencem ao conteúdo visível e ao JSON-LD `LocalBusiness`, não a tags inventadas dentro do sitemap.
+
+### Publicar e enviar
+
+1. Atualize o código e publique o Worker:
+
+   ```bash
+   git pull --ff-only origin main
+   npm ci
+   npm run build
+   npx wrangler deploy --config dist/server/wrangler.json
+   ```
+
+2. Abra a URL do sitemap e confira HTTP 200 e XML. Confira também `https://mixlocadora.com.br/robots.txt`, que anuncia esse endereço.
+3. Na propriedade verificada `mixlocadora.com.br` do Search Console, abra **Sitemaps**, informe a URL acima em **Adicionar um novo sitemap** e clique em **Enviar**.
+4. Use **Inspeção de URL** com `https://mixlocadora.com.br/`, faça o teste da URL publicada e solicite indexação se necessário. Um envio aceito não garante indexação ou posição nos resultados.
+
+Quando existirem páginas públicas próprias (por exemplo, uma página de modelo), inclua suas URLs canônicas somente após implementar HTML indexável e resposta 200 para cada uma. Hoje `#motos`, `#contato` e `#localizacao` continuam sendo partes da página inicial.
+
+Referências: [sitemaps do Google](https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap?hl=pt-br) e [sitemaps de imagens](https://developers.google.com/search/docs/crawling-indexing/sitemaps/image-sitemaps?hl=pt-br).

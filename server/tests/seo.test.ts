@@ -1,5 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { buildSitemap } from '../seo/sitemap.ts';
 import { publicPage } from '../seo/public-page.ts';
 import { localBusiness, serializeStructuredData } from '../seo/structured-data.ts';
 import { environment, request, seedState } from './helpers.ts';
@@ -63,4 +64,38 @@ test('structured data uses real settings, validates hours, omits invented rating
  assert.equal(localBusiness({...realSettings,hours:'Horários a confirmar'})?.['openingHoursSpecification'],undefined);
  const serialized=serializeStructuredData({value:'</script><script>alert(1)</script>&'});
  assert.doesNotMatch(serialized,/<script|<\/script|&/);assert.equal(JSON.parse(serialized).value,'</script><script>alert(1)</script>&');
+});
+
+
+test('sitemap lists only the canonical page and public first-party images with XML escaping',()=>{
+ const state={...seedState()};
+ const image='/api/media/moto.webp?color=green&size=large';
+ state.bikes=[{...state.bikes[0]!,image},{...state.bikes[0]!,id:'duplicate',image}];
+ state.banners=[
+  {...state.banners[0]!,image:'/assets/banner.webp',active:true},
+  {...state.banners[0]!,id:'draft',image:'/assets/private-draft.webp',active:false},
+  {...state.banners[0]!,id:'external',image:'https://other.example/photo.webp',active:true},
+  {...state.banners[0]!,id:'inline',image:'data:image/png;base64,AAAA',active:true},
+  {...state.banners[0]!,id:'api',image:'/api/state',active:true},
+ ];
+ const xml=buildSitemap(state);
+ assert.match(xml,/xmlns:image="http:\/\/www.google.com\/schemas\/sitemap-image\/1.1"/);
+ assert.equal((xml.match(/<url>/g)||[]).length,1);
+ assert.equal((xml.match(/<image:image>/g)||[]).length,2);
+ assert.match(xml,/color=green&amp;size=large/);
+ assert.doesNotMatch(xml,/private-draft|other.example|data:image|api\/state|<lastmod>|<priority>|<changefreq>/);
+});
+
+test('sitemap reflects saved catalog changes and remains independent of Angular rendering',async()=>{
+ const {env,db}=environment();
+ try {
+  const state={...seedState()};
+  state.bikes=state.bikes.map(bike=>({...bike,image:'/assets/current-bike.webp'}));
+  assert.equal((await handleApi(request('PUT',{version:0,state}),env))?.status,200);
+  const response=await publicPage(new Request(origin+'/sitemap.xml'),env,async()=>{throw Error('No Angular rendering needed');});
+  assert.equal(response?.status,200);
+  assert.equal(response.headers.get('x-robots-tag'),null);
+  assert.equal(response.headers.get('cache-control'),'no-store');
+  assert.match(await response.text(),/https:\/\/mixlocadora.com.br\/assets\/current-bike.webp/);
+ } finally {db.close();}
 });
