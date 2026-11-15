@@ -7,7 +7,7 @@ test("rental conditions survive D1 saves, are public and can be cleared without 
   const { env, db, maximumBatch } = environment();
   try {
     const state = seedState();
-    const rentalConditions = { dailyPlan: "Retirada combinada", weeklyPlan: "Renovação sob consulta", deposit: "Caução a confirmar", documents: "Documentos da empresa", coverage: "Conforme contrato", included: "Manutenção conforme plano" };
+    const rentalConditions = { depositAmount: "400,00", dailyPlan: "Retirada combinada", weeklyPlan: "Renovação sob consulta", deposit: "Caução a confirmar", documents: "Documentos da empresa", coverage: "Conforme contrato", included: "Manutenção conforme plano" };
     const updated = { ...state, settings: { ...state.settings, rentalConditions } };
     assert.equal((await handleApi(request("PUT", { version: 0, state: updated }), env))?.status, 200);
     const loaded = await snapshot((await handleApi(request("GET", undefined, false), env))!);
@@ -26,7 +26,7 @@ test("invalid conditions and anonymous changes never write to D1", async () => {
   const { env, db } = environment();
   try {
     const state = seedState();
-    for (const rentalConditions of [null, [], { dailyPlan: "a".repeat(801) }, { dailyPlan: 42 }]) {
+    for (const rentalConditions of [null, [], { dailyPlan: "", weeklyPlan: "", deposit: "", documents: "", coverage: "", included: "", depositAmount: "-400" }, { dailyPlan: "a".repeat(801) }, { dailyPlan: 42 }]) {
       assert.equal((await handleApi(request("PUT", { version: 0, state: { ...state, settings: { ...state.settings, rentalConditions } } }), env))?.status, 400);
     }
     assert.equal((await handleApi(request("PUT", { version: 0, state }, false), env))?.status, 401);

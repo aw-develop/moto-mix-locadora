@@ -24,6 +24,7 @@ export interface Banner {
   readonly motorcycleIds?: readonly string[];
 }
 export interface RentalConditions {
+  readonly depositAmount?: string;
   readonly dailyPlan: string;
   readonly weeklyPlan: string;
   readonly deposit: string;

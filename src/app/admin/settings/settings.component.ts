@@ -65,6 +65,7 @@ export class SettingsComponent {
     instagram: [this.initial.instagram, optionalHttpsValidator],
     facebook: [this.initial.facebook, optionalHttpsValidator],
     rentalConditions: this.fb.nonNullable.group({
+      depositAmount: [this.initial.rentalConditions?.depositAmount ?? "400", [Validators.required, Validators.pattern(/^\d{1,6}([.,]\d{1,2})?$/), Validators.max(100000)]],
       dailyPlan: [this.initial.rentalConditions?.dailyPlan ?? "", Validators.maxLength(800)],
       weeklyPlan: [this.initial.rentalConditions?.weeklyPlan ?? "", Validators.maxLength(800)],
       deposit: [this.initial.rentalConditions?.deposit ?? "", Validators.maxLength(800)],
@@ -94,7 +95,7 @@ export class SettingsComponent {
     }
   }
   reset(): void {
-    this.form.reset({ ...this.admin.settings(), rentalConditions: { dailyPlan: "", weeklyPlan: "", deposit: "", documents: "", coverage: "", included: "", ...this.admin.settings().rentalConditions } });
+    this.form.reset({ ...this.admin.settings(), rentalConditions: { depositAmount: "400", dailyPlan: "", weeklyPlan: "", deposit: "", documents: "", coverage: "", included: "", ...this.admin.settings().rentalConditions } });
     this.error.set("");
     this.saved.set(false);
   }

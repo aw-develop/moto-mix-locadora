@@ -19,8 +19,8 @@ export class RentalConditionsComponent {
   readonly plans = computed(() => {
     const available = this.admin.bikes().filter(bike => bike.available);
     return [
-      { name: "DIÁRIO", period: "dia", price: available.length ? Math.min(...available.map(b => b.daily)) : null, description: this.conditions().dailyPlan },
-      { name: "SEMANAL", period: "semana", price: available.length ? Math.min(...available.map(b => b.weekly)) : null, description: this.conditions().weeklyPlan },
+      { name: "CAUÇÃO", label: "CAUÇÃO", period: "", starting: false, price: Number((this.conditions().depositAmount ?? "400").replace(",", ".")), description: this.conditions().dailyPlan },
+      { name: "SEMANAL", label: "PLANO SEMANAL", starting: true, period: "semana", price: available.length ? Math.min(...available.map(b => b.weekly)) : null, description: this.conditions().weeklyPlan },
     ];
   });
 }

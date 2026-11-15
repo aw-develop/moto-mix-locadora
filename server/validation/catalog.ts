@@ -91,7 +91,11 @@ export function settings(value: unknown): SiteSettings {
     facebook: text(s["facebook"], "Facebook", 2000, true),
     ...(s["rentalConditions"] === undefined ? {} : { rentalConditions: (() => {
       const conditions = object(s["rentalConditions"], "Condições do aluguel");
+      const depositAmount = conditions["depositAmount"];
+      if (depositAmount !== undefined && (typeof depositAmount !== "string" || !/^\d{1,6}([.,]\d{1,2})?$/.test(depositAmount) || Number(depositAmount.replace(",", ".")) > 100000))
+        fail("Valor da caução inválido.");
       return {
+        ...(depositAmount === undefined ? {} : { depositAmount: depositAmount as string }),
         dailyPlan: text(conditions["dailyPlan"], "Condições do aluguel", 800, true),
         weeklyPlan: text(conditions["weeklyPlan"], "Condições do aluguel", 800, true),
         deposit: text(conditions["deposit"], "Condições do aluguel", 800, true),

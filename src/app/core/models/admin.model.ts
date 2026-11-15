@@ -13,6 +13,7 @@ export interface Banner {
 }
 export type BannerDraft = Omit<Banner, "id" | "order">;
 export interface RentalConditions {
+  readonly depositAmount?: string;
   readonly dailyPlan: string;
   readonly weeklyPlan: string;
   readonly deposit: string;

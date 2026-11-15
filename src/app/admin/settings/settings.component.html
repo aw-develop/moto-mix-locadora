@@ -110,6 +110,12 @@
     <div><span class="settings-number">04</span><h2>Condições do aluguel</h2>
       <p>Informe as regras reais da empresa. Campos em branco exibem uma orientação para consultar a Mix.</p></div>
     <div class="admin-form-grid" formGroupName="rentalConditions">
+      <label class="full">Valor da caução (R$)<input type="text" inputmode="decimal" formControlName="depositAmount" placeholder="400,00" maxlength="9" required />
+        <small>Valor fixo da garantia, independente dos preços das motos. Use 400 ou 400,00.</small>
+        @if (form.controls.rentalConditions.controls.depositAmount.touched && form.controls.rentalConditions.controls.depositAmount.invalid) {
+          <span class="field-error">Informe um valor entre 0 e 100.000, com até duas casas decimais.</span>
+        }
+      </label>
       @for (field of rentalFields; track field.key) {
         <label class="full">{{ field.label }}<textarea [formControlName]="field.key" rows="3" maxlength="800"></textarea><small>Até 800 caracteres. Texto exibido no site público.</small></label>
       }
