@@ -11,6 +11,18 @@ export const routes: Routes = [
     title: "Aluguel de Motos em Palhoça – SC | Mix Locadora",
   },
   {
+    path: "termos-de-uso",
+    loadComponent: () => import("./public/legal-page.component").then(m => m.LegalPageComponent),
+    data: { kind: "terms" },
+    title: "Termos de Uso | Mix Locadora",
+  },
+  {
+    path: "politica-de-privacidade",
+    loadComponent: () => import("./public/legal-page.component").then(m => m.LegalPageComponent),
+    data: { kind: "privacy" },
+    title: "Política de Privacidade | Mix Locadora",
+  },
+  {
     path: "admin/login",
     canMatch: [loginGuard],
     loadComponent: () =>
