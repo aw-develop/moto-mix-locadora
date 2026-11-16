@@ -1,12 +1,13 @@
 import { SectionLinkDirective } from "../../shared/section-link/section-link.directive";
 import { AdminService } from "../../core/services/admin.service";
 import { Component, ChangeDetectionStrategy, inject, computed } from "@angular/core";
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: "mix-footer",
   standalone: true,
   styleUrl: "./footer.component.css",
-  imports: [SectionLinkDirective],
+  imports: [SectionLinkDirective, RouterLink],
   templateUrl: "./footer.component.html",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
