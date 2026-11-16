@@ -104,3 +104,6 @@ textarea::placeholder {
   transform: none;
   box-shadow: none;
 }
+
+.contact-privacy { margin-top: 16px; font-size: 10px; line-height: 1.6; color: #9ba99b; }
+.contact-privacy a { color: var(--green); text-decoration: underline; text-underline-offset: 3px; }
