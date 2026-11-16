@@ -1,33 +1,25 @@
 <footer>
   <div class="wrap footer-top">
-    <a mixSectionLink href="#inicio" class="brand"
-      ><span class="brand-mark">M<span>IX</span><i></i></span
-      ><span class="brand-label">LOCADORA<br />DE MOTOS</span></a
-    ><span>LIBERDADE PARA IR. CONFIANÇA PARA CHEGAR.</span
-    ><a mixSectionLink href="#inicio">Voltar ao topo</a>
+    <a mixSectionLink href="#inicio" class="brand"><span class="brand-mark">M<span>IX</span><i></i></span><span class="brand-label">LOCADORA<br />DE MOTOS</span></a>
+    <span>LIBERDADE PARA IR. CONFIANÇA PARA CHEGAR.</span>
+    <a mixSectionLink href="#inicio">Voltar ao topo</a>
   </div>
   <div class="wrap footer-contact">
-    <span>{{ settings().address }}</span
-    ><span>{{ settings().hours }}</span>
+    <span>{{ settings().address }}</span>
+    <span>{{ settings().hours }}</span>
     @if (phone(); as contact) { <a [href]="contact.href">{{ contact.label }}</a> }
   </div>
   <div class="wrap footer-socials">
-    @if (settings().instagram) {
-      <a [href]="settings().instagram" target="_blank" rel="noopener noreferrer"
-        >Instagram</a
-      >
-    }
-    @if (settings().facebook) {
-      <a [href]="settings().facebook" target="_blank" rel="noopener noreferrer"
-        >Facebook</a
-      >
-    }
+    @if (settings().instagram) { <a [href]="settings().instagram" target="_blank" rel="noopener noreferrer">Instagram</a> }
+    @if (settings().facebook) { <a [href]="settings().facebook" target="_blank" rel="noopener noreferrer">Facebook</a> }
   </div>
   <div class="wrap footer-bottom">
-    <span
-      >© <span>{{ year }}</span> Mix Locadora de Motos.</span
-    ><span
-      >Palhoça – SC · Consulte os planos e as condições de locação.</span
-    >
+    <span>© {{ year }} Mix Locadora de Motos</span>
+    <nav class="footer-legal" aria-label="Informações legais">
+      <a routerLink="/termos-de-uso">Termos de Uso</a>
+      <span aria-hidden="true">·</span>
+      <a routerLink="/politica-de-privacidade">Política de Privacidade</a>
+    </nav>
+    <span>Desenvolvido por AW Develop</span>
   </div>
 </footer>
