@@ -137,3 +137,16 @@ footer {
   .footer-bottom > span,
   .footer-bottom > nav { flex-shrink: 0; }
 }
+
+/* Agrupa os três itens no centro, sem grandes espaços entre eles. */
+.footer-bottom {
+  justify-content: center;
+  column-gap: clamp(14px, 2.5vw, 36px);
+  row-gap: 0;
+}
+@media (max-width: 700px) {
+  .footer-bottom {
+    justify-content: flex-start;
+    column-gap: 14px;
+  }
+}
