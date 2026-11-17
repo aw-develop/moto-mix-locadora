@@ -150,3 +150,6 @@ footer {
     column-gap: 14px;
   }
 }
+
+.footer-credit { color: #a9b9aa; text-decoration: none; white-space: nowrap; }
+.footer-credit:hover, .footer-credit:focus-visible { color: var(--green); text-decoration: underline; }
