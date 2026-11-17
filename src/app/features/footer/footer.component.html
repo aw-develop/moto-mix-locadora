@@ -1,18 +1,14 @@
 <footer>
-  <div class="wrap footer-top">
+  <!-- <div class="wrap footer-top">
     <a mixSectionLink href="#inicio" class="brand"><span class="brand-mark">M<span>IX</span><i></i></span><span class="brand-label">LOCADORA<br />DE MOTOS</span></a>
     <span>LIBERDADE PARA IR. CONFIANÇA PARA CHEGAR.</span>
     <a mixSectionLink href="#inicio">Voltar ao topo</a>
-  </div>
-  <div class="wrap footer-contact">
-    <span>{{ settings().address }}</span>
-    <span>{{ settings().hours }}</span>
-    @if (phone(); as contact) { <a [href]="contact.href">{{ contact.label }}</a> }
-  </div>
+  </div> -->
   <div class="wrap footer-socials">
     @if (settings().instagram) { <a [href]="settings().instagram" target="_blank" rel="noopener noreferrer">Instagram</a> }
     @if (settings().facebook) { <a [href]="settings().facebook" target="_blank" rel="noopener noreferrer">Facebook</a> }
   </div>
+  
   <div class="wrap footer-bottom">
     <span>© {{ year }} Mix Locadora de Motos</span>
     <nav class="footer-legal" aria-label="Informações legais">
