@@ -1,5 +1,6 @@
 import { ScrollRevealDirective } from "../../shared/scroll-reveal/scroll-reveal.directive";
 import { Component, ChangeDetectionStrategy, inject } from "@angular/core";
+import { RouterLink } from "@angular/router";
 import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
 import { WhatsappService } from "../../core/services/whatsapp.service";
 import { WhatsappDirective } from "../../shared/whatsapp/whatsapp.directive";
@@ -7,7 +8,7 @@ import { WhatsappDirective } from "../../shared/whatsapp/whatsapp.directive";
   selector: "mix-contact",
   standalone: true,
   styleUrl: "./contact.component.css",
-  imports: [ScrollRevealDirective, ReactiveFormsModule, WhatsappDirective],
+  imports: [ScrollRevealDirective, ReactiveFormsModule, WhatsappDirective, RouterLink],
   templateUrl: "./contact.component.html",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
